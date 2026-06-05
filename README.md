@@ -30,9 +30,7 @@ option**. KodLyft fills that gap:
 - **No-code customization nearly for free** — the Frappe DocType engine lets owners build their own
   forms, fields and workflows, the single feature that most improves retention.
 - **The differentiators incumbents skip** — Uber-like customer tracking, recurring-revenue service
-  contracts, and (on the roadmap) AI call intake that captures revenue lost before a job is booked.
-
-> Strategy over feature count. See [`docs/feature-catalog`](#documentation) for the full landscape.
+  contracts, and AI call intake that captures revenue lost before a job is booked.
 
 ## Architecture
 
@@ -111,25 +109,13 @@ status colors reserved strictly for state. **Never hard-code a hex or px in a co
 
 ## Documentation
 
-- `docs/feature-catalog` — the full FSM feature landscape and build priority (P0 → P3)
-- `docs/design-system` — tokens, typography, components and governance
 - [`CONTRIBUTING.md`](./CONTRIBUTING.md) — how to develop, test and submit changes
 - [`SECURITY.md`](./SECURITY.md) — reporting vulnerabilities
 
-## Roadmap
-
-| Priority | Area                              | Status      |
-| -------- | --------------------------------- | ----------- |
-| **P0**   | Core loop + clean UI + offline    | In progress |
-| **P1**   | Uber-like tracking, no-code, contracts | Planned |
-| **P2**   | AI scheduling, assistant, **call intake** | Planned |
-| **P3**   | IoT / AR / digital twins          | Deferred    |
-
 ## Contributing
 
-Contributions are welcome! Please read [`CONTRIBUTING.md`](./CONTRIBUTING.md) and our
-[`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md). Commits and PR titles follow
-[Conventional Commits](https://www.conventionalcommits.org).
+Contributions are welcome! Please read [`CONTRIBUTING.md`](./CONTRIBUTING.md). Commits and PR titles
+follow [Conventional Commits](https://www.conventionalcommits.org).
 
 ## License
 

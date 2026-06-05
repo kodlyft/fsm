@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /**
  * KodLyft FSM token build.
  * Reads tokens.json (the single source of truth) and generates:
@@ -16,7 +15,6 @@ import { fileURLToPath } from "node:url";
 const root = dirname(fileURLToPath(import.meta.url));
 const tokens = JSON.parse(readFileSync(resolve(root, "tokens.json"), "utf8"));
 
-// --- helpers ---------------------------------------------------------------
 const raw = (node) => (node && typeof node === "object" && "value" in node ? node.value : node);
 const at = (path) => path.split(".").reduce((o, k) => (o == null ? o : o[k]), tokens);
 const resolveRef = (v) => {
@@ -33,7 +31,6 @@ const hexToRgb = (hex) => {
 const BANNER = (what) =>
 	`/* KodLyft FSM — ${what} (generated from tokens.json — do not edit by hand). */\n`;
 
-// --- kodlyft-tokens.css ----------------------------------------------------
 function buildWebCss() {
 	const c = tokens.color;
 	const s = tokens.semantic;
@@ -49,7 +46,7 @@ function buildWebCss() {
 	lines.push(`\t--kl-brand-900: ${raw(c.brand["900"])};`);
 	lines.push("");
 	lines.push("\t/* Surfaces (light) */");
-	for (const [k, v] of Object.entries(s.light)) {
+	for (const k of Object.keys(s.light)) {
 		if (k === "brand") continue;
 		lines.push(`\t--kl-${k}: ${get(`semantic.light.${k}`)};`);
 	}
@@ -196,7 +193,6 @@ function buildTailwindTheme() {
 	return lines.join("\n") + "\n";
 }
 
-// --- src/tokens.ts ---------------------------------------------------------
 function buildTs() {
 	const flat = {
 		brand: {
@@ -236,7 +232,6 @@ function buildTs() {
 	);
 }
 
-// --- write -----------------------------------------------------------------
 mkdirSync(resolve(root, "css"), { recursive: true });
 mkdirSync(resolve(root, "src"), { recursive: true });
 writeFileSync(resolve(root, "css/kodlyft-tokens.css"), buildWebCss());
