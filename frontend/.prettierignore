@@ -1,0 +1,17 @@
+# Resolved relative to the frontend/ workspace root (lint-staged & yarn format run here)
+node_modules/
+**/node_modules/
+**/dist/
+**/.vite/
+
+# Generated design tokens (owned by the token build step)
+design/css/
+
+# Capacitor native platforms
+mobile/android/
+mobile/ios/
+
+# Minified / lockfiles
+**/*.min.js
+**/*.min.css
+yarn.lock

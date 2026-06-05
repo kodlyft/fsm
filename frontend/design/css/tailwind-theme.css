@@ -1,0 +1,41 @@
+/* KodLyft FSM — Tailwind v4 theme (generated from tokens.json — do not edit by hand). */
+
+/* Maps tokens onto Tailwind's @theme so utilities (bg-brand, text-fg-muted,
+   rounded-lg, text-2xl …) follow the design tokens, including dark mode. */
+@theme {
+	/* Brand + status colors */
+	--color-brand: var(--kl-brand);
+	--color-brand-50: #E1F5EE;
+	--color-brand-100: #9FE1CB;
+	--color-brand-500: #0F6E56;
+	--color-brand-700: #085041;
+	--color-brand-900: #04342C;
+	--color-success: var(--kl-success);
+	--color-warning: var(--kl-warning);
+	--color-danger: var(--kl-danger);
+	--color-info: var(--kl-info);
+	/* Semantic surfaces (follow light/dark automatically) */
+	--color-bg: var(--kl-bg);
+	--color-bg-subtle: var(--kl-bg-subtle);
+	--color-surface: var(--kl-surface);
+	--color-border: var(--kl-border);
+	--color-fg: var(--kl-text);
+	--color-fg-muted: var(--kl-text-muted);
+	/* Type */
+	--font-sans: var(--kl-font-ui);
+	--font-mono: var(--kl-font-mono);
+	--text-xs: 12px;
+	--text-sm: 14px;
+	--text-base: 16px;
+	--text-lg: 18px;
+	--text-xl: 22px;
+	--text-2xl: 28px;
+	--text-3xl: 34px;
+	/* Radius (sm/md/lg overridden to KodLyft values) */
+	--radius-sm: 6px;
+	--radius-md: 10px;
+	--radius-lg: 14px;
+	/* Elevation */
+	--shadow-card: 0 1px 2px rgba(26,26,25,0.06), 0 1px 1px rgba(26,26,25,0.04);
+	--shadow-sheet: 0 -2px 16px rgba(26,26,25,0.10);
+}

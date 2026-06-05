@@ -35,9 +35,11 @@ repos:
     hooks:
       - id: prettier
         types_or: [javascript, vue, scss]
-        # Ignore any files that might contain jinja / bundles
+        # Ignore any files that might contain jinja / bundles.
+        # frontend/ is owned by the Node toolchain (prettier 3 via husky + lint-staged).
         exclude: |
             (?x)^(
+                frontend/.*|
                 fsm/public/dist/.*|
                 .*node_modules.*|
                 .*boilerplate.*|
@@ -52,9 +54,11 @@ repos:
       - id: eslint
         types_or: [javascript]
         args: ['--quiet']
-        # Ignore any files that might contain jinja / bundles
+        # Ignore any files that might contain jinja / bundles.
+        # frontend/ is owned by the Node toolchain (eslint 9 flat config via husky + lint-staged).
         exclude: |
             (?x)^(
+                frontend/.*|
                 fsm/public/dist/.*|
                 cypress/.*|
                 .*node_modules.*|

@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+/* Tailwind utilities + tokens layered on top of Ionic's component theming. */
+@import "../../design/css/tailwind-theme.css";
+@import "../../design/css/kodlyft-tokens.css";
+
+@source "../../ui/src";

@@ -1,0 +1,31 @@
+{
+  "name": "@kodlyft/portal",
+  "version": "0.1.0",
+  "description": "KodLyft FSM customer portal (Vue 3 + Tailwind v4, public).",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --base=/assets/fsm/portal/ && yarn copy-html-entry",
+    "copy-html-entry": "cp ../../fsm/public/portal/index.html ../../fsm/www/book.html",
+    "preview": "vite preview",
+    "typecheck": "vue-tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@kodlyft/api": "0.1.0",
+    "@kodlyft/design": "0.1.0",
+    "@kodlyft/ui": "0.1.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7",
+    "vitest": "^3.2.4",
+    "vue-tsc": "^2.2.0"
+  }
+}

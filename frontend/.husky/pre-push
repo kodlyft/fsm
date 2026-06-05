@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+# Type-check all frontend workspaces before pushing.
+cd frontend && yarn typecheck

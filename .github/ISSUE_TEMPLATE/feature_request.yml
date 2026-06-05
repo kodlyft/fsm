@@ -1,0 +1,33 @@
+name: Feature request
+description: Suggest an idea or enhancement for KodLyft FSM
+labels: ["enhancement", "triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / motivation
+      description: What problem does this solve? Who is it for (dispatcher, technician, customer, owner)?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+    validations:
+      required: true
+  - type: dropdown
+    id: layer
+    attributes:
+      label: Feature layer (from the roadmap)
+      options:
+        - Table-stakes (core)
+        - AI & automation
+        - Emerging tech
+        - Gap / differentiator
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered

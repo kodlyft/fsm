@@ -1,0 +1,76 @@
+/* KodLyft FSM — CSS custom properties (generated from tokens.json — do not edit by hand). */
+
+:root {
+	/* Brand */
+	--kl-brand-50: #E1F5EE;
+	--kl-brand-100: #9FE1CB;
+	--kl-brand: #1D9E75; /* primary accent */
+	--kl-brand-500: #0F6E56;
+	--kl-brand-700: #085041;
+	--kl-brand-900: #04342C;
+
+	/* Surfaces (light) */
+	--kl-bg: #FFFFFF;
+	--kl-bg-subtle: #F7F6F2;
+	--kl-surface: #F1EFE8;
+	--kl-border: #D3D1C7;
+	--kl-text: #1A1A19;
+	--kl-text-muted: #5F5E5A;
+
+	/* Status */
+	--kl-success: #1D9E75;
+	--kl-warning: #BA7517;
+	--kl-danger: #A32D2D;
+	--kl-info: #185FA5;
+
+	/* Type */
+	--kl-font-ui: 'Plus Jakarta Sans', system-ui, sans-serif;
+	--kl-font-mono: 'JetBrains Mono', monospace;
+	--kl-text-xs: 12px;
+	--kl-text-sm: 14px;
+	--kl-text-base: 16px;
+	--kl-text-lg: 18px;
+	--kl-text-xl: 22px;
+	--kl-text-2xl: 28px;
+	--kl-text-3xl: 34px;
+	--kl-weight-regular: 400;
+	--kl-weight-medium: 500;
+	--kl-weight-bold: 600;
+	--kl-leading-tight: 1.25;
+	--kl-leading-normal: 1.5;
+	--kl-leading-relaxed: 1.7;
+
+	/* Space (4px scale) */
+	--kl-space-1: 4px;
+	--kl-space-2: 8px;
+	--kl-space-3: 12px;
+	--kl-space-4: 16px;
+	--kl-space-5: 20px;
+	--kl-space-6: 24px;
+	--kl-space-8: 32px;
+	--kl-space-12: 48px;
+
+	/* Radius + elevation */
+	--kl-radius-sm: 6px;
+	--kl-radius-md: 10px;
+	--kl-radius-lg: 14px;
+	--kl-radius-full: 999px;
+	--kl-elevation-card: 0 1px 2px rgba(26,26,25,0.06), 0 1px 1px rgba(26,26,25,0.04);
+	--kl-elevation-sheet: 0 -2px 16px rgba(26,26,25,0.10);
+	--kl-elevation-focus: 0 0 0 3px rgba(29,158,117,0.35);
+
+	--kl-touch-min: 44px;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--kl-bg: #1A1A19;
+		--kl-bg-subtle: #222220;
+		--kl-surface: #2C2C2A;
+		--kl-border: #44443F;
+		--kl-text: #F1EFE8;
+		--kl-text-muted: #B4B2A9;
+		--kl-brand: #5DCAA5;
+		--kl-elevation-card: 0 1px 2px rgba(0,0,0,0.4);
+	}
+}

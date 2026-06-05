@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+# Validate the commit message against Conventional Commits (commitlint).
+# Git passes the message file path relative to the repo root; make it absolute
+# before cd-ing into frontend/ where commitlint + its config live.
+msg="$1"
+case "$msg" in
+	/*) ;;
+	*) msg="$(pwd)/$msg" ;;
+esac
+cd frontend && npx --no-install commitlint --edit "$msg"

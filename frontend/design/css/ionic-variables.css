@@ -1,0 +1,50 @@
+/* KodLyft FSM — Ionic theme (generated from tokens.json — do not edit by hand).
+ * Place at mobile/src/theme/variables.css and import in main.ts. Maps KodLyft tokens
+ * onto Ionic's CSS variable contract so Ionic's adaptive iOS/Android components render
+ * in the KodLyft visual language. */
+
+:root {
+	/* Primary = KodLyft brand */
+	--ion-color-primary: #1D9E75;
+	--ion-color-primary-rgb: 29,158,117;
+	--ion-color-primary-contrast: #ffffff;
+	--ion-color-primary-contrast-rgb: 255,255,255;
+	--ion-color-primary-shade: #0F6E56;
+	--ion-color-primary-tint: #5DCAA5;
+
+	/* Status tokens */
+	--ion-color-success: #1D9E75;
+	--ion-color-warning: #BA7517;
+	--ion-color-danger: #A32D2D;
+
+	/* Typography */
+	--ion-font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+
+	/* Surfaces */
+	--ion-background-color: #FFFFFF;
+	--ion-background-color-rgb: 255,255,255;
+	--ion-text-color: #1A1A19;
+	--ion-text-color-rgb: 26,26,25;
+	--ion-border-color: #D3D1C7;
+	--ion-item-background: #FFFFFF;
+	--ion-card-background: #FFFFFF;
+	--ion-toolbar-background: #FFFFFF;
+
+	/* Radius (applied via component CSS) */
+	--kl-radius-md: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--ion-background-color: #1A1A19;
+		--ion-background-color-rgb: 26,26,25;
+		--ion-text-color: #F1EFE8;
+		--ion-text-color-rgb: 241,239,232;
+		--ion-border-color: #44443F;
+		--ion-item-background: #2C2C2A;
+		--ion-card-background: #2C2C2A;
+		--ion-toolbar-background: #2C2C2A;
+		--ion-color-primary: #5DCAA5;
+		--ion-color-primary-shade: #1D9E75;
+	}
+}

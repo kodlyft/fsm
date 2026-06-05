@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@import "../../design/css/tailwind-theme.css";
+@import "../../design/css/kodlyft-tokens.css";
+
+@source "../../ui/src";
+
+:root {
+	color-scheme: light dark;
+}
+
+body {
+	margin: 0;
+	font-family: var(--kl-font-ui);
+	background: var(--kl-bg);
+	color: var(--kl-text);
+	line-height: 1.7;
+}

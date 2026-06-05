@@ -64,6 +64,16 @@ app_license = "mit"
 # 	"Role": "home_page"
 # }
 
+# Website routes
+# --------------
+# Serve the Vue SPAs (built by `yarn build` into fsm/public/{console,portal} and copied to
+# fsm/www/{console,book}.html). These rules make client-side deep links resolve to the SPA
+# entry page. Console = back office (auth via API); /book = public customer portal.
+website_route_rules = [
+	{"from_route": "/console/<path:app_path>", "to_route": "console"},
+	{"from_route": "/book/<path:app_path>", "to_route": "book"},
+]
+
 # Generators
 # ----------
 
@@ -245,7 +255,7 @@ app_license = "mit"
 # ]
 
 # Automatically update python controller files with type annotations for this app.
-# export_python_type_annotations = True
+export_python_type_annotations = True
 
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs

@@ -1,0 +1,34 @@
+# Dependencies & lockfiles
+**/node_modules/
+**/yarn.lock
+**/package-lock.json
+**/pnpm-lock.yaml
+
+# Build output
+**/dist/
+**/dist-electron/
+fsm/public/console/
+fsm/public/portal/
+fsm/public/dist/
+**/.vite/
+
+# Generated design tokens (owned by the token build step)
+frontend/design/css/
+
+# Capacitor native platforms
+frontend/mobile/android/
+frontend/mobile/ios/
+
+# Frappe-managed files (protect doctype JSON formatting & generated assets)
+fsm/**/*.json
+*.fixtures.json
+fsm/www/*.html
+
+# Python
+**/__pycache__/
+*.pyc
+
+# Misc
+*.min.js
+*.min.css
+CHANGELOG.md

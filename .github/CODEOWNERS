@@ -1,0 +1,12 @@
+# Default owners for everything in the repo.
+* @kodlyft/maintainers
+
+# Backend (Frappe app)
+/fsm/ @kodlyft/backend
+
+# Frontends
+/frontend/ @kodlyft/frontend
+/frontend/mobile/ @kodlyft/mobile
+
+# Repo tooling / CI
+/.github/ @kodlyft/maintainers

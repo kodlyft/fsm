@@ -1,0 +1,5 @@
+# Configure sponsorship buttons shown on the repository.
+# Uncomment and fill in the channels you actually use.
+# github: [kodlyft]
+# open_collective: kodlyft
+# custom: ["https://kodlyft.com"]

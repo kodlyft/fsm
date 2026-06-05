@@ -1,0 +1,19 @@
+{
+  "name": "@kodlyft/api",
+  "version": "0.1.0",
+  "description": "KodLyft FSM typed Frappe client — REST resources, whitelisted methods, auth and realtime.",
+  "private": true,
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "socket.io-client": "^4.8.1"
+  }
+}
