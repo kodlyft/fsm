@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=/assets/fsm/console/ && yarn copy-html-entry",
-    "copy-html-entry": "cp ../../fsm/public/console/index.html ../../fsm/www/console.html",
+    "build": "vite build --base=/assets/fsm/fsm-console/ && yarn copy-html-entry",
+    "copy-html-entry": "cp ../../fsm/public/fsm-console/index.html ../../fsm/www/fsm-console.html",
     "preview": "vite preview",
     "typecheck": "vue-tsc --noEmit",
     "test": "vitest run --passWithNoTests"

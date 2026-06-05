@@ -1,0 +1,66 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:territory_name",
+ "creation": "2026-06-05 12:00:00",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "territory_name",
+  "parent_territory",
+  "disabled",
+  "description"
+ ],
+ "fields": [
+  {
+   "fieldname": "territory_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Territory Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "parent_territory",
+   "fieldtype": "Link",
+   "label": "Parent Territory",
+   "options": "Service Territory"
+  },
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "label": "Disabled"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-06-05 12:00:00",
+ "modified_by": "Administrator",
+ "module": "Field Service Management",
+ "name": "Service Territory",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

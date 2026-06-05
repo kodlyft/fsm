@@ -22,8 +22,7 @@ const routes: RouteRecordRaw[] = [
 	},
 ];
 
-// Assets load from /assets/fsm/console/, but users navigate under /console.
-const base = import.meta.env.DEV ? "/" : "/console/";
+const base = import.meta.env.DEV ? "/" : "/fsm-console/";
 
 const router = createRouter({
 	history: createWebHistory(base),

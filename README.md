@@ -53,7 +53,7 @@ KodLyft runs as one Frappe app with three frontends that share **one design lang
 
 | Surface     | Stack                                            | Served as                              |
 | ----------- | ------------------------------------------------ | -------------------------------------- |
-| **Console** | Vue 3 · TypeScript · Tailwind v4 · Vite          | `/console` (Frappe www route)          |
+| **Console** | Vue 3 · TypeScript · Tailwind v4 · Vite          | `/fsm-console` (Frappe www route)      |
 | **Portal**  | Vue 3 · TypeScript · Tailwind v4 · Vite          | `/book` (Frappe www route, public)     |
 | **Mobile**  | Ionic Vue 8 · Capacitor 8 · Tailwind v4          | Native Android + iOS app               |
 | **Backend** | Frappe v16 · ERPNext v16 · Python 3.14           | DocTypes + whitelisted API + realtime  |

@@ -8,7 +8,7 @@ app_license = "mit"
 # Apps
 # ------------------
 
-# required_apps = []
+required_apps = ["erpnext"]
 
 # Each item in the list will be shown as an app in the apps page
 # add_to_apps_screen = [
@@ -70,7 +70,7 @@ app_license = "mit"
 # fsm/www/{console,book}.html). These rules make client-side deep links resolve to the SPA
 # entry page. Console = back office (auth via API); /book = public customer portal.
 website_route_rules = [
-	{"from_route": "/console/<path:app_path>", "to_route": "console"},
+	{"from_route": "/fsm-console/<path:app_path>", "to_route": "fsm-console"},
 	{"from_route": "/book/<path:app_path>", "to_route": "book"},
 ]
 
