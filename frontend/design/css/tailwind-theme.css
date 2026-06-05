@@ -21,6 +21,14 @@
 	--color-border: var(--kl-border);
 	--color-fg: var(--kl-text);
 	--color-fg-muted: var(--kl-text-muted);
+	--color-cmd-bg: var(--kl-cmd-bg);
+	--color-cmd-glass: var(--kl-cmd-glass);
+	--color-cmd-glass-strong: var(--kl-cmd-glass-strong);
+	--color-cmd-border: var(--kl-cmd-glass-border);
+	--color-cmd-border-strong: var(--kl-cmd-glass-border-strong);
+	--color-cmd-fg: var(--kl-cmd-text);
+	--color-cmd-fg-muted: var(--kl-cmd-text-muted);
+	--color-cmd-brand: var(--kl-cmd-brand);
 	/* Type */
 	--font-sans: var(--kl-font-ui);
 	--font-mono: var(--kl-font-mono);
@@ -35,7 +43,13 @@
 	--radius-sm: 6px;
 	--radius-md: 10px;
 	--radius-lg: 14px;
-	/* Elevation */
-	--shadow-card: 0 1px 2px rgba(26,26,25,0.06), 0 1px 1px rgba(26,26,25,0.04);
-	--shadow-sheet: 0 -2px 16px rgba(26,26,25,0.10);
+	/* Elevation (card/sheet follow the runtime var so the command theme can deepen them) */
+	--shadow-card: var(--kl-elevation-card);
+	--shadow-sheet: var(--kl-elevation-sheet);
+	--shadow-e1: var(--kl-elevation-e1);
+	--shadow-e2: var(--kl-elevation-e2);
+	--shadow-e3: var(--kl-elevation-e3);
+	--shadow-e4: var(--kl-elevation-e4);
+	--shadow-glass: var(--kl-elevation-glass);
+	--shadow-glass-lg: var(--kl-elevation-glass-lg);
 }

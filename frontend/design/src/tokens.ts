@@ -52,6 +52,25 @@ export const tokens = {
 		lg: "14px",
 		full: "999px",
 	},
+	command: {
+		bg: "#0B1220",
+		"bg-2": "#070C16",
+		glow: "rgba(34,201,160,0.16)",
+		glass: "rgba(255,255,255,0.055)",
+		"glass-strong": "rgba(255,255,255,0.085)",
+		"glass-border": "rgba(255,255,255,0.10)",
+		"glass-border-strong": "rgba(255,255,255,0.18)",
+		text: "#EEF2F8",
+		"text-muted": "#93A0B4",
+		brand: "#34D6AA",
+		blur: "18px",
+	},
+	gradient: {
+		brand: "linear-gradient(135deg, #34D6AA 0%, #1D9E75 52%, #0F6E56 100%)",
+		"brand-soft":
+			"linear-gradient(135deg, rgba(52,214,170,0.18) 0%, rgba(15,110,86,0.06) 100%)",
+		surface: "linear-gradient(160deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.015) 100%)",
+	},
 	touchMin: "44px",
 } as const;
 export type Tokens = typeof tokens;

@@ -10,7 +10,6 @@ const routes: RouteRecordRaw[] = [
 	},
 ];
 
-// Served at /book; assets at /assets/fsm/portal/.
 const base = import.meta.env.DEV ? "/" : "/book/";
 
 export default createRouter({

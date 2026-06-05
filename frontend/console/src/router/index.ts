@@ -18,6 +18,17 @@ const routes: RouteRecordRaw[] = [
 				component: () => import("@/views/DispatchBoardView.vue"),
 			},
 			{ path: "jobs", name: "jobs", component: () => import("@/views/JobsView.vue") },
+			{
+				path: "jobs/new",
+				name: "job-new",
+				component: () => import("@/views/NewJobView.vue"),
+			},
+			{
+				path: "jobs/:name",
+				name: "job-detail",
+				component: () => import("@/views/JobDetailView.vue"),
+				props: true,
+			},
 		],
 	},
 ];

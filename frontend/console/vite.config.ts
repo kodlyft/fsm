@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import path from "node:path";
 
 export default defineConfig({
-	base: "/fsm-console/",
+	base: "/",
 	plugins: [vue(), tailwindcss()],
 	resolve: {
 		alias: {

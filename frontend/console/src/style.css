@@ -1,20 +1,51 @@
 @import "tailwindcss";
 
-/* Design tokens: @theme drives Tailwind utilities; kodlyft-tokens supplies the runtime
-   CSS variables (and dark-mode overrides). Both are generated from tokens.json. */
 @import "../../design/css/tailwind-theme.css";
 @import "../../design/css/kodlyft-tokens.css";
+@import "../../design/css/command.css";
 
-/* Scan the shared UI library so its utility classes are generated. */
 @source "../../ui/src";
 
 :root {
-	color-scheme: light dark;
+	color-scheme: dark;
+}
+
+html,
+body {
+	margin: 0;
+	min-height: 100%;
 }
 
 body {
-	margin: 0;
 	font-family: var(--kl-font-ui);
-	background: var(--kl-bg-subtle);
-	color: var(--kl-text);
+	background: var(--kl-cmd-bg);
+	color: var(--kl-cmd-text);
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+.kl-command ::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+.kl-command ::-webkit-scrollbar-thumb {
+	background: var(--kl-cmd-glass-strong);
+	border-radius: 999px;
+	border: 2px solid transparent;
+	background-clip: padding-box;
+}
+.kl-command ::-webkit-scrollbar-thumb:hover {
+	background: var(--kl-cmd-glass-border-strong);
+	background-clip: padding-box;
 }

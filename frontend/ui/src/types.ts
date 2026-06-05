@@ -1,40 +1,46 @@
 // Shared FSM domain types + status → color mapping used across all surfaces.
 
+// Values match the Service Job `status` doctype options exactly.
 export type JobStatus =
-	| "draft"
-	| "scheduled"
-	| "assigned"
-	| "in_progress"
-	| "on_hold"
-	| "completed"
-	| "cancelled"
-	| "overdue";
+	| "Draft"
+	| "Scheduled"
+	| "Assigned"
+	| "In Progress"
+	| "On Hold"
+	| "Completed"
+	| "Cancelled"
+	| "Overdue";
 
 export type StatusTone = "success" | "warning" | "danger" | "info" | "neutral";
 
 /** Maps a job status to a design-system status tone (status colors mean status). */
 export const STATUS_TONE: Record<JobStatus, StatusTone> = {
-	draft: "neutral",
-	scheduled: "warning",
-	assigned: "warning",
-	in_progress: "info",
-	on_hold: "warning",
-	completed: "success",
-	cancelled: "neutral",
-	overdue: "danger",
+	Draft: "neutral",
+	Scheduled: "warning",
+	Assigned: "warning",
+	"In Progress": "info",
+	"On Hold": "warning",
+	Completed: "success",
+	Cancelled: "neutral",
+	Overdue: "danger",
 };
 
-/** Sentence-case labels — never Title Case or ALL CAPS. */
+/** Sentence-case display labels — never Title Case or ALL CAPS. */
 export const STATUS_LABEL: Record<JobStatus, string> = {
-	draft: "Draft",
-	scheduled: "Scheduled",
-	assigned: "Assigned",
-	in_progress: "In progress",
-	on_hold: "On hold",
-	completed: "Completed",
-	cancelled: "Cancelled",
-	overdue: "Overdue",
+	Draft: "Draft",
+	Scheduled: "Scheduled",
+	Assigned: "Assigned",
+	"In Progress": "In progress",
+	"On Hold": "On hold",
+	Completed: "Completed",
+	Cancelled: "Cancelled",
+	Overdue: "Overdue",
 };
+
+export interface LinkOption {
+	value: string;
+	label: string;
+}
 
 export interface JobSummary {
 	name: string;

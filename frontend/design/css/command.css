@@ -1,0 +1,48 @@
+.kl-command {
+	--kl-bg: var(--kl-cmd-glass);
+	--kl-bg-subtle: var(--kl-cmd-bg);
+	--kl-surface: var(--kl-cmd-glass-strong);
+	--kl-border: var(--kl-cmd-glass-border);
+	--kl-text: var(--kl-cmd-text);
+	--kl-text-muted: var(--kl-cmd-text-muted);
+	--kl-brand: var(--kl-cmd-brand);
+	--kl-elevation-card: var(--kl-elevation-glass);
+
+	color: var(--kl-cmd-text);
+	background-color: var(--kl-cmd-bg);
+	background-image:
+		radial-gradient(120% 85% at 100% 0%, var(--kl-cmd-glow) 0%, transparent 55%),
+		radial-gradient(95% 70% at 0% 100%, rgba(24, 95, 165, 0.1) 0%, transparent 60%),
+		linear-gradient(180deg, var(--kl-cmd-bg) 0%, var(--kl-cmd-bg-2) 100%);
+}
+
+.kl-glass {
+	background-color: var(--kl-cmd-glass);
+	background-image: var(--kl-grad-surface);
+	border: 1px solid var(--kl-cmd-glass-border);
+	-webkit-backdrop-filter: blur(var(--kl-cmd-blur));
+	backdrop-filter: blur(var(--kl-cmd-blur));
+	box-shadow: var(--kl-elevation-glass);
+}
+
+.kl-glass-strong {
+	background-color: var(--kl-cmd-glass-strong);
+	border-color: var(--kl-cmd-glass-border-strong);
+}
+
+.kl-grad-brand {
+	background-image: var(--kl-grad-brand);
+}
+
+.kl-grad-text {
+	background-image: var(--kl-grad-brand);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+	.kl-glass {
+		background-color: rgba(20, 28, 42, 0.92);
+	}
+}

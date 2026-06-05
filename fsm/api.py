@@ -33,6 +33,58 @@ def get_dispatch_jobs(status: str | None = None, technician: str | None = None, 
 	)
 
 
+@frappe.whitelist()
+def get_dashboard_stats():
+	"""Headline metrics for the console dashboard."""
+	from frappe.utils import today
+
+	start, end = today() + " 00:00:00", today() + " 23:59:59"
+	open_statuses = ["Scheduled", "Assigned", "In Progress", "On Hold"]
+
+	completed_today = frappe.get_all(
+		"Service Job",
+		filters={"status": "Completed", "completed_on": ["between", [start, end]]},
+		fields=["total_amount"],
+	)
+	revenue_today = sum((row.total_amount or 0) for row in completed_today)
+
+	return {
+		"open_jobs": frappe.db.count("Service Job", {"status": ["in", open_statuses]}),
+		"in_progress": frappe.db.count("Service Job", {"status": "In Progress"}),
+		"completed_today": len(completed_today),
+		"revenue_today": revenue_today,
+	}
+
+
+@frappe.whitelist()
+def create_invoice_from_job(job: str):
+	"""Generate a draft Sales Invoice from a job's parts & services and link it back."""
+	doc = frappe.get_doc("Service Job", job)
+
+	if doc.sales_invoice:
+		return {"name": doc.sales_invoice}
+	if not doc.customer:
+		frappe.throw("This job has no customer to invoice.")
+	if not doc.items:
+		frappe.throw("This job has no parts or services to invoice.")
+
+	company = (
+		frappe.defaults.get_user_default("Company")
+		or frappe.db.get_single_value("Global Defaults", "default_company")
+	)
+
+	invoice = frappe.new_doc("Sales Invoice")
+	invoice.customer = doc.customer
+	if company:
+		invoice.company = company
+	for row in doc.items:
+		invoice.append("items", {"item_code": row.item_code, "qty": row.qty, "rate": row.rate})
+	invoice.insert()
+
+	doc.db_set("sales_invoice", invoice.name)
+	return {"name": invoice.name}
+
+
 @frappe.whitelist(allow_guest=True)
 def book_appointment(
 	customer_name: str,

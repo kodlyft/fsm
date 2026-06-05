@@ -1,37 +1,129 @@
 <script setup lang="ts">
-import { StatusPill, type JobStatus } from "@kodlyft/ui";
+import { ref, computed, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import {
+	PageHeader,
+	StatusPill,
+	EmptyState,
+	Spinner,
+	STATUS_LABEL,
+	type JobSummary,
+	type JobStatus,
+} from "@kodlyft/ui";
+import { getDispatchJobs } from "@/lib/fsm";
 
-const rows: { name: string; customer: string; status: JobStatus; total: string }[] = [
-	{ name: "JOB-0001", customer: "Acme Cooling Co.", status: "scheduled", total: "$420.00" },
-	{ name: "JOB-0002", customer: "Bluewater Plumbing", status: "in_progress", total: "$1,150.00" },
-	{ name: "JOB-0003", customer: "Greenfield Pest", status: "overdue", total: "$260.00" },
-	{ name: "JOB-0004", customer: "Northside HVAC", status: "completed", total: "$980.00" },
+const router = useRouter();
+
+const jobs = ref<JobSummary[]>([]);
+const loading = ref(true);
+const error = ref("");
+const search = ref("");
+const statusFilter = ref<JobStatus | "">("");
+
+const STATUSES: JobStatus[] = [
+	"Draft",
+	"Scheduled",
+	"Assigned",
+	"In Progress",
+	"On Hold",
+	"Completed",
+	"Cancelled",
+	"Overdue",
 ];
+
+const filtered = computed(() =>
+	jobs.value.filter((j) => {
+		const matchesSearch =
+			!search.value ||
+			j.customer.toLowerCase().includes(search.value.toLowerCase()) ||
+			j.name.toLowerCase().includes(search.value.toLowerCase());
+		const matchesStatus = !statusFilter.value || j.status === statusFilter.value;
+		return matchesSearch && matchesStatus;
+	}),
+);
+
+const currency = (n?: number) =>
+	n == null
+		? "—"
+		: new Intl.NumberFormat(undefined, { style: "currency", currency: "USD" }).format(n);
+
+async function load() {
+	loading.value = true;
+	error.value = "";
+	try {
+		jobs.value = await getDispatchJobs({ limit: 200 });
+	} catch {
+		error.value = "Couldn't load jobs.";
+	} finally {
+		loading.value = false;
+	}
+}
+
+onMounted(load);
 </script>
 
 <template>
-	<div class="overflow-hidden rounded-lg border border-border bg-bg shadow-card">
-		<table class="w-full text-left text-sm">
-			<thead class="border-b border-border text-fg-muted">
-				<tr>
-					<th class="px-4 py-3 font-medium">Job</th>
-					<th class="px-4 py-3 font-medium">Customer</th>
-					<th class="px-4 py-3 font-medium">Status</th>
-					<th class="px-4 py-3 text-right font-medium">Total</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr
-					v-for="row in rows"
-					:key="row.name"
-					class="border-b border-border last:border-0"
-				>
-					<td class="px-4 py-3 font-mono">{{ row.name }}</td>
-					<td class="px-4 py-3">{{ row.customer }}</td>
-					<td class="px-4 py-3"><StatusPill :status="row.status" /></td>
-					<td class="px-4 py-3 text-right font-mono tabular-nums">{{ row.total }}</td>
-				</tr>
-			</tbody>
-		</table>
+	<div>
+		<PageHeader title="Jobs" :subtitle="`${filtered.length} of ${jobs.length}`" />
+
+		<div class="mb-4 flex flex-wrap gap-3">
+			<input
+				v-model="search"
+				type="search"
+				placeholder="Search customer or job no."
+				class="min-w-56 flex-1 rounded-md border border-border bg-bg px-3 py-2 text-base focus-visible:outline-none focus-visible:[box-shadow:var(--kl-elevation-focus)]"
+			/>
+			<select
+				v-model="statusFilter"
+				class="rounded-md border border-border bg-bg px-3 py-2 text-base focus-visible:outline-none focus-visible:[box-shadow:var(--kl-elevation-focus)]"
+			>
+				<option value="">All statuses</option>
+				<option v-for="s in STATUSES" :key="s" :value="s">{{ STATUS_LABEL[s] }}</option>
+			</select>
+		</div>
+
+		<div v-if="loading" class="flex justify-center py-16"><Spinner :size="28" /></div>
+		<div
+			v-else-if="error"
+			class="rounded-lg border border-danger/30 bg-danger/10 p-4 text-sm text-danger"
+		>
+			{{ error }}
+		</div>
+		<EmptyState
+			v-else-if="filtered.length === 0"
+			icon="🔍"
+			title="No matching jobs"
+			description="Try adjusting your search or status filter."
+		/>
+
+		<div v-else class="overflow-hidden rounded-lg border border-border bg-bg shadow-card">
+			<table class="w-full text-left text-sm">
+				<thead class="border-b border-border text-fg-muted">
+					<tr>
+						<th class="px-4 py-3 font-medium">Job</th>
+						<th class="px-4 py-3 font-medium">Customer</th>
+						<th class="px-4 py-3 font-medium">Technician</th>
+						<th class="px-4 py-3 font-medium">Status</th>
+						<th class="px-4 py-3 text-right font-medium">Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr
+						v-for="row in filtered"
+						:key="row.name"
+						class="cursor-pointer border-b border-border last:border-0 hover:bg-bg-subtle"
+						@click="router.push({ name: 'job-detail', params: { name: row.name } })"
+					>
+						<td class="px-4 py-3 font-mono">{{ row.name }}</td>
+						<td class="px-4 py-3">{{ row.customer }}</td>
+						<td class="px-4 py-3 text-fg-muted">{{ row.technician ?? "—" }}</td>
+						<td class="px-4 py-3"><StatusPill :status="row.status" /></td>
+						<td class="px-4 py-3 text-right font-mono tabular-nums">
+							{{ currency(row.total) }}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </template>

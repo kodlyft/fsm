@@ -76,6 +76,24 @@ function buildWebCss() {
 	lines.push(`\t--kl-elevation-card: ${raw(tokens.elevation.card)};`);
 	lines.push(`\t--kl-elevation-sheet: ${raw(tokens.elevation.sheet)};`);
 	lines.push(`\t--kl-elevation-focus: ${raw(tokens.elevation.focus)};`);
+	lines.push(`\t--kl-elevation-e1: ${raw(tokens.elevation.e1)};`);
+	lines.push(`\t--kl-elevation-e2: ${raw(tokens.elevation.e2)};`);
+	lines.push(`\t--kl-elevation-e3: ${raw(tokens.elevation.e3)};`);
+	lines.push(`\t--kl-elevation-e4: ${raw(tokens.elevation.e4)};`);
+	lines.push(`\t--kl-elevation-glass: ${raw(tokens.elevation.glass)};`);
+	lines.push(`\t--kl-elevation-glass-lg: ${raw(tokens.elevation["glass-lg"])};`);
+	lines.push("");
+	lines.push("\t/* Command theme (dark glass) — raw values; .kl-command opts in */");
+	for (const k of Object.keys(s.command)) {
+		if (k.startsWith("$")) continue;
+		lines.push(`\t--kl-cmd-${k}: ${get(`semantic.command.${k}`)};`);
+	}
+	lines.push("");
+	lines.push("\t/* Brand gradients */");
+	for (const [k, v] of Object.entries(tokens.gradient)) {
+		if (k.startsWith("$")) continue;
+		lines.push(`\t--kl-grad-${k}: ${raw(v)};`);
+	}
 	lines.push("");
 	lines.push(`\t--kl-touch-min: ${raw(tokens.touchTarget.min)};`);
 	lines.push("}");
@@ -178,6 +196,15 @@ function buildTailwindTheme() {
 	lines.push("\t--color-border: var(--kl-border);");
 	lines.push("\t--color-fg: var(--kl-text);");
 	lines.push("\t--color-fg-muted: var(--kl-text-muted);");
+	lines.push("\t/* Command (dark glass) surfaces — opt-in via .kl-command wrapper */");
+	lines.push("\t--color-cmd-bg: var(--kl-cmd-bg);");
+	lines.push("\t--color-cmd-glass: var(--kl-cmd-glass);");
+	lines.push("\t--color-cmd-glass-strong: var(--kl-cmd-glass-strong);");
+	lines.push("\t--color-cmd-border: var(--kl-cmd-glass-border);");
+	lines.push("\t--color-cmd-border-strong: var(--kl-cmd-glass-border-strong);");
+	lines.push("\t--color-cmd-fg: var(--kl-cmd-text);");
+	lines.push("\t--color-cmd-fg-muted: var(--kl-cmd-text-muted);");
+	lines.push("\t--color-cmd-brand: var(--kl-cmd-brand);");
 	lines.push("\t/* Type */");
 	lines.push("\t--font-sans: var(--kl-font-ui);");
 	lines.push("\t--font-mono: var(--kl-font-mono);");
@@ -186,11 +213,81 @@ function buildTailwindTheme() {
 	lines.push(`\t--radius-sm: ${get("radius.sm")};`);
 	lines.push(`\t--radius-md: ${get("radius.md")};`);
 	lines.push(`\t--radius-lg: ${get("radius.lg")};`);
-	lines.push("\t/* Elevation */");
-	lines.push(`\t--shadow-card: ${raw(tokens.elevation.card)};`);
-	lines.push(`\t--shadow-sheet: ${raw(tokens.elevation.sheet)};`);
+	lines.push(
+		"\t/* Elevation (card/sheet follow the runtime var so the command theme can deepen them) */",
+	);
+	lines.push("\t--shadow-card: var(--kl-elevation-card);");
+	lines.push("\t--shadow-sheet: var(--kl-elevation-sheet);");
+	lines.push("\t--shadow-e1: var(--kl-elevation-e1);");
+	lines.push("\t--shadow-e2: var(--kl-elevation-e2);");
+	lines.push("\t--shadow-e3: var(--kl-elevation-e3);");
+	lines.push("\t--shadow-e4: var(--kl-elevation-e4);");
+	lines.push("\t--shadow-glass: var(--kl-elevation-glass);");
+	lines.push("\t--shadow-glass-lg: var(--kl-elevation-glass-lg);");
 	lines.push("}");
 	return lines.join("\n") + "\n";
+}
+
+function buildCommandCss() {
+	return `${BANNER("command theme (dark glass)")}
+/* Apply \`.kl-command\` to a root element (console #app, mobile content). It remaps the
+   semantic token roles to the command palette — so existing components styled with
+   bg-bg / text-fg / border-border / shadow-card automatically adopt the dark glass look —
+   then provides .kl-glass / .kl-grad-brand / .kl-grad-text helpers for accents. */
+
+.kl-command {
+	/* Remap semantic roles → command (dark glass) */
+	--kl-bg: var(--kl-cmd-glass); /* card + input surfaces become glass */
+	--kl-bg-subtle: var(--kl-cmd-bg); /* page base */
+	--kl-surface: var(--kl-cmd-glass-strong);
+	--kl-border: var(--kl-cmd-glass-border);
+	--kl-text: var(--kl-cmd-text);
+	--kl-text-muted: var(--kl-cmd-text-muted);
+	--kl-brand: var(--kl-cmd-brand);
+	--kl-elevation-card: var(--kl-elevation-glass);
+
+	color: var(--kl-cmd-text);
+	background-color: var(--kl-cmd-bg);
+	background-image:
+		radial-gradient(120% 85% at 100% 0%, var(--kl-cmd-glow) 0%, transparent 55%),
+		radial-gradient(95% 70% at 0% 100%, rgba(24, 95, 165, 0.1) 0%, transparent 60%),
+		linear-gradient(180deg, var(--kl-cmd-bg) 0%, var(--kl-cmd-bg-2) 100%);
+}
+
+/* Frosted glass surface */
+.kl-glass {
+	background-color: var(--kl-cmd-glass);
+	background-image: var(--kl-grad-surface);
+	border: 1px solid var(--kl-cmd-glass-border);
+	-webkit-backdrop-filter: blur(var(--kl-cmd-blur));
+	backdrop-filter: blur(var(--kl-cmd-blur));
+	box-shadow: var(--kl-elevation-glass);
+}
+
+.kl-glass-strong {
+	background-color: var(--kl-cmd-glass-strong);
+	border-color: var(--kl-cmd-glass-border-strong);
+}
+
+/* Brand gradient fill + clipped gradient text */
+.kl-grad-brand {
+	background-image: var(--kl-grad-brand);
+}
+
+.kl-grad-text {
+	background-image: var(--kl-grad-brand);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+
+/* Fallback where backdrop-filter is unsupported — keep glass legible */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+	.kl-glass {
+		background-color: rgba(20, 28, 42, 0.92);
+	}
+}
+`;
 }
 
 function buildTs() {
@@ -223,6 +320,16 @@ function buildTs() {
 			size: Object.fromEntries(Object.entries(tokens.font.size).map(([k, v]) => [k, raw(v)])),
 		},
 		radius: Object.fromEntries(Object.entries(tokens.radius).map(([k, v]) => [k, raw(v)])),
+		command: Object.fromEntries(
+			Object.keys(tokens.semantic.command)
+				.filter((k) => !k.startsWith("$"))
+				.map((k) => [k, get(`semantic.command.${k}`)]),
+		),
+		gradient: Object.fromEntries(
+			Object.entries(tokens.gradient)
+				.filter(([k]) => !k.startsWith("$"))
+				.map(([k, v]) => [k, raw(v)]),
+		),
 		touchMin: raw(tokens.touchTarget.min),
 	};
 	return (
@@ -237,7 +344,8 @@ mkdirSync(resolve(root, "src"), { recursive: true });
 writeFileSync(resolve(root, "css/kodlyft-tokens.css"), buildWebCss());
 writeFileSync(resolve(root, "css/ionic-variables.css"), buildIonicCss());
 writeFileSync(resolve(root, "css/tailwind-theme.css"), buildTailwindTheme());
+writeFileSync(resolve(root, "css/command.css"), buildCommandCss());
 writeFileSync(resolve(root, "src/tokens.ts"), buildTs());
 console.log(
-	"✓ tokens built: css/{kodlyft-tokens,ionic-variables,tailwind-theme}.css, src/tokens.ts",
+	"✓ tokens built: css/{kodlyft-tokens,ionic-variables,tailwind-theme,command}.css, src/tokens.ts",
 );

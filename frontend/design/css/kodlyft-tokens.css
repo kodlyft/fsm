@@ -57,7 +57,29 @@
 	--kl-radius-full: 999px;
 	--kl-elevation-card: 0 1px 2px rgba(26,26,25,0.06), 0 1px 1px rgba(26,26,25,0.04);
 	--kl-elevation-sheet: 0 -2px 16px rgba(26,26,25,0.10);
-	--kl-elevation-focus: 0 0 0 3px rgba(29,158,117,0.35);
+	--kl-elevation-focus: 0 0 0 3px rgba(52,214,170,0.40);
+	--kl-elevation-e1: 0 1px 2px rgba(2,6,16,0.40);
+	--kl-elevation-e2: 0 6px 16px -8px rgba(2,6,16,0.55);
+	--kl-elevation-e3: 0 18px 40px -16px rgba(2,6,16,0.65);
+	--kl-elevation-e4: 0 34px 70px -24px rgba(2,6,16,0.75);
+	--kl-elevation-glass: 0 18px 40px -16px rgba(2,6,16,0.65), inset 0 1px 0 rgba(255,255,255,0.06);
+	--kl-elevation-glass-lg: 0 34px 70px -24px rgba(2,6,16,0.75), inset 0 1px 0 rgba(255,255,255,0.08);
+
+	--kl-cmd-bg: #0B1220;
+	--kl-cmd-bg-2: #070C16;
+	--kl-cmd-glow: rgba(34,201,160,0.16);
+	--kl-cmd-glass: rgba(255,255,255,0.055);
+	--kl-cmd-glass-strong: rgba(255,255,255,0.085);
+	--kl-cmd-glass-border: rgba(255,255,255,0.10);
+	--kl-cmd-glass-border-strong: rgba(255,255,255,0.18);
+	--kl-cmd-text: #EEF2F8;
+	--kl-cmd-text-muted: #93A0B4;
+	--kl-cmd-brand: #34D6AA;
+	--kl-cmd-blur: 18px;
+
+	--kl-grad-brand: linear-gradient(135deg, #34D6AA 0%, #1D9E75 52%, #0F6E56 100%);
+	--kl-grad-brand-soft: linear-gradient(135deg, rgba(52,214,170,0.18) 0%, rgba(15,110,86,0.06) 100%);
+	--kl-grad-surface: linear-gradient(160deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.015) 100%);
 
 	--kl-touch-min: 44px;
 }

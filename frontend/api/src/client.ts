@@ -18,7 +18,6 @@ export class FrappeClient {
 		const headers: Record<string, string> = {};
 		const token = (await this.opts.getToken?.()) ?? this.opts.token;
 		if (token) headers["Authorization"] = `token ${token}`;
-		// CSRF is required for state-changing cookie-auth requests.
 		const csrf =
 			this.opts.csrfToken ??
 			(typeof window !== "undefined"
