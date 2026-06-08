@@ -64,7 +64,10 @@
 	--kl-elevation-e4: 0 34px 70px -24px rgba(2,6,16,0.75);
 	--kl-elevation-glass: 0 18px 40px -16px rgba(2,6,16,0.65), inset 0 1px 0 rgba(255,255,255,0.06);
 	--kl-elevation-glass-lg: 0 34px 70px -24px rgba(2,6,16,0.75), inset 0 1px 0 rgba(255,255,255,0.08);
+	--kl-elevation-glass-light: 0 10px 30px -12px rgba(15,23,42,0.18), inset 0 1px 0 rgba(255,255,255,0.6);
+	--kl-elevation-glass-lg-light: 0 24px 50px -18px rgba(15,23,42,0.22), inset 0 1px 0 rgba(255,255,255,0.7);
 
+	/* Command theme (dark glass) — raw values; .kl-command opts in */
 	--kl-cmd-bg: #0B1220;
 	--kl-cmd-bg-2: #070C16;
 	--kl-cmd-glow: rgba(34,201,160,0.16);
@@ -77,6 +80,20 @@
 	--kl-cmd-brand: #34D6AA;
 	--kl-cmd-blur: 18px;
 
+	/* Command theme — light variant (html.kl-theme-light) */
+	--kl-cmdl-bg: #EEF2F8;
+	--kl-cmdl-bg-2: #E2E8F2;
+	--kl-cmdl-glow: rgba(29,158,117,0.10);
+	--kl-cmdl-glass: rgba(255,255,255,0.72);
+	--kl-cmdl-glass-strong: rgba(255,255,255,0.88);
+	--kl-cmdl-glass-border: rgba(15,23,42,0.08);
+	--kl-cmdl-glass-border-strong: rgba(15,23,42,0.16);
+	--kl-cmdl-text: #0F172A;
+	--kl-cmdl-text-muted: #475569;
+	--kl-cmdl-brand: #0F6E56;
+	--kl-cmdl-blur: 16px;
+
+	/* Brand gradients */
 	--kl-grad-brand: linear-gradient(135deg, #34D6AA 0%, #1D9E75 52%, #0F6E56 100%);
 	--kl-grad-brand-soft: linear-gradient(135deg, rgba(52,214,170,0.18) 0%, rgba(15,110,86,0.06) 100%);
 	--kl-grad-surface: linear-gradient(160deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.015) 100%);

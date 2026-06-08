@@ -41,7 +41,13 @@
   }
  ],
  "index_web_pages_for_search": 1,
- "links": [],
+ "links": [
+  {
+   "group": "Usage",
+   "link_doctype": "Service Job",
+   "link_fieldname": "checklist_template"
+  }
+ ],
  "modified": "2026-06-05 12:00:00",
  "modified_by": "Administrator",
  "module": "Field Service Management",
@@ -60,6 +66,22 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1,
+   "role": "FSM Manager"
+  },
+  {
+   "read": 1,
+   "role": "FSM Technician"
   }
  ],
  "sort_field": "modified",

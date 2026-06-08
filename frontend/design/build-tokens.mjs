@@ -82,11 +82,19 @@ function buildWebCss() {
 	lines.push(`\t--kl-elevation-e4: ${raw(tokens.elevation.e4)};`);
 	lines.push(`\t--kl-elevation-glass: ${raw(tokens.elevation.glass)};`);
 	lines.push(`\t--kl-elevation-glass-lg: ${raw(tokens.elevation["glass-lg"])};`);
+	lines.push(`\t--kl-elevation-glass-light: ${raw(tokens.elevation["glass-light"])};`);
+	lines.push(`\t--kl-elevation-glass-lg-light: ${raw(tokens.elevation["glass-lg-light"])};`);
 	lines.push("");
 	lines.push("\t/* Command theme (dark glass) — raw values; .kl-command opts in */");
 	for (const k of Object.keys(s.command)) {
 		if (k.startsWith("$")) continue;
 		lines.push(`\t--kl-cmd-${k}: ${get(`semantic.command.${k}`)};`);
+	}
+	lines.push("");
+	lines.push("\t/* Command theme — light variant (html.kl-theme-light) */");
+	for (const k of Object.keys(s["command-light"])) {
+		if (k.startsWith("$")) continue;
+		lines.push(`\t--kl-cmdl-${k}: ${get(`semantic.command-light.${k}`)};`);
 	}
 	lines.push("");
 	lines.push("\t/* Brand gradients */");
@@ -235,17 +243,23 @@ function buildCommandCss() {
    bg-bg / text-fg / border-border / shadow-card automatically adopt the dark glass look —
    then provides .kl-glass / .kl-grad-brand / .kl-grad-text helpers for accents. */
 
-.kl-command {
-	/* Remap semantic roles → command (dark glass) */
-	--kl-bg: var(--kl-cmd-glass); /* card + input surfaces become glass */
-	--kl-bg-subtle: var(--kl-cmd-bg); /* page base */
+:root {
+	/* Command (dark glass) is the base theme for every FSM surface. The semantic
+	   roles are mapped at :root so Tailwind @theme utilities (text-fg, bg-bg,
+	   border-border, shadow-card …) resolve to it — those @theme vars are
+	   substituted at :root, so re-mapping the roles on .kl-command alone would
+	   never reach them (that would leave text the OS-default colour). */
+	--kl-bg: var(--kl-cmd-glass);
+	--kl-bg-subtle: var(--kl-cmd-bg);
 	--kl-surface: var(--kl-cmd-glass-strong);
 	--kl-border: var(--kl-cmd-glass-border);
 	--kl-text: var(--kl-cmd-text);
 	--kl-text-muted: var(--kl-cmd-text-muted);
 	--kl-brand: var(--kl-cmd-brand);
 	--kl-elevation-card: var(--kl-elevation-glass);
+}
 
+.kl-command {
 	color: var(--kl-cmd-text);
 	background-color: var(--kl-cmd-bg);
 	background-image:
@@ -281,10 +295,33 @@ function buildCommandCss() {
 	color: transparent;
 }
 
+/* Light theme: flip the command palette at the root element. Because the role
+   mapping above reads --kl-cmd-* at :root, overriding the cmd vars here re-resolves
+   --kl-text / --kl-bg / etc. (and therefore every @theme utility) to light glass. */
+html.kl-theme-light {
+	color-scheme: light;
+	--kl-cmd-bg: var(--kl-cmdl-bg);
+	--kl-cmd-bg-2: var(--kl-cmdl-bg-2);
+	--kl-cmd-glow: var(--kl-cmdl-glow);
+	--kl-cmd-glass: var(--kl-cmdl-glass);
+	--kl-cmd-glass-strong: var(--kl-cmdl-glass-strong);
+	--kl-cmd-glass-border: var(--kl-cmdl-glass-border);
+	--kl-cmd-glass-border-strong: var(--kl-cmdl-glass-border-strong);
+	--kl-cmd-text: var(--kl-cmdl-text);
+	--kl-cmd-text-muted: var(--kl-cmdl-text-muted);
+	--kl-cmd-brand: var(--kl-cmdl-brand);
+	--kl-cmd-blur: var(--kl-cmdl-blur);
+	--kl-elevation-glass: var(--kl-elevation-glass-light);
+	--kl-elevation-glass-lg: var(--kl-elevation-glass-lg-light);
+}
+
 /* Fallback where backdrop-filter is unsupported — keep glass legible */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
 	.kl-glass {
 		background-color: rgba(20, 28, 42, 0.92);
+	}
+	html.kl-theme-light .kl-glass {
+		background-color: rgba(255, 255, 255, 0.92);
 	}
 }
 `;

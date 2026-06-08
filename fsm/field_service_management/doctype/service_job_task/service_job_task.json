@@ -6,12 +6,15 @@
  "engine": "InnoDB",
  "field_order": [
   "task",
+  "status",
   "completed",
-  "note"
+  "note",
+  "started_on",
+  "completed_on"
  ],
  "fields": [
   {
-   "columns": 5,
+   "columns": 4,
    "fieldname": "task",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -19,19 +22,40 @@
    "reqd": 1
   },
   {
+   "columns": 2,
+   "default": "Pending",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Pending\nIn Progress\nDone"
+  },
+  {
    "columns": 1,
    "default": "0",
    "fieldname": "completed",
    "fieldtype": "Check",
-   "in_list_view": 1,
-   "label": "Done"
+   "label": "Done",
+   "read_only": 1
   },
   {
-   "columns": 4,
+   "columns": 3,
    "fieldname": "note",
    "fieldtype": "Small Text",
    "in_list_view": 1,
    "label": "Note"
+  },
+  {
+   "fieldname": "started_on",
+   "fieldtype": "Datetime",
+   "label": "Started On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "completed_on",
+   "fieldtype": "Datetime",
+   "label": "Completed On",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,

@@ -96,7 +96,8 @@ website_route_rules = [
 # ------------
 
 # before_install = "fsm.install.before_install"
-# after_install = "fsm.install.after_install"
+after_install = "fsm.setup.after_install"
+after_migrate = "fsm.setup.after_migrate"
 
 # Uninstallation
 # ------------

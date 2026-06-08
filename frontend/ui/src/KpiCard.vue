@@ -46,7 +46,7 @@ const deltaClass = computed(() => DELTA[props.tone]);
 				<slot name="icon">
 					<svg
 						viewBox="0 0 24 24"
-						class="size-4.5"
+						class="size-5"
 						fill="none"
 						stroke="currentColor"
 						stroke-width="1.9"

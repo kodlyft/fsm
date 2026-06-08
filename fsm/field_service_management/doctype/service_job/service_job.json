@@ -223,7 +223,13 @@
   }
  ],
  "index_web_pages_for_search": 1,
- "links": [],
+ "links": [
+  {
+   "group": "Operations",
+   "link_doctype": "Service Appointment",
+   "link_fieldname": "service_job"
+  }
+ ],
  "modified": "2026-06-05 12:00:00",
  "modified_by": "Administrator",
  "module": "Field Service Management",
@@ -242,6 +248,25 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "write": 1,
+   "role": "FSM Manager"
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "write": 1,
+   "role": "FSM Technician"
   }
  ],
  "search_fields": "customer_name,status,primary_technician",

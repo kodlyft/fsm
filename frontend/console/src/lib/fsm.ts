@@ -38,8 +38,21 @@ export interface JobDoc {
 	completed_on?: string;
 	sales_invoice?: string;
 	notes?: string;
-	tasks?: { task: string; completed: number; note?: string }[];
+	tasks?: JobTask[];
 	items?: { item_code: string; item_name?: string; qty: number; rate: number; amount?: number }[];
+}
+
+export type TaskStatus = "Pending" | "In Progress" | "Done";
+
+export interface JobTask {
+	name?: string;
+	idx: number;
+	task: string;
+	status: TaskStatus;
+	completed: number;
+	note?: string;
+	started_on?: string;
+	completed_on?: string;
 }
 
 export function getDashboardStats(): Promise<DashboardStats> {
@@ -65,16 +78,25 @@ export function getJob(name: string): Promise<JobDoc> {
 	return client.getDoc<JobDoc>("Service Job", name);
 }
 
-export function updateJobStatus(name: string, status: JobStatus): Promise<JobDoc> {
-	return client.updateDoc<JobDoc>("Service Job", name, { status });
-}
-
 export function createJob(payload: Partial<JobDoc>): Promise<JobDoc> {
 	return client.createDoc<JobDoc>("Service Job", payload);
 }
 
 export function createInvoiceFromJob(job: string): Promise<{ name: string }> {
 	return client.call<{ name: string }>("fsm.api.create_invoice_from_job", { job });
+}
+
+/** Sequential checklist actions — status is derived from these, never set by hand. */
+export function startJobTask(job: string, idx: number): Promise<JobDoc> {
+	return client.call<JobDoc>("fsm.api.start_job_task", { job, idx });
+}
+
+export function completeJobTask(job: string, idx: number, note?: string): Promise<JobDoc> {
+	return client.call<JobDoc>("fsm.api.complete_job_task", { job, idx, note });
+}
+
+export function completeJob(job: string): Promise<JobDoc> {
+	return client.call<JobDoc>("fsm.api.complete_job", { job });
 }
 
 export async function searchLink(

@@ -11,7 +11,7 @@
 [![Conventional Commits](https://img.shields.io/badge/commits-conventional-1D9E75.svg)](https://www.conventionalcommits.org)
 [![Code style: prettier](https://img.shields.io/badge/code_style-prettier-1D9E75.svg)](https://prettier.io)
 
-Scheduling, dispatch, mobile work orders, quoting, invoicing and a live customer portal —
+Scheduling, dispatch, mobile work orders, quoting, invoicing and a live customer portal,
 built on [Frappe](https://frappeframework.com) + [ERPNext](https://erpnext.com), with no lock-in and transparent pricing.
 
 </div>
@@ -24,12 +24,12 @@ Field service software for small and mid-sized contractors (HVAC, plumbing, elec
 appliance repair, …) is either too thin or too expensive, and there is **no credible open-source
 option**. KodLyft fills that gap:
 
-- **Complete core, done elegantly** — scheduling, work orders, mobile + offline, quoting, invoicing,
+- **Complete core, done elegantly**: scheduling, work orders, mobile + offline, quoting, invoicing,
   CRM and reporting that just work.
-- **No lock-in** — self-host it, own your data, export anything. Open core, transparent pricing.
-- **No-code customization nearly for free** — the Frappe DocType engine lets owners build their own
+- **No lock-in**: self-host it, own your data, export anything. Open core, transparent pricing.
+- **No-code customization nearly for free**: the Frappe DocType engine lets owners build their own
   forms, fields and workflows, the single feature that most improves retention.
-- **The differentiators incumbents skip** — Uber-like customer tracking, recurring-revenue service
+- **The differentiators incumbents skip**: Uber-like customer tracking, recurring-revenue service
   contracts, and AI call intake that captures revenue lost before a job is booked.
 
 ## Architecture
@@ -103,14 +103,14 @@ yarn ios:dev             # build + sync the iOS project, then open in Xcode
 
 Every color, type, spacing, radius and elevation value lives in
 [`frontend/design/tokens.json`](./frontend/design/tokens.json) and is generated into CSS variables for the
-web surfaces, Ionic variables for mobile, and a Tailwind v4 theme — so one edit updates all three apps.
+web surfaces, Ionic variables for mobile, and a Tailwind v4 theme, so one edit updates all three apps.
 Brand `#1D9E75`, Plus Jakarta Sans + JetBrains Mono, a 4px spacing scale, full dark-mode parity, and
 status colors reserved strictly for state. **Never hard-code a hex or px in a component.**
 
 ## Documentation
 
-- [`CONTRIBUTING.md`](./CONTRIBUTING.md) — how to develop, test and submit changes
-- [`SECURITY.md`](./SECURITY.md) — reporting vulnerabilities
+- [`CONTRIBUTING.md`](./CONTRIBUTING.md): how to develop, test and submit changes
+- [`SECURITY.md`](./SECURITY.md): reporting vulnerabilities
 
 ## Contributing
 

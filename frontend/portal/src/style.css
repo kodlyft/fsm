@@ -1,18 +1,43 @@
 @import "tailwindcss";
 
+/* Tokens + the command (dark glass) theme — must include command.css so the
+   portal's .kl-command / .kl-glass / text-cmd-* classes are defined and the
+   light/dark toggle works. All generated from tokens.json. */
 @import "../../design/css/tailwind-theme.css";
 @import "../../design/css/kodlyft-tokens.css";
+@import "../../design/css/command.css";
 
 @source "../../ui/src";
 
 :root {
-	color-scheme: light dark;
+	color-scheme: dark;
+}
+
+html,
+body {
+	margin: 0;
+	min-height: 100%;
 }
 
 body {
-	margin: 0;
 	font-family: var(--kl-font-ui);
-	background: var(--kl-bg);
-	color: var(--kl-text);
+	background: var(--kl-cmd-bg);
+	color: var(--kl-cmd-text);
 	line-height: 1.7;
+	-webkit-font-smoothing: antialiased;
+}
+
+html.kl-theme-light body {
+	background: var(--kl-cmdl-bg);
+	color: var(--kl-cmdl-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
 }

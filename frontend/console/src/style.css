@@ -24,6 +24,11 @@ body {
 	text-rendering: optimizeLegibility;
 }
 
+html.kl-theme-light body {
+	background: var(--kl-cmdl-bg);
+	color: var(--kl-cmdl-text);
+}
+
 @media (prefers-reduced-motion: reduce) {
 	*,
 	*::before,

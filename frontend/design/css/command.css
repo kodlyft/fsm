@@ -1,4 +1,16 @@
-.kl-command {
+/* KodLyft FSM — command theme (dark glass) (generated from tokens.json — do not edit by hand). */
+
+/* Apply `.kl-command` to a root element (console #app, mobile content). It remaps the
+   semantic token roles to the command palette — so existing components styled with
+   bg-bg / text-fg / border-border / shadow-card automatically adopt the dark glass look —
+   then provides .kl-glass / .kl-grad-brand / .kl-grad-text helpers for accents. */
+
+:root {
+	/* Command (dark glass) is the base theme for every FSM surface. The semantic
+	   roles are mapped at :root so Tailwind @theme utilities (text-fg, bg-bg,
+	   border-border, shadow-card …) resolve to it — those @theme vars are
+	   substituted at :root, so re-mapping the roles on .kl-command alone would
+	   never reach them (that would leave text the OS-default colour). */
 	--kl-bg: var(--kl-cmd-glass);
 	--kl-bg-subtle: var(--kl-cmd-bg);
 	--kl-surface: var(--kl-cmd-glass-strong);
@@ -7,7 +19,9 @@
 	--kl-text-muted: var(--kl-cmd-text-muted);
 	--kl-brand: var(--kl-cmd-brand);
 	--kl-elevation-card: var(--kl-elevation-glass);
+}
 
+.kl-command {
 	color: var(--kl-cmd-text);
 	background-color: var(--kl-cmd-bg);
 	background-image:
@@ -16,6 +30,7 @@
 		linear-gradient(180deg, var(--kl-cmd-bg) 0%, var(--kl-cmd-bg-2) 100%);
 }
 
+/* Frosted glass surface */
 .kl-glass {
 	background-color: var(--kl-cmd-glass);
 	background-image: var(--kl-grad-surface);
@@ -30,6 +45,7 @@
 	border-color: var(--kl-cmd-glass-border-strong);
 }
 
+/* Brand gradient fill + clipped gradient text */
 .kl-grad-brand {
 	background-image: var(--kl-grad-brand);
 }
@@ -41,8 +57,32 @@
 	color: transparent;
 }
 
+/* Light theme: flip the command palette at the root element. Because the role
+   mapping above reads --kl-cmd-* at :root, overriding the cmd vars here re-resolves
+   --kl-text / --kl-bg / etc. (and therefore every @theme utility) to light glass. */
+html.kl-theme-light {
+	color-scheme: light;
+	--kl-cmd-bg: var(--kl-cmdl-bg);
+	--kl-cmd-bg-2: var(--kl-cmdl-bg-2);
+	--kl-cmd-glow: var(--kl-cmdl-glow);
+	--kl-cmd-glass: var(--kl-cmdl-glass);
+	--kl-cmd-glass-strong: var(--kl-cmdl-glass-strong);
+	--kl-cmd-glass-border: var(--kl-cmdl-glass-border);
+	--kl-cmd-glass-border-strong: var(--kl-cmdl-glass-border-strong);
+	--kl-cmd-text: var(--kl-cmdl-text);
+	--kl-cmd-text-muted: var(--kl-cmdl-text-muted);
+	--kl-cmd-brand: var(--kl-cmdl-brand);
+	--kl-cmd-blur: var(--kl-cmdl-blur);
+	--kl-elevation-glass: var(--kl-elevation-glass-light);
+	--kl-elevation-glass-lg: var(--kl-elevation-glass-lg-light);
+}
+
+/* Fallback where backdrop-filter is unsupported — keep glass legible */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
 	.kl-glass {
 		background-color: rgba(20, 28, 42, 0.92);
+	}
+	html.kl-theme-light .kl-glass {
+		background-color: rgba(255, 255, 255, 0.92);
 	}
 }

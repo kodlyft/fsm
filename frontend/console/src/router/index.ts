@@ -13,30 +13,33 @@ const routes: RouteRecordRaw[] = [
 		component: () => import("@/layouts/AppShell.vue"),
 		children: [
 			{
-				path: "",
+				path: "/",
 				name: "dispatch",
 				component: () => import("@/views/DispatchBoardView.vue"),
 			},
-			{ path: "jobs", name: "jobs", component: () => import("@/views/JobsView.vue") },
+			{ path: "/jobs", name: "jobs", component: () => import("@/views/JobsView.vue") },
 			{
-				path: "jobs/new",
+				path: "/jobs/new",
 				name: "job-new",
 				component: () => import("@/views/NewJobView.vue"),
 			},
 			{
-				path: "jobs/:name",
+				path: "/jobs/:name",
 				name: "job-detail",
 				component: () => import("@/views/JobDetailView.vue"),
 				props: true,
+			},
+			{
+				path: "/account",
+				name: "account",
+				component: () => import("@/views/AccountView.vue"),
 			},
 		],
 	},
 ];
 
-const base = import.meta.env.DEV ? "/" : "/fsm-console/";
-
 const router = createRouter({
-	history: createWebHistory(base),
+	history: createWebHistory(import.meta.env.BASE_URL),
 	routes,
 });
 

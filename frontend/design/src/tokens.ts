@@ -1,3 +1,4 @@
+// KodLyft FSM design tokens — generated from tokens.json. Do not edit by hand.
 export const tokens = {
 	brand: {
 		"50": "#E1F5EE",

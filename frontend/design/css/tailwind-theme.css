@@ -21,6 +21,7 @@
 	--color-border: var(--kl-border);
 	--color-fg: var(--kl-text);
 	--color-fg-muted: var(--kl-text-muted);
+	/* Command (dark glass) surfaces — opt-in via .kl-command wrapper */
 	--color-cmd-bg: var(--kl-cmd-bg);
 	--color-cmd-glass: var(--kl-cmd-glass);
 	--color-cmd-glass-strong: var(--kl-cmd-glass-strong);

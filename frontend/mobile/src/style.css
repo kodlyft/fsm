@@ -1,7 +1,27 @@
 @import "tailwindcss";
 
-/* Tailwind utilities + tokens layered on top of Ionic's component theming. */
+/* Tailwind utilities + tokens + the command (dark glass) theme, layered on Ionic. */
 @import "../../design/css/tailwind-theme.css";
 @import "../../design/css/kodlyft-tokens.css";
+@import "../../design/css/command.css";
 
 @source "../../ui/src";
+
+:root {
+	color-scheme: dark;
+}
+
+/* The field app is always the dark glass command surface. */
+ion-content {
+	--background: var(--kl-cmd-bg);
+}
+
+ion-toolbar {
+	--background: transparent;
+	--color: var(--kl-cmd-text);
+	--border-color: transparent;
+}
+
+ion-title {
+	font-weight: 700;
+}
