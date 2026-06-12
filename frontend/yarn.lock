@@ -649,10 +649,10 @@
     debug "^4.0.0"
     tslib "^2.0.1"
 
-"@ionic/core@8.8.9":
-  version "8.8.9"
-  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-8.8.9.tgz#ac83c344135a922b428a4d5b7b13cde80559b63c"
-  integrity sha512-eb0oztHFIxqltOEnTYmfvEzkYENnE5qcOUo+6j2ZrHbXICGwpxzNDg4no4A13FkJ1Rb6ahAjFp0UxO0sw6M76A==
+"@ionic/core@8.8.10":
+  version "8.8.10"
+  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-8.8.10.tgz#9698d08b9ab906774705447f1cf431a7ef1aa873"
+  integrity sha512-pNujZuU/vydXKtE3yOqmeOIySbXodspxuK4QcbRitWoikNZhGalqW2JvtEJqeRRvE4KJ4dJ3gXF8i6+rtVSG3Q==
   dependencies:
     "@stencil/core" "4.43.5"
     ionicons "^8.0.13"
@@ -733,19 +733,19 @@
     untildify "^4.0.0"
     wrap-ansi "^7.0.0"
 
-"@ionic/vue-router@^8.4.0":
-  version "8.8.9"
-  resolved "https://registry.yarnpkg.com/@ionic/vue-router/-/vue-router-8.8.9.tgz#8f8257716ad77fe286203dc10adb82f0a87f23a7"
-  integrity sha512-pLth+hY+2pXl3BBjOJ737lgjmLIUN9Smr1EUL325bAV77VO178MDjqLoFMRrQzuEpFdzP5nw5U3+zUIXO6EwMw==
+"@ionic/vue-router@^8.8.10":
+  version "8.8.10"
+  resolved "https://registry.yarnpkg.com/@ionic/vue-router/-/vue-router-8.8.10.tgz#b8fefecc4168b6c741fc05c652e348b7cfb7a72a"
+  integrity sha512-rAUCRi469dEbGqndhDfUpE+Skhh2WLUg1mHwJzZubFPgIIFQT/rA/ZFNNwne2/XONLoelbm/sl4TNDYvH50bfg==
   dependencies:
-    "@ionic/vue" "8.8.9"
+    "@ionic/vue" "8.8.10"
 
-"@ionic/vue@8.8.9", "@ionic/vue@^8.4.0":
-  version "8.8.9"
-  resolved "https://registry.yarnpkg.com/@ionic/vue/-/vue-8.8.9.tgz#324dfec20e51dd24231d494ec5e02ace29c0f9f3"
-  integrity sha512-SxZE7g9c8fIhD0HjzfJz6VXbck2KkhKegn9kgS3iW5GFk0T/1ecpY5t02d7MFtAnuO5laKrdOwhto/JrZrqukg==
+"@ionic/vue@8.8.10", "@ionic/vue@^8.8.10":
+  version "8.8.10"
+  resolved "https://registry.yarnpkg.com/@ionic/vue/-/vue-8.8.10.tgz#7ce0f55f8e8c1430e5b5caa8570ec057a4b2b32c"
+  integrity sha512-pCuB3XY/GkuRmEYllMnidYeiAFfLRTtWjxC+iLv4D3xo4zV4bdBbtLBJHlJlPNgrME5hguIHmKO1GL6IyFK+eg==
   dependencies:
-    "@ionic/core" "8.8.9"
+    "@ionic/core" "8.8.10"
     "@stencil/vue-output-target" "0.10.7"
     ionicons "^8.0.13"
 
