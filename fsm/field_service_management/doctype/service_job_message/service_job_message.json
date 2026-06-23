@@ -1,0 +1,113 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-06-24 00:00:00",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "service_job",
+  "author_role",
+  "column_break_main",
+  "author_user",
+  "author_name",
+  "section_break_body",
+  "message"
+ ],
+ "fields": [
+  {
+   "fieldname": "service_job",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Service Job",
+   "options": "Service Job",
+   "reqd": 1
+  },
+  {
+   "default": "Dispatcher",
+   "fieldname": "author_role",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Author Role",
+   "options": "Dispatcher\nTechnician\nCustomer\nSystem"
+  },
+  {
+   "fieldname": "column_break_main",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "author_user",
+   "fieldtype": "Link",
+   "label": "Author User",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "author_name",
+   "fieldtype": "Data",
+   "label": "Author Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_body",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "message",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Message",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-06-24 01:51:11.923980",
+ "modified_by": "Administrator",
+ "module": "Field Service Management",
+ "name": "Service Job Message",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "FSM Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "report": 1,
+   "role": "FSM Technician"
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "role": "FSM Customer"
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "ASC",
+ "states": [],
+ "track_changes": 1
+}

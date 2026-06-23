@@ -2,6 +2,7 @@
 # For license information, please see license.txt
 
 import frappe
+from frappe import _
 from frappe.model.document import Document
 from frappe.utils import get_datetime, now_datetime
 
@@ -70,6 +71,23 @@ class ServiceJob(Document):
 	def on_update(self):
 		self.sync_technician_status()
 		self.autocreate_invoice_if_enabled()
+		self.notify_reschedule()
+
+	def notify_reschedule(self):
+		"""Post a System message to the job thread when the appointment time moves, so
+		the customer sees it on the portal (FSM feature #11)."""
+		before = self.get_doc_before_save()
+		if not before or not self.scheduled_date:
+			return
+		if before.scheduled_date == self.scheduled_date:
+			return
+		from frappe.utils import format_datetime
+
+		from fsm.messaging import post_system_message
+
+		post_system_message(
+			self.name, _("Appointment rescheduled to {0}.").format(format_datetime(self.scheduled_date))
+		)
 
 	@frappe.whitelist()
 	def start_task(self, idx: int):

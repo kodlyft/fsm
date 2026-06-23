@@ -1,0 +1,130 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2026-06-24 00:00:00",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "service_job",
+  "customer",
+  "column_break_main",
+  "rating",
+  "nps_score",
+  "submitted_on",
+  "section_break_comments",
+  "comments"
+ ],
+ "fields": [
+  {
+   "default": "FSM-FB-.YYYY.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "FSM-FB-.YYYY.-",
+   "reqd": 1
+  },
+  {
+   "fieldname": "service_job",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Service Job",
+   "options": "Service Job",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fetch_from": "service_job.customer",
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Customer",
+   "options": "Customer",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_main",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Customer satisfaction rating, 1 (poor) to 5 (excellent).",
+   "fieldname": "rating",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Rating (1-5)",
+   "reqd": 1
+  },
+  {
+   "description": "Net Promoter Score answer, 0-10 (optional).",
+   "fieldname": "nps_score",
+   "fieldtype": "Int",
+   "label": "NPS (0-10)"
+  },
+  {
+   "fieldname": "submitted_on",
+   "fieldtype": "Datetime",
+   "label": "Submitted On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_comments",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "comments",
+   "fieldtype": "Small Text",
+   "label": "Comments"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-06-24 01:51:48.516338",
+ "modified_by": "Administrator",
+ "module": "Field Service Management",
+ "name": "Service Feedback",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "FSM Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "FSM Technician"
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "role": "FSM Customer"
+  }
+ ],
+ "row_format": "Dynamic",
+ "search_fields": "service_job,customer,rating",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
