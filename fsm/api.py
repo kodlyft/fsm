@@ -97,7 +97,7 @@ def register_customer(full_name: str, email: str, password: str, phone: str | No
 	if frappe.db.exists("User", email):
 		frappe.throw(_("An account with this email already exists. Please sign in."))
 
-	first_name, last_name = [*full_name.split(" ", 1), ""]
+	first_name, _, last_name = full_name.partition(" ")
 
 	user = frappe.get_doc(
 		{
