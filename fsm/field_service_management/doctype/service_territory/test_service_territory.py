@@ -11,9 +11,7 @@ class TestServiceTerritory(FrappeTestCase):
 		if frappe.db.exists("Service Territory", name):
 			frappe.delete_doc("Service Territory", name)
 
-		doc = frappe.get_doc(
-			{"doctype": "Service Territory", "territory_name": name}
-		).insert()
+		doc = frappe.get_doc({"doctype": "Service Territory", "territory_name": name}).insert()
 
 		self.assertEqual(doc.name, name)
 		frappe.delete_doc("Service Territory", name)

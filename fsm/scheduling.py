@@ -142,9 +142,7 @@ def _eligible_technicians() -> list:
 
 def _has_skill(technician: str, service_type: str) -> bool:
 	"""A technician 'has the skill' when one of their skills matches the service type."""
-	skills = frappe.get_all(
-		"Technician Skill", filters={"parent": technician}, pluck="skill"
-	)
+	skills = frappe.get_all("Technician Skill", filters={"parent": technician}, pluck="skill")
 	needle = (service_type or "").strip().lower()
 	return any(needle and needle in (s or "").strip().lower() for s in skills)
 
@@ -202,9 +200,7 @@ def _has_conflict(technician: str, job) -> bool:
 
 
 def _busy_at(technician: str, scheduled_date: str) -> bool:
-	stub = frappe._dict(
-		{"name": None, "scheduled_date": scheduled_date, "scheduled_end": None}
-	)
+	stub = frappe._dict({"name": None, "scheduled_date": scheduled_date, "scheduled_end": None})
 	return _has_conflict(technician, stub)
 
 
@@ -216,7 +212,7 @@ def has_coords(lat, lng) -> bool:
 def _proximity_score(tech, job) -> int | None:
 	"""Distance-decayed score from technician's last-known location to the job site.
 	Returns None when coordinates are unavailable on either side."""
-	
+
 	t_lat, t_lng = tech.get("last_seen_latitude"), tech.get("last_seen_longitude")
 	j_lat = job.get("service_latitude")
 	j_lng = job.get("service_longitude")

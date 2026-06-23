@@ -56,9 +56,7 @@ def get_dashboard_stats():
 		"in_progress": frappe.db.count("Service Job", {"status": "In Progress"}),
 		"completed_today": len(completed_today),
 		"revenue_today": revenue_today,
-		"sla_breached": frappe.db.count(
-			"Service Job", {"sla_breached": 1, "status": ["in", open_statuses]}
-		),
+		"sla_breached": frappe.db.count("Service Job", {"sla_breached": 1, "status": ["in", open_statuses]}),
 	}
 
 
@@ -99,7 +97,7 @@ def register_customer(full_name: str, email: str, password: str, phone: str | No
 	if frappe.db.exists("User", email):
 		frappe.throw(_("An account with this email already exists. Please sign in."))
 
-	first_name, last_name = (full_name.split(" ", 1) + [""])[:2]
+	first_name, last_name = [*full_name.split(" ", 1), ""]
 
 	user = frappe.get_doc(
 		{
@@ -267,7 +265,7 @@ def _current_customer(optional: bool = False) -> str | None:
 		raise frappe.AuthenticationError(_("Please sign in to continue."))
 
 	contact = frappe.db.get_value("Contact", {"user": user})
-	
+
 	if contact:
 		customer = frappe.db.get_value(
 			"Dynamic Link",
