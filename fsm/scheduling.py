@@ -1,28 +1,23 @@
 # Copyright (c) 2026, KodLyft and contributors
 # For license information, please see license.txt
-#
+
+
 # Dynamic scheduling / dispatch engine.
 #
 # Ranks technicians for a Service Job by availability, skill match and territory
 # coverage so dispatchers (console) get a suggested order and can one-click assign.
-# Intentionally dependency-free heuristics — the AI/ML optimiser (Phase 6) can later
+# Intentionally dependency-free heuristics, the AI/ML optimiser (Phase 6) can later
 # replace `score_technician` without touching the API surface.
 
 import frappe
 from frappe import _
 from frappe.utils import add_to_date, get_datetime
 
-# Weighting for the suggestion score. Higher = better candidate.
 _SKILL_WEIGHT = 50
 _TERRITORY_WEIGHT = 30
 _AVAILABLE_WEIGHT = 20
 _PROXIMITY_WEIGHT = 25
 _PROFICIENCY_BONUS = {"Beginner": 0, "Intermediate": 5, "Expert": 10}
-
-
-# ---------------------------------------------------------------------------
-# Public API (console dispatch board)
-# ---------------------------------------------------------------------------
 
 
 @frappe.whitelist()
@@ -37,7 +32,7 @@ def suggest_technicians(job: str, limit: int = 10):
 	ranked = []
 	for tech in candidates:
 		score, reasons = score_technician(tech, doc, territories)
-		if score is None:  # hard-filtered out (e.g. busy at this slot)
+		if score is None:
 			continue
 		ranked.append(
 			{
@@ -93,17 +88,11 @@ def get_available_technicians(
 				"matches_skill": matches_skill,
 			}
 		)
-	# Best fit first: skill, then territory, then currently free.
 	out.sort(
 		key=lambda r: (r["matches_skill"], r["matches_territory"], r["status"] == "Available"),
 		reverse=True,
 	)
 	return out
-
-
-# ---------------------------------------------------------------------------
-# Scoring & matching
-# ---------------------------------------------------------------------------
 
 
 def score_technician(tech, job, territories: set[str]) -> tuple[int | None, list[str]]:
@@ -133,11 +122,6 @@ def score_technician(tech, job, territories: set[str]) -> tuple[int | None, list
 		reasons.append(_("Near the job site"))
 
 	return score, reasons
-
-
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
 
 
 def _eligible_technicians() -> list:
@@ -212,7 +196,7 @@ def _has_conflict(technician: str, job) -> bool:
 	for other in others:
 		o_start = get_datetime(other.scheduled_date)
 		o_end = get_datetime(other.scheduled_end) if other.scheduled_end else add_to_date(o_start, hours=1)
-		if start < o_end and o_start < end:  # interval overlap
+		if start < o_end and o_start < end:
 			return True
 	return False
 
@@ -224,16 +208,21 @@ def _busy_at(technician: str, scheduled_date: str) -> bool:
 	return _has_conflict(technician, stub)
 
 
+def has_coords(lat, lng) -> bool:
+	"""True when a lat/lng pair is a real fix."""
+	return bool((lat or 0) or (lng or 0))
+
+
 def _proximity_score(tech, job) -> int | None:
 	"""Distance-decayed score from technician's last-known location to the job site.
 	Returns None when coordinates are unavailable on either side."""
+	
 	t_lat, t_lng = tech.get("last_seen_latitude"), tech.get("last_seen_longitude")
 	j_lat = job.get("service_latitude")
 	j_lng = job.get("service_longitude")
-	if None in (t_lat, t_lng, j_lat, j_lng):
+	if not has_coords(t_lat, t_lng) or not has_coords(j_lat, j_lng):
 		return None
 	km = _haversine_km(t_lat, t_lng, j_lat, j_lng)
-	# Full points within 5km, linearly decaying to 0 by 50km.
 	if km <= 5:
 		return _PROXIMITY_WEIGHT
 	if km >= 50:

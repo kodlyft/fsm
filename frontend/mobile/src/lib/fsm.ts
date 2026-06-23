@@ -25,3 +25,20 @@ export async function getDispatchJobs(
 		total: r.total_amount,
 	}));
 }
+
+export function clockIn(): Promise<{ technician: string; clocked_in: boolean }> {
+	return client.call("fsm.tracking.clock_in", {});
+}
+
+export function clockOut(): Promise<{ technician: string; clocked_in: boolean }> {
+	return client.call("fsm.tracking.clock_out", {});
+}
+
+export function updateLocation(
+	latitude: number,
+	longitude: number,
+	accuracy?: number,
+	job?: string,
+): Promise<{ technician: string }> {
+	return client.call("fsm.tracking.update_location", { latitude, longitude, accuracy, job });
+}

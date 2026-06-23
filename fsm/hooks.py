@@ -149,34 +149,23 @@ after_migrate = "fsm.setup.after_migrate"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Service Job": {
+		"on_update": "fsm.realtime.on_service_job_update",
+	},
+	"Technician": {
+		"on_update": "fsm.realtime.on_technician_update",
+	},
+}
 
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-# 	"all": [
-# 		"fsm.tasks.all"
-# 	],
-# 	"daily": [
-# 		"fsm.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"fsm.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"fsm.tasks.weekly"
-# 	],
-# 	"monthly": [
-# 		"fsm.tasks.monthly"
-# 	],
-# }
+scheduler_events = {
+	"hourly": [
+		"fsm.tasks.flag_sla_breaches",
+	],
+}
 
 # Testing
 # -------

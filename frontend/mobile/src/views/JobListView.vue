@@ -15,8 +15,10 @@ import { Network } from "@capacitor/network";
 import { useRouter } from "vue-router";
 import { JobCard, type JobSummary } from "@kodlyft/ui";
 import { getDispatchJobs } from "@/lib/fsm";
+import { useDuty } from "@/lib/duty";
 
 const router = useRouter();
+const { onDuty, busy: dutyBusy, error: dutyError, toggle } = useDuty();
 const online = ref(true);
 const loading = ref(true);
 const jobs = ref<JobSummary[]>([]);
@@ -99,7 +101,39 @@ async function refresh(event: RefresherCustomEvent) {
 					Offline — showing saved jobs. Changes sync when you reconnect.
 				</div>
 
-				<!-- Hero stat -->
+				<div class="kl-glass mt-3 flex items-center justify-between gap-3 rounded-2xl p-4">
+					<div class="flex items-center gap-2.5">
+						<span
+							class="size-2.5 rounded-full"
+							:class="onDuty ? 'animate-pulse bg-success' : 'bg-cmd-fg-muted'"
+							aria-hidden="true"
+						/>
+						<div>
+							<p class="text-sm font-medium text-cmd-fg">
+								{{ onDuty ? "On duty" : "Off duty" }}
+							</p>
+							<p class="text-xs text-cmd-fg-muted">
+								{{ onDuty ? "Sharing your location" : "Clock in to take jobs" }}
+							</p>
+						</div>
+					</div>
+					<button
+						type="button"
+						:disabled="dutyBusy"
+						class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-[filter] disabled:opacity-60"
+						:class="
+							onDuty
+								? 'border border-border bg-transparent text-cmd-fg'
+								: 'kl-grad-brand text-white shadow-e2 hover:brightness-110'
+						"
+						@click="toggle"
+					>
+						<IonSpinner v-if="dutyBusy" name="crescent" class="size-4" />
+						{{ onDuty ? "Clock out" : "Clock in" }}
+					</button>
+				</div>
+				<p v-if="dutyError" class="mt-2 text-xs text-danger">{{ dutyError }}</p>
+
 				<div class="kl-glass mt-3 flex items-center justify-between rounded-2xl p-5">
 					<div>
 						<p class="text-sm text-cmd-fg-muted">Assigned today</p>

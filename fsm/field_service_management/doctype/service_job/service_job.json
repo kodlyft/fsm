@@ -16,12 +16,18 @@
   "section_break_schedule",
   "scheduled_date",
   "scheduled_end",
+  "promised_response_by",
+  "responded_on",
   "column_break_schedule",
   "territory",
   "primary_technician",
+  "sla_breached",
   "section_break_location",
   "service_address",
   "address_display",
+  "column_break_location",
+  "service_latitude",
+  "service_longitude",
   "section_break_checklist",
   "checklist_template",
   "tasks",
@@ -110,6 +116,18 @@
    "label": "Scheduled End"
   },
   {
+   "description": "SLA: the time by which a technician should respond to / start this job.",
+   "fieldname": "promised_response_by",
+   "fieldtype": "Datetime",
+   "label": "Promised Response By"
+  },
+  {
+   "fieldname": "responded_on",
+   "fieldtype": "Datetime",
+   "label": "Responded On",
+   "read_only": 1
+  },
+  {
    "fieldname": "column_break_schedule",
    "fieldtype": "Column Break"
   },
@@ -129,6 +147,15 @@
    "options": "Technician"
   },
   {
+   "default": "0",
+   "description": "Set automatically when the promised response time passes without a response.",
+   "fieldname": "sla_breached",
+   "fieldtype": "Check",
+   "in_standard_filter": 1,
+   "label": "SLA Breached",
+   "read_only": 1
+  },
+  {
    "fieldname": "section_break_location",
    "fieldtype": "Section Break",
    "label": "Location"
@@ -144,6 +171,23 @@
    "fieldtype": "Small Text",
    "label": "Address",
    "read_only": 1
+  },
+  {
+   "fieldname": "column_break_location",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Geocoded job-site coordinates, used by the dispatch engine to find the nearest technician.",
+   "fieldname": "service_latitude",
+   "fieldtype": "Float",
+   "label": "Service Latitude",
+   "precision": "6"
+  },
+  {
+   "fieldname": "service_longitude",
+   "fieldtype": "Float",
+   "label": "Service Longitude",
+   "precision": "6"
   },
   {
    "fieldname": "section_break_checklist",

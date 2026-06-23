@@ -1,16 +1,10 @@
 # Copyright (c) 2026, KodLyft and contributors
 # For license information, please see license.txt
-#
-# Whitelisted endpoints consumed by the KodLyft FSM frontends (console, portal, mobile).
 
 import frappe
 from frappe import _
 
 from fsm.field_service_management.doctype.service_job.service_job import make_invoice_from_job
-
-# ---------------------------------------------------------------------------
-# Console / dispatch
-# ---------------------------------------------------------------------------
 
 
 @frappe.whitelist()
@@ -34,6 +28,8 @@ def get_dispatch_jobs(status: str | None = None, technician: str | None = None, 
 			"primary_technician",
 			"total_amount",
 			"address_display",
+			"sla_breached",
+			"promised_response_by",
 		],
 		order_by="scheduled_date asc",
 		limit_page_length=int(limit),
@@ -60,6 +56,9 @@ def get_dashboard_stats():
 		"in_progress": frappe.db.count("Service Job", {"status": "In Progress"}),
 		"completed_today": len(completed_today),
 		"revenue_today": revenue_today,
+		"sla_breached": frappe.db.count(
+			"Service Job", {"sla_breached": 1, "status": ["in", open_statuses]}
+		),
 	}
 
 
@@ -85,11 +84,6 @@ def complete_job_task(job: str, idx: int, note: str | None = None):
 def complete_job(job: str):
 	"""Complete a job that has no checklist; returns the refreshed job."""
 	return frappe.get_doc("Service Job", job).complete_job()
-
-
-# ---------------------------------------------------------------------------
-# Customer portal — signup, session & self-service history
-# ---------------------------------------------------------------------------
 
 
 @frappe.whitelist(allow_guest=True)
@@ -262,11 +256,6 @@ def book_appointment(
 	).insert(ignore_permissions=True)
 
 	return {"name": appointment.name}
-
-
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
 
 
 def _current_customer(optional: bool = False) -> str | None:

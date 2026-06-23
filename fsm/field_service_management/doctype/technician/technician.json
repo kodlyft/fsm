@@ -15,6 +15,14 @@
   "territory",
   "column_break_contact",
   "active",
+  "section_break_tracking",
+  "clocked_in",
+  "last_clock_in",
+  "last_clock_out",
+  "column_break_tracking",
+  "last_seen_latitude",
+  "last_seen_longitude",
+  "last_seen_on",
   "section_break_skills",
   "skills"
  ],
@@ -73,6 +81,54 @@
    "fieldname": "active",
    "fieldtype": "Check",
    "label": "Active"
+  },
+  {
+   "fieldname": "section_break_tracking",
+   "fieldtype": "Section Break",
+   "label": "Tracking"
+  },
+  {
+   "default": "0",
+   "fieldname": "clocked_in",
+   "fieldtype": "Check",
+   "label": "Clocked In",
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_clock_in",
+   "fieldtype": "Datetime",
+   "label": "Last Clock In",
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_clock_out",
+   "fieldtype": "Datetime",
+   "label": "Last Clock Out",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_tracking",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "last_seen_latitude",
+   "fieldtype": "Float",
+   "label": "Last Seen Latitude",
+   "precision": "6",
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_seen_longitude",
+   "fieldtype": "Float",
+   "label": "Last Seen Longitude",
+   "precision": "6",
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_seen_on",
+   "fieldtype": "Datetime",
+   "label": "Last Seen On",
+   "read_only": 1
   },
   {
    "fieldname": "section_break_skills",

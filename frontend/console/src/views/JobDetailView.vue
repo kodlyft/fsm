@@ -8,7 +8,10 @@ import {
 	completeJobTask,
 	completeJob,
 	createInvoiceFromJob,
+	suggestTechnicians,
+	assignTechnician,
 	type JobDoc,
+	type TechnicianSuggestion,
 } from "@/lib/fsm";
 
 const props = defineProps<{ name: string }>();
@@ -21,9 +24,41 @@ const completing = ref(false);
 const invoicing = ref(false);
 const note = ref("");
 
+const suggestions = ref<TechnicianSuggestion[]>([]);
+const loadingSuggestions = ref(false);
+const assigningTo = ref<string | null>(null);
+const assignError = ref("");
+
+async function loadSuggestions() {
+	if (!job.value) return;
+	loadingSuggestions.value = true;
+	assignError.value = "";
+	try {
+		suggestions.value = await suggestTechnicians(job.value.name);
+	} catch {
+		assignError.value = "Couldn't load technician suggestions.";
+	} finally {
+		loadingSuggestions.value = false;
+	}
+}
+
+async function assign(technician: string) {
+	if (!job.value) return;
+	assigningTo.value = technician;
+	assignError.value = "";
+	try {
+		job.value = await assignTechnician(job.value.name, technician);
+		suggestions.value = [];
+	} catch (e) {
+		assignError.value =
+			(e as { message?: string })?.message || "Couldn't assign this technician.";
+	} finally {
+		assigningTo.value = null;
+	}
+}
+
 const tasks = computed(() => [...(job.value?.tasks ?? [])].sort((a, b) => a.idx - b.idx));
 const doneCount = computed(() => tasks.value.filter((t) => t.status === "Done").length);
-// The first not-done step is the only actionable one (sequential).
 const activeIdx = computed(() => tasks.value.find((t) => t.status !== "Done")?.idx ?? null);
 const allDone = computed(() => tasks.value.length > 0 && activeIdx.value === null);
 
@@ -142,7 +177,6 @@ onMounted(load);
 
 			<div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
 				<div class="space-y-6 lg:col-span-2">
-					<!-- Checklist -->
 					<section
 						class="rounded-2xl border border-border bg-bg shadow-card backdrop-blur-xl"
 					>
@@ -167,7 +201,6 @@ onMounted(load);
 									'opacity-50': t.status !== 'Done' && t.idx !== activeIdx,
 								}"
 							>
-								<!-- State icon -->
 								<span
 									class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border"
 									:class="
@@ -217,7 +250,6 @@ onMounted(load);
 										Done at {{ time(t.completed_on) }}
 									</p>
 
-									<!-- Active step controls -->
 									<div v-if="t.idx === activeIdx" class="mt-2">
 										<button
 											v-if="t.status === 'Pending'"
@@ -291,7 +323,6 @@ onMounted(load);
 						</p>
 					</section>
 
-					<!-- Items -->
 					<section
 						class="rounded-2xl border border-border bg-bg shadow-card backdrop-blur-xl"
 					>
@@ -357,7 +388,6 @@ onMounted(load);
 					</section>
 				</div>
 
-				<!-- Sidebar -->
 				<aside
 					class="space-y-3 rounded-2xl border border-border bg-bg p-4 shadow-card backdrop-blur-xl"
 				>
@@ -369,6 +399,28 @@ onMounted(load);
 						<div>
 							<dt class="text-fg-muted">Technician</dt>
 							<dd class="text-fg">{{ job.primary_technician || "Unassigned" }}</dd>
+						</div>
+						<div>
+							<dt class="text-fg-muted">Response SLA</dt>
+							<dd class="text-fg">
+								<span v-if="job.responded_on" class="text-success"
+									>Responded {{ datetime(job.responded_on) }}</span
+								>
+								<span
+									v-else-if="job.sla_breached"
+									class="inline-flex items-center gap-1 font-medium text-danger"
+								>
+									<span
+										class="size-1.5 rounded-full bg-danger"
+										aria-hidden="true"
+									/>
+									Breached · due {{ datetime(job.promised_response_by) }}
+								</span>
+								<span v-else-if="job.promised_response_by"
+									>Due {{ datetime(job.promised_response_by) }}</span
+								>
+								<span v-else class="text-fg-muted">—</span>
+							</dd>
 						</div>
 						<div>
 							<dt class="text-fg-muted">Priority</dt>
@@ -401,6 +453,63 @@ onMounted(load);
 							<Spinner v-if="invoicing" :size="16" />
 							{{ invoicing ? "Creating…" : "Create invoice" }}
 						</button>
+					</div>
+
+					<div
+						v-if="job.status !== 'Completed' && job.status !== 'Cancelled'"
+						class="border-t border-border pt-3"
+					>
+						<div class="mb-2 flex items-center justify-between">
+							<p class="text-fg-muted">
+								{{
+									job.primary_technician
+										? "Reassign technician"
+										: "Assign technician"
+								}}
+							</p>
+							<button
+								type="button"
+								:disabled="loadingSuggestions"
+								class="text-xs font-medium text-brand hover:underline disabled:opacity-50"
+								@click="loadSuggestions"
+							>
+								{{ loadingSuggestions ? "Finding…" : "Suggest" }}
+							</button>
+						</div>
+
+						<p v-if="assignError" class="mb-2 text-xs text-danger">{{ assignError }}</p>
+
+						<ul v-if="suggestions.length" class="space-y-2">
+							<li
+								v-for="s in suggestions"
+								:key="s.technician"
+								class="rounded-xl border border-border bg-white/2 p-2.5"
+							>
+								<div class="flex items-center justify-between gap-2">
+									<div class="min-w-0">
+										<p class="truncate text-sm font-medium text-fg">
+											{{ s.technician_name }}
+										</p>
+										<p class="truncate text-xs text-fg-muted">
+											{{ s.reasons.join(" · ") || s.status }}
+										</p>
+									</div>
+									<button
+										type="button"
+										:disabled="assigningTo !== null"
+										class="kl-grad-brand inline-flex shrink-0 items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-white shadow-e2 transition-[filter] hover:brightness-110 disabled:opacity-60"
+										@click="assign(s.technician)"
+									>
+										<Spinner v-if="assigningTo === s.technician" :size="12" />
+										Assign
+									</button>
+								</div>
+							</li>
+						</ul>
+						<p v-else-if="!loadingSuggestions" class="text-xs text-fg-muted">
+							Tap “Suggest” to rank available technicians by skill, territory and
+							proximity.
+						</p>
 					</div>
 				</aside>
 			</div>

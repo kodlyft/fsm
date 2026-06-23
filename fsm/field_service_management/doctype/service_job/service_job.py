@@ -3,7 +3,7 @@
 
 import frappe
 from frappe.model.document import Document
-from frappe.utils import now_datetime
+from frappe.utils import get_datetime, now_datetime
 
 
 class ServiceJob(Document):
@@ -15,12 +15,12 @@ class ServiceJob(Document):
 		self.normalize_tasks()
 		self.sync_status()
 		self.set_completion_timestamp()
+		self.track_sla()
 
 	def on_update(self):
 		self.sync_technician_status()
 		self.autocreate_invoice_if_enabled()
 
-	# --- sequential checklist --------------------------------------------
 	@frappe.whitelist()
 	def start_task(self, idx: int):
 		"""Begin a checklist step. Steps must be started in order."""
@@ -68,7 +68,6 @@ class ServiceJob(Document):
 			if t.idx < idx and t.status != "Done":
 				frappe.throw("Complete the previous step first.")
 
-	# --- defaults & derived data ------------------------------------------
 	def apply_settings_defaults(self):
 		"""Fall back to Service Settings for the unset operational defaults."""
 		settings = frappe.get_cached_doc("Service Settings")
@@ -107,7 +106,6 @@ class ServiceJob(Document):
 		else:
 			self.address_display = None
 
-	# --- status orchestration ---------------------------------------------
 	def normalize_tasks(self):
 		"""Keep each task's completed flag + timestamps consistent with its status."""
 		for t in self.tasks:
@@ -122,7 +120,7 @@ class ServiceJob(Document):
 				t.completed_on = None
 				if not t.started_on:
 					t.started_on = now_datetime()
-			else:  # Pending
+			else:
 				t.completed = 0
 				t.started_on = None
 				t.completed_on = None
@@ -142,7 +140,6 @@ class ServiceJob(Document):
 			if any(t.status in ("In Progress", "Done") for t in self.tasks):
 				self.status = "In Progress"
 				return
-			# checklist exists but nothing started yet → fall through to scheduling
 
 		if self.primary_technician and self.status in ("Draft", "Scheduled"):
 			self.status = "Assigned"
@@ -154,6 +151,18 @@ class ServiceJob(Document):
 			self.completed_on = now_datetime()
 		elif self.status != "Completed":
 			self.completed_on = None
+
+	def track_sla(self):
+		"""Stamp the first response and flag SLA breaches against promised_response_by.
+		A 'response' is the job leaving the Draft/Scheduled backlog (Assigned onward)."""
+		responded_statuses = ("Assigned", "In Progress", "On Hold", "Completed")
+		if not self.responded_on and self.status in responded_statuses:
+			self.responded_on = now_datetime()
+
+		if self.responded_on or not self.promised_response_by:
+			self.sla_breached = 0
+		else:
+			self.sla_breached = 1 if now_datetime() > get_datetime(self.promised_response_by) else 0
 
 	def sync_technician_status(self):
 		"""Keep the assigned technician's availability in step with the job."""
@@ -167,7 +176,6 @@ class ServiceJob(Document):
 		if not target:
 			return
 		current = frappe.db.get_value("Technician", self.primary_technician, "status")
-		# Don't override a technician who has clocked off.
 		if current and current not in (target, "Off Duty"):
 			frappe.db.set_value("Technician", self.primary_technician, "status", target)
 
@@ -216,7 +224,7 @@ def make_invoice_from_job(job: str) -> str:
 	invoice.customer = doc.customer
 	if company:
 		invoice.company = company
-	invoice.po_no = doc.name  # trace the invoice back to the originating job
+	invoice.po_no = doc.name
 	for row in doc.items:
 		invoice.append(
 			"items",

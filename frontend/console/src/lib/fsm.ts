@@ -6,6 +6,7 @@ export interface DashboardStats {
 	in_progress: number;
 	completed_today: number;
 	revenue_today: number;
+	sla_breached: number;
 }
 
 interface DispatchRow {
@@ -17,6 +18,17 @@ interface DispatchRow {
 	primary_technician: string | null;
 	total_amount: number;
 	address_display: string | null;
+	sla_breached: number;
+	promised_response_by: string | null;
+}
+
+export interface TechnicianSuggestion {
+	technician: string;
+	technician_name: string;
+	status: string;
+	territory: string | null;
+	score: number;
+	reasons: string[];
 }
 
 export interface JobDoc {
@@ -38,6 +50,9 @@ export interface JobDoc {
 	completed_on?: string;
 	sales_invoice?: string;
 	notes?: string;
+	promised_response_by?: string;
+	responded_on?: string;
+	sla_breached?: number;
 	tasks?: JobTask[];
 	items?: { item_code: string; item_name?: string; qty: number; rate: number; amount?: number }[];
 }
@@ -59,9 +74,14 @@ export function getDashboardStats(): Promise<DashboardStats> {
 	return client.call<DashboardStats>("fsm.api.get_dashboard_stats", {}, "GET");
 }
 
+export type DispatchJob = JobSummary & {
+	slaBreached: boolean;
+	promisedResponseBy?: string;
+};
+
 export async function getDispatchJobs(
 	params: { status?: string; technician?: string; limit?: number } = {},
-): Promise<JobSummary[]> {
+): Promise<DispatchJob[]> {
 	const rows = await client.call<DispatchRow[]>("fsm.api.get_dispatch_jobs", params, "GET");
 	return rows.map((r) => ({
 		name: r.name,
@@ -71,7 +91,21 @@ export async function getDispatchJobs(
 		status: r.status,
 		technician: r.primary_technician ?? undefined,
 		total: r.total_amount,
+		slaBreached: !!r.sla_breached,
+		promisedResponseBy: r.promised_response_by ?? undefined,
 	}));
+}
+
+export function suggestTechnicians(job: string, limit = 8): Promise<TechnicianSuggestion[]> {
+	return client.call<TechnicianSuggestion[]>(
+		"fsm.scheduling.suggest_technicians",
+		{ job, limit },
+		"GET",
+	);
+}
+
+export function assignTechnician(job: string, technician: string): Promise<JobDoc> {
+	return client.call<JobDoc>("fsm.scheduling.assign_technician", { job, technician });
 }
 
 export function getJob(name: string): Promise<JobDoc> {
@@ -86,7 +120,6 @@ export function createInvoiceFromJob(job: string): Promise<{ name: string }> {
 	return client.call<{ name: string }>("fsm.api.create_invoice_from_job", { job });
 }
 
-/** Sequential checklist actions — status is derived from these, never set by hand. */
 export function startJobTask(job: string, idx: number): Promise<JobDoc> {
 	return client.call<JobDoc>("fsm.api.start_job_task", { job, idx });
 }

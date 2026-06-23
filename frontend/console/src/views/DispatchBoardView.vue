@@ -1,22 +1,35 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
+import { PageHeader, KpiCard, JobCard, EmptyState, type JobStatus } from "@kodlyft/ui";
 import {
-	PageHeader,
-	KpiCard,
-	JobCard,
-	EmptyState,
-	type JobSummary,
-	type JobStatus,
-} from "@kodlyft/ui";
-import { getDispatchJobs, getDashboardStats, type DashboardStats } from "@/lib/fsm";
+	getDispatchJobs,
+	getDashboardStats,
+	type DashboardStats,
+	type DispatchJob,
+} from "@/lib/fsm";
+import { realtime, SERVICE_JOB_EVENT, TECHNICIAN_EVENT } from "@/lib/realtime";
 
 const router = useRouter();
 
-const jobs = ref<JobSummary[]>([]);
+const jobs = ref<DispatchJob[]>([]);
 const stats = ref<DashboardStats | null>(null);
 const loading = ref(true);
 const error = ref("");
+const live = ref(false);
+
+const slaBreaches = computed(() => jobs.value.filter((j) => j.slaBreached).length);
+
+let reloadTimer: ReturnType<typeof setTimeout> | null = null;
+function scheduleReload() {
+	if (reloadTimer) return;
+	reloadTimer = setTimeout(() => {
+		reloadTimer = null;
+		load();
+	}, 600);
+}
+
+const unsubscribers: Array<() => void> = [];
 
 const COLUMNS: { status: JobStatus; label: string; dot: string }[] = [
 	{ status: "Scheduled", label: "Scheduled", dot: "bg-warning" },
@@ -60,13 +73,36 @@ function openJob(name: string) {
 	router.push({ name: "job-detail", params: { name } });
 }
 
-onMounted(load);
+onMounted(() => {
+	load();
+	try {
+		const rt = realtime();
+		unsubscribers.push(rt.on(SERVICE_JOB_EVENT, scheduleReload));
+		unsubscribers.push(rt.on(TECHNICIAN_EVENT, scheduleReload));
+		live.value = true;
+	} catch {
+		live.value = false;
+	}
+});
+
+onBeforeUnmount(() => {
+	if (reloadTimer) clearTimeout(reloadTimer);
+	unsubscribers.forEach((off) => off());
+});
 </script>
 
 <template>
 	<div>
 		<PageHeader eyebrow="Today" title="Dispatch board" :subtitle="today">
 			<template #actions>
+				<span
+					v-if="live"
+					class="inline-flex items-center gap-1.5 rounded-full border border-border bg-bg px-2.5 py-1 text-xs font-medium text-fg-muted"
+					title="Live updates are on"
+				>
+					<span class="size-2 animate-pulse rounded-full bg-success" aria-hidden="true" />
+					Live
+				</span>
 				<button
 					type="button"
 					class="inline-flex items-center gap-2 rounded-xl border border-border bg-bg px-3.5 py-2 text-sm font-medium text-fg backdrop-blur-xl transition-colors hover:bg-surface focus-visible:outline-none focus-visible:[box-shadow:var(--kl-elevation-focus)]"
@@ -110,7 +146,6 @@ onMounted(load);
 			</template>
 		</PageHeader>
 
-		<!-- KPI row -->
 		<div class="mb-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
 			<KpiCard label="Open jobs" :value="stats?.open_jobs ?? '—'" tone="brand">
 				<template #icon>
@@ -185,7 +220,32 @@ onMounted(load);
 			</KpiCard>
 		</div>
 
-		<!-- Loading skeleton -->
+		<div
+			v-if="!loading && slaBreaches > 0"
+			class="mb-4 flex items-center gap-2 rounded-2xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger backdrop-blur-xl"
+		>
+			<svg
+				viewBox="0 0 24 24"
+				class="size-5 shrink-0"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="1.9"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				aria-hidden="true"
+			>
+				<path
+					d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+				/>
+				<path d="M12 9v4M12 17h.01" />
+			</svg>
+			<span>
+				<strong class="font-semibold">{{ slaBreaches }}</strong>
+				{{ slaBreaches === 1 ? "job has" : "jobs have" }} breached their response SLA —
+				assign a technician now.
+			</span>
+		</div>
+
 		<div v-if="loading" class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
 			<div v-for="c in 4" :key="c" class="flex flex-col gap-3">
 				<div class="h-5 w-24 animate-pulse rounded-md bg-white/10" />
@@ -197,7 +257,6 @@ onMounted(load);
 			</div>
 		</div>
 
-		<!-- Error -->
 		<div
 			v-else-if="error"
 			class="rounded-2xl border border-danger/30 bg-danger/10 p-4 text-sm text-danger backdrop-blur-xl"
@@ -205,7 +264,6 @@ onMounted(load);
 			{{ error }}
 		</div>
 
-		<!-- Empty -->
 		<EmptyState
 			v-else-if="jobs.length === 0"
 			title="No active jobs"
@@ -237,7 +295,6 @@ onMounted(load);
 			</template>
 		</EmptyState>
 
-		<!-- Board -->
 		<div v-else class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
 			<section
 				v-for="col in board"
