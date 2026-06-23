@@ -14,7 +14,7 @@ import {
 import { Network } from "@capacitor/network";
 import { useRouter } from "vue-router";
 import { JobCard, type JobSummary } from "@kodlyft/ui";
-import { getDispatchJobs } from "@/lib/fsm";
+import { getDispatchJobs, getVanStock, type StockRow } from "@/lib/fsm";
 import { useDuty } from "@/lib/duty";
 
 const router = useRouter();
@@ -22,6 +22,8 @@ const { onDuty, busy: dutyBusy, error: dutyError, toggle } = useDuty();
 const online = ref(true);
 const loading = ref(true);
 const jobs = ref<JobSummary[]>([]);
+const vanStock = ref<StockRow[]>([]);
+const showStock = ref(false);
 let stop: (() => void) | undefined;
 
 const SAMPLE: JobSummary[] = [
@@ -45,6 +47,11 @@ async function load() {
 		jobs.value = SAMPLE;
 	} finally {
 		loading.value = false;
+	}
+	try {
+		vanStock.value = await getVanStock();
+	} catch {
+		vanStock.value = [];
 	}
 }
 
@@ -147,6 +154,38 @@ async function refresh(event: RefresherCustomEvent) {
 							{{ activeCount }}
 						</p>
 					</div>
+				</div>
+				<div v-if="vanStock.length" class="kl-glass mt-3 rounded-2xl p-4">
+					<button
+						type="button"
+						class="flex w-full items-center justify-between"
+						@click="showStock = !showStock"
+					>
+						<span class="text-sm font-medium text-cmd-fg">
+							Van stock
+							<span class="text-cmd-fg-muted">({{ vanStock.length }})</span>
+						</span>
+						<span class="text-xs text-cmd-fg-muted">{{
+							showStock ? "Hide" : "Show"
+						}}</span>
+					</button>
+					<ul v-if="showStock" class="mt-3 divide-y divide-white/10">
+						<li
+							v-for="s in vanStock"
+							:key="s.item_code"
+							class="flex items-center justify-between py-2 text-sm"
+						>
+							<span class="truncate text-cmd-fg">{{
+								s.item_name || s.item_code
+							}}</span>
+							<span
+								class="ml-3 shrink-0 font-mono tabular-nums"
+								:class="s.low ? 'text-danger' : 'text-cmd-fg-muted'"
+							>
+								{{ s.actual_qty }}<span v-if="s.low" class="ml-1">· low</span>
+							</span>
+						</li>
+					</ul>
 				</div>
 
 				<div v-if="loading" class="flex justify-center py-12">

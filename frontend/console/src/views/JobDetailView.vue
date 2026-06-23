@@ -10,8 +10,11 @@ import {
 	createInvoiceFromJob,
 	suggestTechnicians,
 	assignTechnician,
+	getJobLogistics,
+	requestParts,
 	type JobDoc,
 	type TechnicianSuggestion,
+	type JobLogistics,
 } from "@/lib/fsm";
 
 const props = defineProps<{ name: string }>();
@@ -73,11 +76,40 @@ const datetime = (iso?: string) =>
 const time = (iso?: string) =>
 	iso ? new Date(iso).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" }) : "";
 
+const logistics = ref<JobLogistics | null>(null);
+const requesting = ref(false);
+
+async function loadLogistics() {
+	try {
+		logistics.value = await getJobLogistics(props.name);
+	} catch {
+		logistics.value = null;
+	}
+}
+
+async function requestJobParts() {
+	if (!job.value?.items?.length) return;
+	requesting.value = true;
+	error.value = "";
+	try {
+		const items = job.value.items.map((i) => ({ item_code: i.item_code, qty: i.qty }));
+		await requestParts(job.value.name, items);
+		await loadLogistics();
+	} catch (e) {
+		error.value =
+			(e as { message?: string })?.message ||
+			"Couldn't request parts. Set a van/default warehouse first.";
+	} finally {
+		requesting.value = false;
+	}
+}
+
 async function load() {
 	loading.value = true;
 	error.value = "";
 	try {
 		job.value = await getJob(props.name);
+		loadLogistics();
 	} catch {
 		error.value = "Couldn't load this job.";
 	} finally {
@@ -376,6 +408,74 @@ onMounted(load);
 						</div>
 						<p v-if="!job.items?.length" class="px-4 py-6 text-sm text-fg-muted">
 							No items added.
+						</p>
+					</section>
+					<section
+						class="rounded-2xl border border-border bg-bg shadow-card backdrop-blur-xl"
+					>
+						<div
+							class="flex items-center justify-between border-b border-border px-4 py-3"
+						>
+							<h2 class="text-lg font-bold">Parts &amp; logistics</h2>
+							<button
+								type="button"
+								:disabled="requesting || !job.items?.length"
+								class="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-3 py-1.5 text-sm font-medium text-fg hover:bg-bg-subtle disabled:opacity-50"
+								@click="requestJobParts"
+							>
+								<Spinner v-if="requesting" :size="14" />
+								Request parts
+							</button>
+						</div>
+
+						<div
+							v-if="
+								logistics &&
+								(logistics.material_requests.length ||
+									logistics.delivery_notes.length)
+							"
+							class="divide-y divide-border"
+						>
+							<div
+								v-for="mr in logistics.material_requests"
+								:key="mr.name"
+								class="flex items-center justify-between px-4 py-2.5 text-sm"
+							>
+								<div>
+									<p class="font-mono text-xs text-fg">{{ mr.name }}</p>
+									<p class="text-xs text-fg-muted">
+										{{ mr.material_request_type }} · ordered
+										{{ Math.round(mr.per_ordered) }}% · received
+										{{ Math.round(mr.per_received) }}%
+									</p>
+								</div>
+								<span
+									class="rounded-full bg-white/5 px-2.5 py-0.5 text-xs text-fg-muted"
+								>
+									{{ mr.status }}
+								</span>
+							</div>
+							<div
+								v-for="dn in logistics.delivery_notes"
+								:key="dn.name"
+								class="flex items-center justify-between px-4 py-2.5 text-sm"
+							>
+								<div>
+									<p class="font-mono text-xs text-fg">{{ dn.name }}</p>
+									<p class="text-xs text-fg-muted">
+										Delivery · {{ dn.posting_date }}
+									</p>
+								</div>
+								<span
+									class="rounded-full bg-white/5 px-2.5 py-0.5 text-xs text-fg-muted"
+								>
+									{{ dn.status }}
+								</span>
+							</div>
+						</div>
+						<p v-else class="px-4 py-6 text-sm text-fg-muted">
+							No parts requests yet. Use “Request parts” to transfer this job's items
+							to the technician's van.
 						</p>
 					</section>
 

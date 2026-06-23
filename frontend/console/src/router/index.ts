@@ -30,6 +30,16 @@ const routes: RouteRecordRaw[] = [
 				props: true,
 			},
 			{
+				path: "/inventory",
+				name: "inventory",
+				component: () => import("@/views/InventoryView.vue"),
+			},
+			{
+				path: "/returns",
+				name: "returns",
+				component: () => import("@/views/ReturnsView.vue"),
+			},
+			{
 				path: "/account",
 				name: "account",
 				component: () => import("@/views/AccountView.vue"),

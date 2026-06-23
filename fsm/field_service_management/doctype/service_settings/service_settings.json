@@ -9,7 +9,11 @@
   "default_checklist_template",
   "column_break_main",
   "auto_create_invoice",
-  "default_priority"
+  "default_priority",
+  "inventory_section",
+  "default_warehouse",
+  "column_break_inventory",
+  "low_stock_threshold"
  ],
  "fields": [
   {
@@ -40,6 +44,29 @@
    "fieldname": "auto_create_invoice",
    "fieldtype": "Check",
    "label": "Auto-create invoice on job completion"
+  },
+  {
+   "fieldname": "inventory_section",
+   "fieldtype": "Section Break",
+   "label": "Inventory"
+  },
+  {
+   "description": "Fallback warehouse for parts requests when a technician has no van warehouse set.",
+   "fieldname": "default_warehouse",
+   "fieldtype": "Link",
+   "label": "Default Warehouse",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "column_break_inventory",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "description": "Items at or below this quantity are flagged low when no ERPNext reorder level is set. 0 disables the fallback.",
+   "fieldname": "low_stock_threshold",
+   "fieldtype": "Float",
+   "label": "Low Stock Threshold"
   }
  ],
  "index_web_pages_for_search": 1,

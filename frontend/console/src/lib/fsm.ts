@@ -132,6 +132,87 @@ export function completeJob(job: string): Promise<JobDoc> {
 	return client.call<JobDoc>("fsm.api.complete_job", { job });
 }
 
+export interface StockRow {
+	item_code: string;
+	item_name: string | null;
+	warehouse: string;
+	actual_qty: number;
+	reserved_qty: number;
+	projected_qty: number;
+	reorder_level: number | null;
+	low: boolean;
+}
+
+export function getStockLevels(
+	params: { warehouse?: string; technician?: string; item?: string; low_only?: number } = {},
+): Promise<StockRow[]> {
+	return client.call<StockRow[]>("fsm.inventory.get_stock_levels", params, "GET");
+}
+
+export interface JobLogistics {
+	material_requests: {
+		name: string;
+		status: string;
+		material_request_type: string;
+		transaction_date: string;
+		schedule_date: string;
+		per_ordered: number;
+		per_received: number;
+	}[];
+	delivery_notes: { name: string; status: string; posting_date: string; per_billed: number }[];
+}
+
+export function getJobLogistics(job: string): Promise<JobLogistics> {
+	return client.call<JobLogistics>("fsm.logistics.get_job_logistics", { job }, "GET");
+}
+
+export function requestParts(
+	job: string,
+	items: { item_code: string; qty: number }[],
+	warehouse?: string,
+): Promise<{ name: string; warehouse: string }> {
+	return client.call("fsm.logistics.request_parts", { job, items, warehouse });
+}
+
+export interface ServiceReturnRow {
+	name: string;
+	service_job: string;
+	customer: string;
+	status: string;
+	return_date: string;
+	warehouse: string | null;
+	stock_entry: string | null;
+}
+
+export interface ReturnItemInput {
+	item_code: string;
+	qty: number;
+	disposition: "Restock" | "Refurbish" | "Scrap";
+	note?: string;
+}
+
+export function listReturns(
+	params: { status?: string; job?: string } = {},
+): Promise<ServiceReturnRow[]> {
+	return client.call<ServiceReturnRow[]>("fsm.returns.list_returns", params, "GET");
+}
+
+export function createReturn(
+	service_job: string,
+	items: ReturnItemInput[],
+	warehouse?: string,
+	reason?: string,
+): Promise<{ name: string; status: string }> {
+	return client.call("fsm.returns.create_return", { service_job, items, warehouse, reason });
+}
+
+export function processReturn(
+	name: string,
+	action: "approve" | "receive" | "close",
+): Promise<{ name: string; status: string; stock_entry: string | null }> {
+	return client.call("fsm.returns.process_return", { name, action });
+}
+
 export async function searchLink(
 	doctype: string,
 	query: string,

@@ -10,6 +10,8 @@ const router = useRouter();
 const nav = [
 	{ name: "dispatch", label: "Dispatch", to: "/", exact: true },
 	{ name: "jobs", label: "Jobs", to: "/jobs", exact: false },
+	{ name: "inventory", label: "Inventory", to: "/inventory", exact: false },
+	{ name: "returns", label: "Returns", to: "/returns", exact: false },
 	{ name: "account", label: "Account", to: "/account", exact: false },
 ];
 
@@ -31,7 +33,6 @@ async function signOut() {
 
 <template>
 	<div class="kl-command flex min-h-screen">
-		<!-- Desktop sidebar (floating glass) -->
 		<aside class="sticky top-0 hidden h-screen w-64 shrink-0 flex-col p-4 md:flex">
 			<div class="kl-glass flex h-full flex-col rounded-2xl p-4">
 				<div class="mb-7 flex items-center gap-3 px-1">
@@ -88,6 +89,15 @@ async function signOut() {
 									d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"
 								/>
 								<path d="M9 12h6M9 16h6" />
+							</template>
+							<template v-else-if="item.name === 'inventory'">
+								<path d="M3 7l9-4 9 4-9 4-9-4z" />
+								<path d="M3 7v10l9 4 9-4V7" />
+								<path d="M12 11v10" />
+							</template>
+							<template v-else-if="item.name === 'returns'">
+								<path d="M3 7h13a4 4 0 0 1 0 8H7" />
+								<path d="M7 11l-4 4 4 4" />
 							</template>
 							<template v-else>
 								<circle cx="12" cy="8" r="3.5" />
@@ -148,7 +158,6 @@ async function signOut() {
 		</aside>
 
 		<div class="flex min-w-0 flex-1 flex-col">
-			<!-- Mobile top bar -->
 			<header
 				class="kl-glass sticky top-0 z-20 flex items-center justify-between px-4 py-3 md:hidden"
 			>
@@ -214,7 +223,6 @@ async function signOut() {
 				<RouterView />
 			</main>
 
-			<!-- Mobile bottom tab bar (glass) -->
 			<nav
 				class="kl-glass fixed inset-x-3 bottom-3 z-30 flex items-center justify-around rounded-2xl px-2 py-2 md:hidden"
 				style="padding-bottom: calc(0.5rem + env(safe-area-inset-bottom))"
@@ -249,6 +257,15 @@ async function signOut() {
 								d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"
 							/>
 							<path d="M9 12h6M9 16h6" />
+						</template>
+						<template v-else-if="item.name === 'inventory'">
+							<path d="M3 7l9-4 9 4-9 4-9-4z" />
+							<path d="M3 7v10l9 4 9-4V7" />
+							<path d="M12 11v10" />
+						</template>
+						<template v-else-if="item.name === 'returns'">
+							<path d="M3 7h13a4 4 0 0 1 0 8H7" />
+							<path d="M7 11l-4 4 4 4" />
 						</template>
 						<template v-else>
 							<circle cx="12" cy="8" r="3.5" />

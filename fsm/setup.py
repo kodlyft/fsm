@@ -1,18 +1,36 @@
 # Copyright (c) 2026, KodLyft and contributors
 # For license information, please see license.txt
-#
-# Idempotent install/migrate setup: ensures the FSM roles exist. FSM Manager and
-# FSM Technician are also referenced in doctype permissions (so they auto-create
-# on migrate), but FSM Customer is only assigned to portal signups, so we create
-# all three here to be safe.
 
 import frappe
+from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
 
 FSM_ROLES = (
 	("FSM Manager", 1),
 	("FSM Technician", 1),
-	("FSM Customer", 0),  # website/portal users — no desk access
+	("FSM Customer", 0),
 )
+
+FSM_CUSTOM_FIELDS = {
+	"Material Request": [
+		{
+			"fieldname": "fsm_service_job",
+			"label": "Service Job",
+			"fieldtype": "Link",
+			"options": "Service Job",
+			"insert_after": "company",
+			"read_only": 1,
+		}
+	],
+	"Delivery Note": [
+		{
+			"fieldname": "fsm_service_job",
+			"label": "Service Job",
+			"fieldtype": "Link",
+			"options": "Service Job",
+			"insert_after": "customer",
+		}
+	],
+}
 
 
 def ensure_roles():
@@ -27,9 +45,16 @@ def ensure_roles():
 			).insert(ignore_permissions=True)
 
 
+def ensure_custom_fields():
+	if frappe.db.exists("DocType", "Material Request"):
+		create_custom_fields(FSM_CUSTOM_FIELDS, ignore_validate=True)
+
+
 def after_install():
 	ensure_roles()
+	ensure_custom_fields()
 
 
 def after_migrate():
 	ensure_roles()
+	ensure_custom_fields()

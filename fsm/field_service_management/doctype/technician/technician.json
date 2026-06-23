@@ -15,6 +15,7 @@
   "territory",
   "column_break_contact",
   "active",
+  "warehouse",
   "section_break_tracking",
   "clocked_in",
   "last_clock_in",
@@ -82,6 +83,13 @@
    "fieldname": "active",
    "fieldtype": "Check",
    "label": "Active"
+  },
+  {
+   "description": "The van/truck stock location for this technician (an ERPNext Warehouse).",
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Van Warehouse",
+   "options": "Warehouse"
   },
   {
    "fieldname": "section_break_tracking",

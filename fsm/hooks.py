@@ -165,6 +165,9 @@ scheduler_events = {
 	"hourly": [
 		"fsm.tasks.flag_sla_breaches",
 	],
+	"daily": [
+		"fsm.tasks.notify_low_stock",
+	],
 }
 
 # Testing

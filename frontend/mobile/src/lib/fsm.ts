@@ -42,3 +42,18 @@ export function updateLocation(
 ): Promise<{ technician: string }> {
 	return client.call("fsm.tracking.update_location", { latitude, longitude, accuracy, job });
 }
+
+export interface StockRow {
+	item_code: string;
+	item_name: string | null;
+	warehouse: string;
+	actual_qty: number;
+	reserved_qty: number;
+	projected_qty: number;
+	reorder_level: number | null;
+	low: boolean;
+}
+
+export function getVanStock(): Promise<StockRow[]> {
+	return client.call<StockRow[]>("fsm.inventory.get_van_stock", {}, "GET");
+}
