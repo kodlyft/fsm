@@ -12,7 +12,10 @@ class ChecklistTemplate(Document):
 
 	if TYPE_CHECKING:
 		from frappe.types import DF
-		from fsm.field_service_management.doctype.checklist_template_item.checklist_template_item import ChecklistTemplateItem
+
+		from fsm.field_service_management.doctype.checklist_template_item.checklist_template_item import (
+			ChecklistTemplateItem,
+		)
 
 		disabled: DF.Check
 		items: DF.Table[ChecklistTemplateItem]

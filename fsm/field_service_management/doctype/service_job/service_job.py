@@ -14,6 +14,7 @@ class ServiceJob(Document):
 
 	if TYPE_CHECKING:
 		from frappe.types import DF
+
 		from fsm.field_service_management.doctype.service_job_item.service_job_item import ServiceJobItem
 		from fsm.field_service_management.doctype.service_job_task.service_job_task import ServiceJobTask
 
@@ -39,7 +40,9 @@ class ServiceJob(Document):
 		service_longitude: DF.Float
 		service_type: DF.Data | None
 		sla_breached: DF.Check
-		status: DF.Literal["Draft", "Scheduled", "Assigned", "In Progress", "On Hold", "Completed", "Cancelled"]
+		status: DF.Literal[
+			"Draft", "Scheduled", "Assigned", "In Progress", "On Hold", "Completed", "Cancelled"
+		]
 		tasks: DF.Table[ServiceJobTask]
 		territory: DF.Link | None
 		total_amount: DF.Currency

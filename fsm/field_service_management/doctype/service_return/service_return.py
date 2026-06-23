@@ -17,7 +17,10 @@ class ServiceReturn(Document):
 
 	if TYPE_CHECKING:
 		from frappe.types import DF
-		from fsm.field_service_management.doctype.service_return_item.service_return_item import ServiceReturnItem
+
+		from fsm.field_service_management.doctype.service_return_item.service_return_item import (
+			ServiceReturnItem,
+		)
 
 		customer: DF.Link | None
 		items: DF.Table[ServiceReturnItem]

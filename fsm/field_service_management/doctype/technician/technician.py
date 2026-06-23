@@ -12,6 +12,7 @@ class Technician(Document):
 
 	if TYPE_CHECKING:
 		from frappe.types import DF
+
 		from fsm.field_service_management.doctype.technician_skill.technician_skill import TechnicianSkill
 
 		active: DF.Check

@@ -13,7 +13,7 @@ def get_stock_levels(
 	low_only: int = 0,
 ):
 	"""
- 	Stock levels for FSM warehouses, each row flagged `low` against its reorder level.
+	Stock levels for FSM warehouses, each row flagged `low` against its reorder level.
 
 	- warehouse: restrict to one warehouse.
 	- technician: restrict to that technician's van warehouse.

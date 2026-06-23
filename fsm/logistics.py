@@ -28,7 +28,11 @@ def request_parts(
 
 	target = warehouse or _job_warehouse(job)
 	if not target:
-		frappe.throw(_("No warehouse to deliver to. Set a van warehouse on the technician or a default in Service Settings."))
+		frappe.throw(
+			_(
+				"No warehouse to deliver to. Set a van warehouse on the technician or a default in Service Settings."
+			)
+		)
 
 	sched = schedule_date or nowdate()
 	mr = frappe.new_doc("Material Request")
