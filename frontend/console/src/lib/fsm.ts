@@ -53,6 +53,13 @@ export interface JobDoc {
 	promised_response_by?: string;
 	responded_on?: string;
 	sla_breached?: number;
+	estimated_hours?: number;
+	actual_hours?: number;
+	labor_rate?: number;
+	labor_cost?: number;
+	materials_cost?: number;
+	overhead_cost?: number;
+	total_cost?: number;
 	tasks?: JobTask[];
 	items?: { item_code: string; item_name?: string; qty: number; rate: number; amount?: number }[];
 }
@@ -114,6 +121,85 @@ export function getJob(name: string): Promise<JobDoc> {
 
 export function createJob(payload: Partial<JobDoc>): Promise<JobDoc> {
 	return client.createDoc<JobDoc>("Service Job", payload);
+}
+
+export function updateJob(name: string, patch: Partial<JobDoc>): Promise<JobDoc> {
+	return client.updateDoc<JobDoc>("Service Job", name, patch);
+}
+
+export interface JobCostSummary {
+	estimated_hours: number | null;
+	labor_rate: number | null;
+	overhead_cost: number | null;
+	actual_hours: number;
+	materials_cost: number;
+	labor_cost: number;
+	total_cost: number;
+}
+
+export function getJobCostSummary(job: string): Promise<JobCostSummary> {
+	return client.call<JobCostSummary>("fsm.costing.get_job_cost_summary", { job }, "GET");
+}
+
+export interface JobEstimate {
+	service_type: string;
+	sample_size: number;
+	avg_hours: number | null;
+	basis?: string;
+}
+
+export function estimateJob(service_type: string, technician?: string): Promise<JobEstimate> {
+	return client.call<JobEstimate>(
+		"fsm.costing.estimate_job",
+		{ service_type, technician },
+		"GET",
+	);
+}
+
+export interface SubcontractorRow {
+	name: string;
+	subcontractor_name: string;
+	status: string;
+	territory: string | null;
+	hourly_rate: number | null;
+	phone: string | null;
+	email: string | null;
+}
+
+export interface SubcontractorWork {
+	technicians: { name: string; technician_name: string; status: string; active: number }[];
+	jobs: {
+		name: string;
+		customer_name: string;
+		status: string;
+		scheduled_date: string | null;
+		primary_technician: string;
+		actual_hours: number;
+		total_cost: number;
+	}[];
+	summary: {
+		technicians: number;
+		total_jobs: number;
+		completed_jobs: number;
+		total_hours: number;
+		total_cost: number;
+	};
+}
+
+export function listSubcontractors(status?: string): Promise<SubcontractorRow[]> {
+	return client.call<SubcontractorRow[]>(
+		"fsm.contractors.list_subcontractors",
+		{ status },
+		"GET",
+	);
+}
+
+export function getSubcontractorWork(subcontractor: string): Promise<SubcontractorWork> {
+	return client.call<SubcontractorWork>(
+		"fsm.contractors.get_subcontractor_work",
+		{ subcontractor },
+		"GET",
+	);
 }
 
 export function createInvoiceFromJob(job: string): Promise<{ name: string }> {

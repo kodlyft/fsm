@@ -10,6 +10,8 @@
   "status",
   "column_break_main",
   "user",
+  "worker_type",
+  "subcontractor",
   "section_break_contact",
   "phone",
   "territory",
@@ -54,6 +56,21 @@
    "fieldtype": "Link",
    "label": "User",
    "options": "User"
+  },
+  {
+   "default": "Employee",
+   "fieldname": "worker_type",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Worker Type",
+   "options": "Employee\nContractor"
+  },
+  {
+   "depends_on": "eval:doc.worker_type==\"Contractor\"",
+   "fieldname": "subcontractor",
+   "fieldtype": "Link",
+   "label": "Subcontractor",
+   "options": "Subcontractor"
   },
   {
    "fieldname": "section_break_contact",

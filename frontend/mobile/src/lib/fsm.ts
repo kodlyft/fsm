@@ -57,3 +57,16 @@ export interface StockRow {
 export function getVanStock(): Promise<StockRow[]> {
 	return client.call<StockRow[]>("fsm.inventory.get_van_stock", {}, "GET");
 }
+
+export function startTimer(
+	job: string,
+	activity?: string,
+): Promise<{ name: string; already_running: boolean }> {
+	return client.call("fsm.costing.start_timer", { job, activity });
+}
+
+export function stopTimer(
+	job: string,
+): Promise<{ name: string; hours: number; actual_hours: number }> {
+	return client.call("fsm.costing.stop_timer", { job });
+}

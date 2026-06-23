@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { ref, reactive, computed, onMounted } from "vue";
 import { RouterLink } from "vue-router";
 import { StatusPill, Spinner } from "@kodlyft/ui";
 import {
@@ -12,9 +12,12 @@ import {
 	assignTechnician,
 	getJobLogistics,
 	requestParts,
+	updateJob,
+	estimateJob,
 	type JobDoc,
 	type TechnicianSuggestion,
 	type JobLogistics,
+	type JobEstimate,
 } from "@/lib/fsm";
 
 const props = defineProps<{ name: string }>();
@@ -104,11 +107,57 @@ async function requestJobParts() {
 	}
 }
 
+const costForm = reactive({ labor_rate: 0, overhead_cost: 0, estimated_hours: 0 });
+const savingCost = ref(false);
+const estimate = ref<JobEstimate | null>(null);
+const estimating = ref(false);
+
+function syncCostForm() {
+	costForm.labor_rate = job.value?.labor_rate ?? 0;
+	costForm.overhead_cost = job.value?.overhead_cost ?? 0;
+	costForm.estimated_hours = job.value?.estimated_hours ?? 0;
+}
+
+async function saveCosts() {
+	if (!job.value) return;
+	savingCost.value = true;
+	error.value = "";
+	try {
+		job.value = await updateJob(job.value.name, {
+			labor_rate: costForm.labor_rate,
+			overhead_cost: costForm.overhead_cost,
+			estimated_hours: costForm.estimated_hours,
+		});
+		syncCostForm();
+	} catch {
+		error.value = "Couldn't save costing.";
+	} finally {
+		savingCost.value = false;
+	}
+}
+
+async function runEstimate() {
+	if (!job.value?.service_type) return;
+	estimating.value = true;
+	try {
+		estimate.value = await estimateJob(job.value.service_type, job.value.primary_technician);
+	} catch {
+		estimate.value = null;
+	} finally {
+		estimating.value = false;
+	}
+}
+
+function useEstimate() {
+	if (estimate.value?.avg_hours != null) costForm.estimated_hours = estimate.value.avg_hours;
+}
+
 async function load() {
 	loading.value = true;
 	error.value = "";
 	try {
 		job.value = await getJob(props.name);
+		syncCostForm();
 		loadLogistics();
 	} catch {
 		error.value = "Couldn't load this job.";
@@ -477,6 +526,112 @@ onMounted(load);
 							No parts requests yet. Use “Request parts” to transfer this job's items
 							to the technician's van.
 						</p>
+					</section>
+
+					<section
+						class="rounded-2xl border border-border bg-bg shadow-card backdrop-blur-xl"
+					>
+						<h2 class="border-b border-border px-4 py-3 text-lg font-bold">Costing</h2>
+						<div class="grid grid-cols-2 gap-px bg-border sm:grid-cols-4">
+							<div class="bg-bg px-4 py-3">
+								<p class="text-xs text-fg-muted">Actual hours</p>
+								<p class="font-mono text-lg tabular-nums text-fg">
+									{{ (job.actual_hours ?? 0).toFixed(2) }}
+								</p>
+							</div>
+							<div class="bg-bg px-4 py-3">
+								<p class="text-xs text-fg-muted">Labour</p>
+								<p class="font-mono text-lg tabular-nums text-fg">
+									{{ currency(job.labor_cost) }}
+								</p>
+							</div>
+							<div class="bg-bg px-4 py-3">
+								<p class="text-xs text-fg-muted">Materials</p>
+								<p class="font-mono text-lg tabular-nums text-fg">
+									{{ currency(job.materials_cost) }}
+								</p>
+							</div>
+							<div class="bg-bg px-4 py-3">
+								<p class="text-xs text-fg-muted">Total cost</p>
+								<p class="font-mono text-lg font-semibold tabular-nums text-brand">
+									{{ currency(job.total_cost) }}
+								</p>
+							</div>
+						</div>
+
+						<div class="space-y-3 border-t border-border p-4">
+							<div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+								<label class="block">
+									<span class="mb-1 block text-xs text-fg-muted"
+										>Labour rate /hr</span
+									>
+									<input
+										v-model.number="costForm.labor_rate"
+										type="number"
+										min="0"
+										class="w-full rounded-md border border-border bg-bg px-3 py-1.5 text-sm"
+									/>
+								</label>
+								<label class="block">
+									<span class="mb-1 block text-xs text-fg-muted">Overhead</span>
+									<input
+										v-model.number="costForm.overhead_cost"
+										type="number"
+										min="0"
+										class="w-full rounded-md border border-border bg-bg px-3 py-1.5 text-sm"
+									/>
+								</label>
+								<label class="block">
+									<span class="mb-1 block text-xs text-fg-muted"
+										>Estimated hours</span
+									>
+									<input
+										v-model.number="costForm.estimated_hours"
+										type="number"
+										min="0"
+										class="w-full rounded-md border border-border bg-bg px-3 py-1.5 text-sm"
+									/>
+								</label>
+							</div>
+
+							<div class="flex flex-wrap items-center gap-3">
+								<button
+									type="button"
+									:disabled="savingCost"
+									class="kl-grad-brand inline-flex items-center gap-2 rounded-lg px-3.5 py-1.5 text-sm font-semibold text-white shadow-e2 hover:brightness-110 disabled:opacity-60"
+									@click="saveCosts"
+								>
+									<Spinner v-if="savingCost" :size="14" />
+									Save costing
+								</button>
+								<button
+									v-if="job.service_type"
+									type="button"
+									:disabled="estimating"
+									class="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-3.5 py-1.5 text-sm font-medium text-fg hover:bg-bg-subtle disabled:opacity-60"
+									@click="runEstimate"
+								>
+									<Spinner v-if="estimating" :size="14" />
+									Estimate from history
+								</button>
+								<p v-if="estimate" class="text-sm text-fg-muted">
+									<template v-if="estimate.avg_hours != null">
+										~{{ estimate.avg_hours }}h avg over
+										{{ estimate.sample_size }} {{ estimate.basis }} job(s)
+										<button
+											type="button"
+											class="ml-1 font-medium text-brand hover:underline"
+											@click="useEstimate"
+										>
+											Use
+										</button>
+									</template>
+									<template v-else
+										>No history yet for “{{ estimate.service_type }}”.</template
+									>
+								</p>
+							</div>
+						</div>
 					</section>
 
 					<section

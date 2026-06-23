@@ -12,6 +12,7 @@ const nav = [
 	{ name: "jobs", label: "Jobs", to: "/jobs", exact: false },
 	{ name: "inventory", label: "Inventory", to: "/inventory", exact: false },
 	{ name: "returns", label: "Returns", to: "/returns", exact: false },
+	{ name: "subcontractors", label: "Partners", to: "/subcontractors", exact: false },
 	{ name: "account", label: "Account", to: "/account", exact: false },
 ];
 
@@ -98,6 +99,11 @@ async function signOut() {
 							<template v-else-if="item.name === 'returns'">
 								<path d="M3 7h13a4 4 0 0 1 0 8H7" />
 								<path d="M7 11l-4 4 4 4" />
+							</template>
+							<template v-else-if="item.name === 'subcontractors'">
+								<circle cx="9" cy="8" r="3" />
+								<path d="M3 20a6 6 0 0 1 12 0" />
+								<path d="M16 3.5a3 3 0 0 1 0 5.8M21 20a6 6 0 0 0-5-5.9" />
 							</template>
 							<template v-else>
 								<circle cx="12" cy="8" r="3.5" />

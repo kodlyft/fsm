@@ -40,6 +40,15 @@
   "column_break_completion",
   "quotation",
   "sales_invoice",
+  "section_break_costing",
+  "estimated_hours",
+  "actual_hours",
+  "labor_rate",
+  "column_break_costing",
+  "labor_cost",
+  "materials_cost",
+  "overhead_cost",
+  "total_cost",
   "section_break_notes",
   "notes"
  ],
@@ -258,6 +267,57 @@
    "fieldtype": "Link",
    "label": "Sales Invoice",
    "options": "Sales Invoice"
+  },
+  {
+   "fieldname": "section_break_costing",
+   "fieldtype": "Section Break",
+   "label": "Costing"
+  },
+  {
+   "description": "Estimated labour hours (from the estimate engine or set manually).",
+   "fieldname": "estimated_hours",
+   "fieldtype": "Float",
+   "label": "Estimated Hours",
+   "precision": "2"
+  },
+  {
+   "fieldname": "actual_hours",
+   "fieldtype": "Float",
+   "label": "Actual Hours",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "labor_rate",
+   "fieldtype": "Currency",
+   "label": "Labour Rate (per hour)"
+  },
+  {
+   "fieldname": "column_break_costing",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "labor_cost",
+   "fieldtype": "Currency",
+   "label": "Labour Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "materials_cost",
+   "fieldtype": "Currency",
+   "label": "Materials Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "overhead_cost",
+   "fieldtype": "Currency",
+   "label": "Overhead Cost"
+  },
+  {
+   "fieldname": "total_cost",
+   "fieldtype": "Currency",
+   "label": "Total Cost",
+   "read_only": 1
   },
   {
    "fieldname": "section_break_notes",

@@ -57,6 +57,15 @@ class ServiceJob(Document):
 		self.sync_status()
 		self.set_completion_timestamp()
 		self.track_sla()
+		self.calculate_costs()
+
+	def calculate_costs(self):
+		"""Roll up labour + materials + overhead into the job's cost fields.
+		Actual hours come from Service Time Log entries (see fsm.costing)."""
+		from fsm.costing import compute_costs
+
+		for field, value in compute_costs(self).items():
+			setattr(self, field, value)
 
 	def on_update(self):
 		self.sync_technician_status()
