@@ -7,6 +7,44 @@ from frappe.utils import get_datetime, now_datetime
 
 
 class ServiceJob(Document):
+	# begin: auto-generated types
+	# This code is auto-generated. Do not modify anything in this block.
+
+	from typing import TYPE_CHECKING
+
+	if TYPE_CHECKING:
+		from frappe.types import DF
+		from fsm.field_service_management.doctype.service_job_item.service_job_item import ServiceJobItem
+		from fsm.field_service_management.doctype.service_job_task.service_job_task import ServiceJobTask
+
+		address_display: DF.SmallText | None
+		checklist_template: DF.Link | None
+		completed_on: DF.Datetime | None
+		contact: DF.Link | None
+		customer: DF.Link
+		customer_name: DF.Data | None
+		items: DF.Table[ServiceJobItem]
+		naming_series: DF.Literal["FSM-JOB-.YYYY.-"]
+		notes: DF.Text | None
+		primary_technician: DF.Link | None
+		priority: DF.Literal["Low", "Medium", "High", "Urgent"]
+		promised_response_by: DF.Datetime | None
+		quotation: DF.Link | None
+		responded_on: DF.Datetime | None
+		sales_invoice: DF.Link | None
+		scheduled_date: DF.Datetime | None
+		scheduled_end: DF.Datetime | None
+		service_address: DF.Link | None
+		service_latitude: DF.Float
+		service_longitude: DF.Float
+		service_type: DF.Data | None
+		sla_breached: DF.Check
+		status: DF.Literal["Draft", "Scheduled", "Assigned", "In Progress", "On Hold", "Completed", "Cancelled"]
+		tasks: DF.Table[ServiceJobTask]
+		territory: DF.Link | None
+		total_amount: DF.Currency
+	# end: auto-generated types
+
 	def validate(self):
 		self.apply_settings_defaults()
 		self.apply_checklist_template()

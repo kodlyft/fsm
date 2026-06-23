@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_bulk_edit": 1,
  "creation": "2026-06-05 12:00:00",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -7,8 +8,8 @@
   "default_territory",
   "default_checklist_template",
   "column_break_main",
-  "default_priority",
-  "auto_create_invoice"
+  "auto_create_invoice",
+  "default_priority"
  ],
  "fields": [
   {
@@ -44,7 +45,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-06-05 12:00:00",
+ "modified": "2026-06-24 00:15:32.338782",
  "modified_by": "Administrator",
  "module": "Field Service Management",
  "name": "Service Settings",
@@ -54,10 +55,8 @@
    "create": 1,
    "delete": 1,
    "email": 1,
-   "export": 1,
    "print": 1,
    "read": 1,
-   "report": 1,
    "role": "System Manager",
    "share": 1,
    "write": 1
@@ -66,16 +65,16 @@
    "create": 1,
    "delete": 1,
    "email": 1,
-   "export": 1,
    "print": 1,
    "read": 1,
-   "report": 1,
+   "role": "FSM Manager",
    "share": 1,
-   "write": 1,
-   "role": "FSM Manager"
+   "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "track_changes": 1
 }

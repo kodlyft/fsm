@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_bulk_edit": 1,
  "allow_rename": 1,
  "autoname": "field:territory_name",
  "creation": "2026-06-05 12:00:00",
@@ -8,7 +9,9 @@
  "field_order": [
   "territory_name",
   "parent_territory",
+  "column_break_kefi",
   "disabled",
+  "description_section",
   "description"
  ],
  "fields": [
@@ -36,6 +39,15 @@
    "fieldname": "description",
    "fieldtype": "Small Text",
    "label": "Description"
+  },
+  {
+   "fieldname": "column_break_kefi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "description_section",
+   "fieldtype": "Section Break",
+   "label": "Description"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -56,7 +68,7 @@
    "link_fieldname": "territory"
   }
  ],
- "modified": "2026-06-05 12:00:00",
+ "modified": "2026-06-24 00:14:38.408912",
  "modified_by": "Administrator",
  "module": "Field Service Management",
  "name": "Service Territory",
@@ -83,16 +95,18 @@
    "print": 1,
    "read": 1,
    "report": 1,
+   "role": "FSM Manager",
    "share": 1,
-   "write": 1,
-   "role": "FSM Manager"
+   "write": 1
   },
   {
    "read": 1,
    "role": "FSM Technician"
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "track_changes": 1
 }

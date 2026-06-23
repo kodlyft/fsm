@@ -85,7 +85,8 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Status",
-   "options": "Draft\nScheduled\nAssigned\nIn Progress\nOn Hold\nCompleted\nCancelled"
+   "options": "Draft\nScheduled\nAssigned\nIn Progress\nOn Hold\nCompleted\nCancelled",
+   "read_only": 1
   },
   {
    "default": "Medium",
@@ -136,7 +137,8 @@
    "fieldtype": "Link",
    "in_standard_filter": 1,
    "label": "Service Territory",
-   "options": "Service Territory"
+   "options": "Service Territory",
+   "search_index": 1
   },
   {
    "fieldname": "primary_technician",
@@ -144,7 +146,8 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Primary Technician",
-   "options": "Technician"
+   "options": "Technician",
+   "search_index": 1
   },
   {
    "default": "0",
@@ -198,7 +201,8 @@
    "fieldname": "checklist_template",
    "fieldtype": "Link",
    "label": "Checklist Template",
-   "options": "Checklist Template"
+   "options": "Checklist Template",
+   "search_index": 1
   },
   {
    "fieldname": "tasks",
@@ -274,7 +278,7 @@
    "link_fieldname": "service_job"
   }
  ],
- "modified": "2026-06-05 12:00:00",
+ "modified": "2026-06-24 00:13:38.747314",
  "modified_by": "Administrator",
  "module": "Field Service Management",
  "name": "Service Job",
@@ -301,22 +305,25 @@
    "print": 1,
    "read": 1,
    "report": 1,
+   "role": "FSM Manager",
    "share": 1,
-   "write": 1,
-   "role": "FSM Manager"
+   "write": 1
   },
   {
    "print": 1,
    "read": 1,
    "report": 1,
-   "write": 1,
-   "role": "FSM Technician"
+   "role": "FSM Technician",
+   "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "search_fields": "customer_name,status,primary_technician",
  "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
- "title_field": "customer_name"
+ "title_field": "customer_name",
+ "track_changes": 1,
+ "track_seen": 1
 }

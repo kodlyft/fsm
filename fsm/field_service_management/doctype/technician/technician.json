@@ -70,7 +70,8 @@
    "fieldtype": "Link",
    "in_standard_filter": 1,
    "label": "Service Territory",
-   "options": "Service Territory"
+   "options": "Service Territory",
+   "search_index": 1
   },
   {
    "fieldname": "column_break_contact",
@@ -150,7 +151,7 @@
    "link_fieldname": "primary_technician"
   }
  ],
- "modified": "2026-06-05 12:00:00",
+ "modified": "2026-06-24 00:12:43.148039",
  "modified_by": "Administrator",
  "module": "Field Service Management",
  "name": "Technician",
@@ -177,16 +178,19 @@
    "print": 1,
    "read": 1,
    "report": 1,
+   "role": "FSM Manager",
    "share": 1,
-   "write": 1,
-   "role": "FSM Manager"
+   "write": 1
   },
   {
    "read": 1,
    "role": "FSM Technician"
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "technician_name",
+ "track_changes": 1
 }

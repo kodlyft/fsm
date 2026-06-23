@@ -6,6 +6,27 @@ from frappe.model.document import Document
 
 
 class ServiceAppointment(Document):
+	# begin: auto-generated types
+	# This code is auto-generated. Do not modify anything in this block.
+
+	from typing import TYPE_CHECKING
+
+	if TYPE_CHECKING:
+		from frappe.types import DF
+
+		contact_phone: DF.Data | None
+		customer: DF.Link | None
+		customer_name: DF.Data | None
+		naming_series: DF.Literal["FSM-APPT-.YYYY.-"]
+		notes: DF.SmallText | None
+		preferred_date: DF.Datetime | None
+		service_address: DF.SmallText | None
+		service_job: DF.Link | None
+		service_type: DF.Data | None
+		status: DF.Literal["Open", "Scheduled", "Converted", "Cancelled"]
+		territory: DF.Link | None
+	# end: auto-generated types
+
 	@frappe.whitelist()
 	def create_service_job(self) -> str:
 		"""Convert this appointment into a Service Job and link it back.

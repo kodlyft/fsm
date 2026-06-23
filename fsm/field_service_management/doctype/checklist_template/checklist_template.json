@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_bulk_edit": 1,
  "allow_rename": 1,
  "autoname": "field:template_name",
  "creation": "2026-06-05 12:00:00",
@@ -8,7 +9,9 @@
  "field_order": [
   "template_name",
   "service_type",
+  "column_break_coez",
   "disabled",
+  "task_details_section",
   "items"
  ],
  "fields": [
@@ -38,6 +41,15 @@
    "label": "Tasks",
    "options": "Checklist Template Item",
    "reqd": 1
+  },
+  {
+   "fieldname": "column_break_coez",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "task_details_section",
+   "fieldtype": "Section Break",
+   "label": "Task Details"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -48,7 +60,7 @@
    "link_fieldname": "checklist_template"
   }
  ],
- "modified": "2026-06-05 12:00:00",
+ "modified": "2026-06-24 00:18:18.149211",
  "modified_by": "Administrator",
  "module": "Field Service Management",
  "name": "Checklist Template",
@@ -75,16 +87,18 @@
    "print": 1,
    "read": 1,
    "report": 1,
+   "role": "FSM Manager",
    "share": 1,
-   "write": 1,
-   "role": "FSM Manager"
+   "write": 1
   },
   {
    "read": 1,
    "role": "FSM Technician"
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "track_changes": 1
 }

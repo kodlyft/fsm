@@ -86,7 +86,7 @@
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-06-23 23:50:15.418643",
+ "modified": "2026-06-24 00:08:11.851444",
  "modified_by": "Administrator",
  "module": "Field Service Management",
  "name": "Technician Location Log",
@@ -126,5 +126,6 @@
  "row_format": "Dynamic",
  "sort_field": "recorded_on",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "track_seen": 1
 }
