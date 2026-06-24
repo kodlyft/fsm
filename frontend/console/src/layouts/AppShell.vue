@@ -13,6 +13,8 @@ const nav = [
 	{ name: "inventory", label: "Inventory", to: "/inventory", exact: false },
 	{ name: "returns", label: "Returns", to: "/returns", exact: false },
 	{ name: "subcontractors", label: "Partners", to: "/subcontractors", exact: false },
+	{ name: "analytics", label: "Analytics", to: "/analytics", exact: false },
+	{ name: "integrations", label: "Integrations", to: "/integrations", exact: false },
 	{ name: "account", label: "Account", to: "/account", exact: false },
 ];
 
@@ -104,6 +106,16 @@ async function signOut() {
 								<circle cx="9" cy="8" r="3" />
 								<path d="M3 20a6 6 0 0 1 12 0" />
 								<path d="M16 3.5a3 3 0 0 1 0 5.8M21 20a6 6 0 0 0-5-5.9" />
+							</template>
+							<template v-else-if="item.name === 'analytics'">
+								<path d="M3 3v18h18" />
+								<path d="M7 15l3-4 3 2 4-6" />
+							</template>
+							<template v-else-if="item.name === 'integrations'">
+								<circle cx="6" cy="12" r="2.5" />
+								<circle cx="18" cy="6" r="2.5" />
+								<circle cx="18" cy="18" r="2.5" />
+								<path d="M8.2 10.8 15.8 7.2M8.2 13.2l7.6 3.6" />
 							</template>
 							<template v-else>
 								<circle cx="12" cy="8" r="3.5" />

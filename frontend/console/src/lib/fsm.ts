@@ -390,6 +390,85 @@ export function listFieldNotes(customer: string): Promise<FieldNote[]> {
 	return client.call<FieldNote[]>("fsm.customers.list_field_notes", { customer }, "GET");
 }
 
+export interface ServicePerformance {
+	window_days: number;
+	total_jobs: number;
+	completed_jobs: number;
+	completion_rate: number | null;
+	first_time_fix_rate: number | null;
+	mttr_hours: number | null;
+	avg_completion_hours: number | null;
+	punctuality_pct: number | null;
+	sla_breaches: number;
+}
+
+export interface WorkorderVolume {
+	window_days: number;
+	total: number;
+	open: number;
+	completed: number;
+	by_status: Record<string, number>;
+	by_service_type: Record<string, number>;
+	trend: { date: string; count: number }[];
+}
+
+export interface InventoryUsage {
+	window_days: number;
+	items: { item_code: string; item_name: string | null; qty: number; amount: number }[];
+}
+
+export interface TechUtilization {
+	window_days: number;
+	technicians: {
+		technician: string;
+		jobs: number;
+		completed: number;
+		hours: number;
+		avg_hours_per_job: number;
+		completion_rate: number;
+	}[];
+}
+
+export function getServicePerformance(days = 90): Promise<ServicePerformance> {
+	return client.call<ServicePerformance>("fsm.analytics.service_performance", { days }, "GET");
+}
+export function getWorkorderVolume(days = 90): Promise<WorkorderVolume> {
+	return client.call<WorkorderVolume>("fsm.analytics.workorder_volume", { days }, "GET");
+}
+export function getInventoryUsage(days = 90): Promise<InventoryUsage> {
+	return client.call<InventoryUsage>("fsm.analytics.inventory_usage", { days }, "GET");
+}
+export function getTechnicianUtilization(days = 90): Promise<TechUtilization> {
+	return client.call<TechUtilization>("fsm.analytics.technician_utilization", { days }, "GET");
+}
+
+export interface ApiKeys {
+	user: string;
+	api_key: string;
+	api_secret: string;
+	usage: string;
+}
+
+export interface WebhookRow {
+	name: string;
+	webhook_docevent: string;
+	request_url: string;
+	enabled: number;
+}
+
+export function generateApiKeys(user?: string): Promise<ApiKeys> {
+	return client.call<ApiKeys>("fsm.integrations.generate_api_keys", { user });
+}
+export function listWebhooks(): Promise<WebhookRow[]> {
+	return client.call<WebhookRow[]>("fsm.integrations.list_webhooks", {}, "GET");
+}
+export function registerWebhook(
+	request_url: string,
+	docevent = "on_update",
+): Promise<{ name: string }> {
+	return client.call("fsm.integrations.register_webhook", { request_url, docevent });
+}
+
 export async function searchLink(
 	doctype: string,
 	query: string,
