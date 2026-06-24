@@ -5,8 +5,10 @@ import { PageHeader, KpiCard, JobCard, EmptyState, type JobStatus } from "@kodly
 import {
 	getDispatchJobs,
 	getDashboardStats,
+	getCsatSummary,
 	type DashboardStats,
 	type DispatchJob,
+	type CsatSummary,
 } from "@/lib/fsm";
 import { realtime, SERVICE_JOB_EVENT, TECHNICIAN_EVENT } from "@/lib/realtime";
 
@@ -14,6 +16,7 @@ const router = useRouter();
 
 const jobs = ref<DispatchJob[]>([]);
 const stats = ref<DashboardStats | null>(null);
+const csat = ref<CsatSummary | null>(null);
 const loading = ref(true);
 const error = ref("");
 const live = ref(false);
@@ -58,9 +61,10 @@ async function load() {
 	loading.value = true;
 	error.value = "";
 	try {
-		[jobs.value, stats.value] = await Promise.all([
+		[jobs.value, stats.value, csat.value] = await Promise.all([
 			getDispatchJobs({ limit: 200 }),
 			getDashboardStats(),
+			getCsatSummary().catch(() => null),
 		]);
 	} catch {
 		error.value = "Couldn't load the dispatch board. Check your connection and try again.";
@@ -146,7 +150,7 @@ onBeforeUnmount(() => {
 			</template>
 		</PageHeader>
 
-		<div class="mb-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+		<div class="mb-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-5">
 			<KpiCard label="Open jobs" :value="stats?.open_jobs ?? '—'" tone="brand">
 				<template #icon>
 					<svg
@@ -215,6 +219,28 @@ onBeforeUnmount(() => {
 						aria-hidden="true"
 					>
 						<path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+					</svg>
+				</template>
+			</KpiCard>
+			<KpiCard
+				label="Satisfaction"
+				:value="csat?.avg_rating != null ? `${csat.avg_rating}★` : '—'"
+				tone="brand"
+			>
+				<template #icon>
+					<svg
+						viewBox="0 0 24 24"
+						class="size-5"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="1.9"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						aria-hidden="true"
+					>
+						<path
+							d="M12 17.3 6.2 21l1.6-6.8L2.5 9.6l7-0.6L12 2.5l2.5 6.5 7 0.6-5.3 4.6L17.8 21z"
+						/>
 					</svg>
 				</template>
 			</KpiCard>

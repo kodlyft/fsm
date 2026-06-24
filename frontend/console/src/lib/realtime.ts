@@ -2,6 +2,15 @@ import { Realtime } from "@kodlyft/api";
 
 export const SERVICE_JOB_EVENT = "fsm_service_job_update";
 export const TECHNICIAN_EVENT = "fsm_technician_update";
+export const JOB_MESSAGE_EVENT = "fsm_job_message";
+
+export interface JobMessageEvent {
+	service_job: string;
+	author_role: string;
+	author_name: string | null;
+	message: string;
+	creation: string;
+}
 
 export interface ServiceJobEvent {
 	name: string;

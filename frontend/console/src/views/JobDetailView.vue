@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, computed, onMounted } from "vue";
+import { ref, reactive, computed, onMounted, onBeforeUnmount } from "vue";
 import { RouterLink } from "vue-router";
 import { StatusPill, Spinner } from "@kodlyft/ui";
 import {
@@ -14,11 +14,20 @@ import {
 	requestParts,
 	updateJob,
 	estimateJob,
+	getMessages,
+	postMessage,
+	getFeedback,
+	listFieldNotes,
+	addFieldNote,
 	type JobDoc,
 	type TechnicianSuggestion,
 	type JobLogistics,
 	type JobEstimate,
+	type JobMessage,
+	type JobFeedback,
+	type FieldNote,
 } from "@/lib/fsm";
+import { realtime, JOB_MESSAGE_EVENT, type JobMessageEvent } from "@/lib/realtime";
 
 const props = defineProps<{ name: string }>();
 
@@ -152,6 +161,71 @@ function useEstimate() {
 	if (estimate.value?.avg_hours != null) costForm.estimated_hours = estimate.value.avg_hours;
 }
 
+const messages = ref<JobMessage[]>([]);
+const newMessage = ref("");
+const postingMsg = ref(false);
+let offMessage: (() => void) | null = null;
+
+async function loadMessages() {
+	try {
+		messages.value = await getMessages(props.name);
+	} catch {
+		messages.value = [];
+	}
+}
+
+async function sendMessage() {
+	const text = newMessage.value.trim();
+	if (!text) return;
+	postingMsg.value = true;
+	try {
+		await postMessage(props.name, text);
+		newMessage.value = "";
+		await loadMessages();
+	} catch {
+		error.value = "Couldn't send the message.";
+	} finally {
+		postingMsg.value = false;
+	}
+}
+
+const feedback = ref<JobFeedback | null>(null);
+async function loadFeedback() {
+	try {
+		feedback.value = await getFeedback(props.name);
+	} catch {
+		feedback.value = null;
+	}
+}
+
+const fieldNotes = ref<FieldNote[]>([]);
+const newNote = ref("");
+const savingNote = ref(false);
+
+async function loadFieldNotes() {
+	if (!job.value?.customer) return;
+	try {
+		fieldNotes.value = await listFieldNotes(job.value.customer);
+	} catch {
+		fieldNotes.value = [];
+	}
+}
+
+async function saveFieldNote() {
+	const text = newNote.value.trim();
+	if (!text || !job.value?.customer) return;
+	savingNote.value = true;
+	try {
+		await addFieldNote(job.value.customer, text, job.value.name);
+		newNote.value = "";
+		await loadFieldNotes();
+	} catch {
+		error.value = "Couldn't save the note.";
+	} finally {
+		savingNote.value = false;
+	}
+}
+
 async function load() {
 	loading.value = true;
 	error.value = "";
@@ -159,6 +233,9 @@ async function load() {
 		job.value = await getJob(props.name);
 		syncCostForm();
 		loadLogistics();
+		loadMessages();
+		loadFeedback();
+		loadFieldNotes();
 	} catch {
 		error.value = "Couldn't load this job.";
 	} finally {
@@ -221,7 +298,18 @@ async function generateInvoice() {
 	}
 }
 
-onMounted(load);
+onMounted(() => {
+	load();
+	try {
+		offMessage = realtime().on(JOB_MESSAGE_EVENT, (m: JobMessageEvent) => {
+			if (m.service_job === props.name) loadMessages();
+		});
+	} catch {
+		offMessage = null;
+	}
+});
+
+onBeforeUnmount(() => offMessage?.());
 </script>
 
 <template>
@@ -633,6 +721,93 @@ onMounted(load);
 							</div>
 						</div>
 					</section>
+					<section
+						class="rounded-2xl border border-border bg-bg shadow-card backdrop-blur-xl"
+					>
+						<h2 class="border-b border-border px-4 py-3 text-lg font-bold">Messages</h2>
+						<div class="max-h-80 space-y-3 overflow-y-auto px-4 py-3">
+							<p v-if="messages.length === 0" class="text-sm text-fg-muted">
+								No messages yet. Reach the customer or technician here.
+							</p>
+							<div v-for="m in messages" :key="m.name" class="text-sm">
+								<div class="flex items-center gap-2">
+									<span
+										class="rounded-full px-2 py-0.5 text-xs font-medium"
+										:class="{
+											'bg-brand/15 text-brand':
+												m.author_role === 'Dispatcher',
+											'bg-info/15 text-info': m.author_role === 'Technician',
+											'bg-success/15 text-success':
+												m.author_role === 'Customer',
+											'bg-fg-muted/15 text-fg-muted':
+												m.author_role === 'System',
+										}"
+									>
+										{{ m.author_role }}
+									</span>
+									<span class="text-xs text-fg-muted">
+										{{ m.author_name }} · {{ datetime(m.creation) }}
+									</span>
+								</div>
+								<p class="mt-1 whitespace-pre-line text-fg">{{ m.message }}</p>
+							</div>
+						</div>
+						<div class="flex gap-2 border-t border-border p-3">
+							<input
+								v-model="newMessage"
+								placeholder="Write a message…"
+								class="flex-1 rounded-lg border border-border bg-white/5 px-3 py-2 text-sm focus-visible:outline-none focus-visible:[box-shadow:var(--kl-elevation-focus)]"
+								@keydown.enter="sendMessage"
+							/>
+							<button
+								type="button"
+								:disabled="postingMsg || !newMessage.trim()"
+								class="kl-grad-brand inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-white shadow-e2 hover:brightness-110 disabled:opacity-50"
+								@click="sendMessage"
+							>
+								<Spinner v-if="postingMsg" :size="14" />
+								Send
+							</button>
+						</div>
+					</section>
+					<section
+						class="rounded-2xl border border-border bg-bg shadow-card backdrop-blur-xl"
+					>
+						<h2 class="border-b border-border px-4 py-3 text-lg font-bold">
+							Customer field notes
+						</h2>
+						<ul v-if="fieldNotes.length" class="divide-y divide-border">
+							<li v-for="n in fieldNotes" :key="n.name" class="px-4 py-2.5 text-sm">
+								<p class="whitespace-pre-line text-fg">{{ n.note }}</p>
+								<p class="mt-0.5 text-xs text-fg-muted">
+									{{ n.technician || "—" }} · {{ n.visit_date }}
+									<span v-if="n.service_job === job.name" class="text-brand"
+										>· this job</span
+									>
+								</p>
+							</li>
+						</ul>
+						<p v-else class="px-4 py-3 text-sm text-fg-muted">
+							No field notes for this customer.
+						</p>
+						<div class="flex gap-2 border-t border-border p-3">
+							<input
+								v-model="newNote"
+								placeholder="Add a field note (e.g. access code, equipment quirk)…"
+								class="flex-1 rounded-lg border border-border bg-white/5 px-3 py-2 text-sm focus-visible:outline-none focus-visible:[box-shadow:var(--kl-elevation-focus)]"
+								@keydown.enter="saveFieldNote"
+							/>
+							<button
+								type="button"
+								:disabled="savingNote || !newNote.trim()"
+								class="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-4 py-2 text-sm font-medium text-fg hover:bg-bg-subtle disabled:opacity-50"
+								@click="saveFieldNote"
+							>
+								<Spinner v-if="savingNote" :size="14" />
+								Add
+							</button>
+						</div>
+					</section>
 
 					<section
 						v-if="job.notes"
@@ -708,6 +883,35 @@ onMounted(load);
 							<Spinner v-if="invoicing" :size="16" />
 							{{ invoicing ? "Creating…" : "Create invoice" }}
 						</button>
+					</div>
+
+					<!-- Customer feedback (Feature 12) -->
+					<div class="border-t border-border pt-3">
+						<p class="mb-1 text-fg-muted">Customer feedback</p>
+						<div v-if="feedback">
+							<p class="text-lg" aria-label="rating">
+								<span class="text-warning">{{ "★".repeat(feedback.rating) }}</span>
+								<span class="text-fg-muted">{{
+									"★".repeat(5 - feedback.rating)
+								}}</span>
+								<span
+									v-if="feedback.nps_score != null"
+									class="ml-2 align-middle text-xs text-fg-muted"
+								>
+									NPS {{ feedback.nps_score }}
+								</span>
+							</p>
+							<p v-if="feedback.comments" class="mt-1 text-sm text-fg">
+								“{{ feedback.comments }}”
+							</p>
+						</div>
+						<p v-else class="text-sm text-fg-muted">
+							{{
+								job.status === "Completed"
+									? "Awaiting customer rating."
+									: "Available after the job is completed."
+							}}
+						</p>
 					</div>
 
 					<div

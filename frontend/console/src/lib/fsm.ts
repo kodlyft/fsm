@@ -299,6 +299,97 @@ export function processReturn(
 	return client.call("fsm.returns.process_return", { name, action });
 }
 
+export interface JobMessage {
+	name: string;
+	author_role: string;
+	author_name: string | null;
+	message: string;
+	creation: string;
+}
+
+export function getMessages(job: string): Promise<JobMessage[]> {
+	return client.call<JobMessage[]>("fsm.messaging.get_messages", { job }, "GET");
+}
+
+export function postMessage(
+	job: string,
+	message: string,
+): Promise<{ name: string; creation: string }> {
+	return client.call("fsm.messaging.post_message", { job, message });
+}
+
+export interface JobFeedback {
+	name: string;
+	rating: number;
+	nps_score: number | null;
+	comments: string | null;
+	submitted_on: string;
+}
+
+export interface CsatSummary {
+	responses: number;
+	avg_rating: number | null;
+	nps: number | null;
+}
+
+export function getFeedback(job: string): Promise<JobFeedback | null> {
+	return client.call<JobFeedback | null>("fsm.feedback.get_feedback", { job }, "GET");
+}
+
+export function getCsatSummary(days = 90): Promise<CsatSummary> {
+	return client.call<CsatSummary>("fsm.feedback.get_csat_summary", { days }, "GET");
+}
+
+export interface FieldNote {
+	name: string;
+	note: string;
+	service_job: string | null;
+	technician: string | null;
+	visit_date: string | null;
+	creation: string;
+}
+
+export interface CustomerProfile {
+	customer: {
+		customer_name: string;
+		customer_group: string | null;
+		territory: string | null;
+		mobile_no: string | null;
+		email_id: string | null;
+	};
+	jobs: {
+		name: string;
+		status: string;
+		service_type: string | null;
+		scheduled_date: string | null;
+		completed_on: string | null;
+		total_amount: number;
+	}[];
+	stats: {
+		total_jobs: number;
+		completed_jobs: number;
+		total_billed: number;
+		last_service: string | null;
+	};
+	field_notes: FieldNote[];
+}
+
+export function getCustomerProfile(customer: string): Promise<CustomerProfile> {
+	return client.call<CustomerProfile>("fsm.customers.get_customer_profile", { customer }, "GET");
+}
+
+export function addFieldNote(
+	customer: string,
+	note: string,
+	service_job?: string,
+): Promise<{ name: string }> {
+	return client.call("fsm.customers.add_field_note", { customer, note, service_job });
+}
+
+export function listFieldNotes(customer: string): Promise<FieldNote[]> {
+	return client.call<FieldNote[]>("fsm.customers.list_field_notes", { customer }, "GET");
+}
+
 export async function searchLink(
 	doctype: string,
 	query: string,

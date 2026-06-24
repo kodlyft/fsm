@@ -79,3 +79,40 @@ export function getMyAppointments(): Promise<MyAppointment[]> {
 export function getMyJobs(): Promise<MyJob[]> {
 	return client.call<MyJob[]>("fsm.api.get_my_jobs", {}, "GET");
 }
+
+export interface JobMessage {
+	name: string;
+	author_role: string;
+	author_name: string | null;
+	message: string;
+	creation: string;
+}
+
+export function getJobMessages(job: string): Promise<JobMessage[]> {
+	return client.call<JobMessage[]>("fsm.messaging.get_messages", { job }, "GET");
+}
+
+export function postJobMessage(job: string, message: string): Promise<{ name: string }> {
+	return client.call("fsm.messaging.post_message", { job, message });
+}
+
+export interface JobFeedback {
+	name: string;
+	rating: number;
+	nps_score: number | null;
+	comments: string | null;
+	submitted_on: string;
+}
+
+export function getJobFeedback(job: string): Promise<JobFeedback | null> {
+	return client.call<JobFeedback | null>("fsm.feedback.get_feedback", { job }, "GET");
+}
+
+export function submitJobFeedback(
+	job: string,
+	rating: number,
+	comments?: string,
+	nps_score?: number,
+): Promise<{ name: string }> {
+	return client.call("fsm.feedback.submit_feedback", { job, rating, comments, nps_score });
+}
