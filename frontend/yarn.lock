@@ -112,25 +112,25 @@
   dependencies:
     css-tree "^3.0.0"
 
-"@capacitor/android@^8.0.0":
-  version "8.4.0"
-  resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-8.4.0.tgz#88ae78c9293ff1f9df39046d4661d73f162d4f33"
-  integrity sha512-K1ZPkQzvRzPEALz9nBdLx5p5nAPzp5fsTYWk7LRiKZeH/NXqjDvqfTv7lrLgrziQNoDeaL6ijg64oBREzXiV+g==
+"@capacitor/android@^8.4.1":
+  version "8.4.1"
+  resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-8.4.1.tgz#d2a42c051c3a8127510bae62875aaf4237c33719"
+  integrity sha512-igtDCJ7QQn0P2qHFD9p4KXaa6V1b2PRNt+MxjVwtjTm/BJvqmiazOJq6rPjwFSZnfHm6iFoZk8TfzHd44pyBGw==
 
 "@capacitor/app@^8.0.0":
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/@capacitor/app/-/app-8.1.0.tgz#fd8da0994a02a767981c8a235d2b6524d36a3aae"
   integrity sha512-MlmttTOWHDedr/G4SrhNRxsXMqY+R75S4MM4eIgzsgCzOYhb/MpCkA5Q3nuOCfL1oHm26xjUzqZ5aupbOwdfYg==
 
-"@capacitor/camera@^8.0.0":
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/@capacitor/camera/-/camera-8.2.0.tgz#66ee3593292137ac85a9e33ce3e002c449d613ff"
-  integrity sha512-hYfrT6xpL936qoEkIpJzSnb0fQCaTkOux1cXzGBfH8QLOGqr6gSLiWZlZz/fqMPmMKJMNRBqlTQkj5fuMhVZog==
+"@capacitor/camera@^8.2.1":
+  version "8.2.1"
+  resolved "https://registry.yarnpkg.com/@capacitor/camera/-/camera-8.2.1.tgz#4084c8247e9b86bf17cd2aed6556c434098d45eb"
+  integrity sha512-yq4TbVcv9Z91JLr7C5407s3rrXr/Dmk+Pr9FAVRn65s3Jg4iYabjwG4fVKUYlQL5TiUdBbZA3LiNAbUxJNcUkw==
 
-"@capacitor/cli@^8.0.0":
-  version "8.4.0"
-  resolved "https://registry.yarnpkg.com/@capacitor/cli/-/cli-8.4.0.tgz#40ae8fb7f057299c86db152bffc2d99935e2bc66"
-  integrity sha512-5Z9RKHxiqJYRTLrfMeZmzR4qrlg5B85MxsWZ5goyXsLkO3bgpW9a1qV/6fR1SX9s5gwLza5y7PZVwITl/hDJ7g==
+"@capacitor/cli@^8.4.1":
+  version "8.4.1"
+  resolved "https://registry.yarnpkg.com/@capacitor/cli/-/cli-8.4.1.tgz#2e340118cb6d380a6484e5375a9fe99a39a25021"
+  integrity sha512-t7F2s7fFHCq113xgrggrmK6ctV0/8E5YfLNVLfPHp4GCTDO+tly9fZvWPf2/sOI8lMm18dLT43qbXLRTz/OZgw==
   dependencies:
     "@ionic/cli-framework-output" "^2.2.8"
     "@ionic/utils-subprocess" "^3.0.1"
@@ -150,10 +150,10 @@
     tslib "^2.8.1"
     xml2js "^0.6.2"
 
-"@capacitor/core@^8.0.0":
-  version "8.4.0"
-  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-8.4.0.tgz#34cfaddae74924bb7a69d41a4ac22a84293913c0"
-  integrity sha512-LrS1xPIrqLtJABBIPDGXxxKmI9OyesrzWw8DiHbxhSC9JoiLUleUAJlX1a0LWIVLRbuY4Szgf9huFeRqYH2SAQ==
+"@capacitor/core@^8.4.1":
+  version "8.4.1"
+  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-8.4.1.tgz#6e9af34642b1722327da6123ce70cb14a68d3f9d"
+  integrity sha512-xqhOGLbTAYeOWK+IDUNSjQJAPapQjRHrIcgk9PYp52or9zFTaaMko31uNi16N6W+CRJ8VrRram6fOYILkBG2Hg==
   dependencies:
     tslib "^2.1.0"
 
@@ -169,15 +169,15 @@
   resolved "https://registry.yarnpkg.com/@capacitor/haptics/-/haptics-8.0.2.tgz#821d2687b81ff8855327273314d0d146476f069f"
   integrity sha512-c2hZzRR5Fk1tbTvhG1jhh2XBAf3EhnIerMIb2sl7Mt41Gxx1fhBJFDa0/BI1IbY4loVepyyuqNC9820/GZuoWQ==
 
-"@capacitor/ios@^8.0.0":
-  version "8.4.0"
-  resolved "https://registry.yarnpkg.com/@capacitor/ios/-/ios-8.4.0.tgz#c519f06fcb2957bf4ea928bd2948cc90ab54d619"
-  integrity sha512-tnwstEdbTJ2nHAfoAwnurXgYRscWeLY+IIGdz69o24gN2Crfj9Xc0TWo8L5uFLF1LmpbUywH1IT0U1oHV8c+CA==
+"@capacitor/ios@^8.4.1":
+  version "8.4.1"
+  resolved "https://registry.yarnpkg.com/@capacitor/ios/-/ios-8.4.1.tgz#afc483682406eae1a703e8751082e1bfc9fe8652"
+  integrity sha512-EgcAk7NYheHMTyP3CUrA65qKs4D2UEAKgw44HI6Uk3dTw6KjLQkdLOQWvbeRncHaZ2gklfOojUoc5DlSw2lhYg==
 
-"@capacitor/keyboard@^8.0.0":
-  version "8.0.3"
-  resolved "https://registry.yarnpkg.com/@capacitor/keyboard/-/keyboard-8.0.3.tgz#5dd28e92dcba4643ba0bfa8ccdfed5c5d5d493b8"
-  integrity sha512-27Bv5/2w1Ss2njguBgTS98O0Bb8DRJhAARyzXYib0JlT/n6BrJw/EZ0CokM4C8GFUjFDjJnEKF1Ie01buTMEXQ==
+"@capacitor/keyboard@^8.0.5":
+  version "8.0.5"
+  resolved "https://registry.yarnpkg.com/@capacitor/keyboard/-/keyboard-8.0.5.tgz#7ec60f27749b04aeba16f7ec232e7947f4e59f94"
+  integrity sha512-oFXygC4eKYA5l2MdpTR06L2M/4x6e2SLD5yS1T9+UBDKTkzyvhWKEhbYLUaTIBPpLKqlfGudJw1X73S1H9eUzQ==
 
 "@capacitor/local-notifications@^8.0.0":
   version "8.2.0"
@@ -649,10 +649,10 @@
     debug "^4.0.0"
     tslib "^2.0.1"
 
-"@ionic/core@8.8.10":
-  version "8.8.10"
-  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-8.8.10.tgz#9698d08b9ab906774705447f1cf431a7ef1aa873"
-  integrity sha512-pNujZuU/vydXKtE3yOqmeOIySbXodspxuK4QcbRitWoikNZhGalqW2JvtEJqeRRvE4KJ4dJ3gXF8i6+rtVSG3Q==
+"@ionic/core@8.8.13":
+  version "8.8.13"
+  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-8.8.13.tgz#17b813e186dd42114bdb0d6a4aa8b1f30f49e8ec"
+  integrity sha512-f09pRxmOLxPvLeCK9kTTBiByaPeCrApwABAwkqeax08e1b4kDSyXD1nMGDT6ChTvUGxyt4/cPxLsEP68ku4+HQ==
   dependencies:
     "@stencil/core" "4.43.5"
     ionicons "^8.0.13"
@@ -733,19 +733,19 @@
     untildify "^4.0.0"
     wrap-ansi "^7.0.0"
 
-"@ionic/vue-router@^8.8.10":
-  version "8.8.10"
-  resolved "https://registry.yarnpkg.com/@ionic/vue-router/-/vue-router-8.8.10.tgz#b8fefecc4168b6c741fc05c652e348b7cfb7a72a"
-  integrity sha512-rAUCRi469dEbGqndhDfUpE+Skhh2WLUg1mHwJzZubFPgIIFQT/rA/ZFNNwne2/XONLoelbm/sl4TNDYvH50bfg==
+"@ionic/vue-router@^8.8.13":
+  version "8.8.13"
+  resolved "https://registry.yarnpkg.com/@ionic/vue-router/-/vue-router-8.8.13.tgz#7fcf3d169fb34405298fe8f7905b2a205bcfaea1"
+  integrity sha512-d5hN8XdZIrG47cLT9UdvqKvkQbxlhbnenKA7tqi2ROo0WTyqcnCQ9V+qSTK9elSMbvdQZrzSgYO6GGxLHnOdOw==
   dependencies:
-    "@ionic/vue" "8.8.10"
+    "@ionic/vue" "8.8.13"
 
-"@ionic/vue@8.8.10", "@ionic/vue@^8.8.10":
-  version "8.8.10"
-  resolved "https://registry.yarnpkg.com/@ionic/vue/-/vue-8.8.10.tgz#7ce0f55f8e8c1430e5b5caa8570ec057a4b2b32c"
-  integrity sha512-pCuB3XY/GkuRmEYllMnidYeiAFfLRTtWjxC+iLv4D3xo4zV4bdBbtLBJHlJlPNgrME5hguIHmKO1GL6IyFK+eg==
+"@ionic/vue@8.8.13", "@ionic/vue@^8.8.13":
+  version "8.8.13"
+  resolved "https://registry.yarnpkg.com/@ionic/vue/-/vue-8.8.13.tgz#2e82b1e64f571ae06e3fc58469c0784c045bf53b"
+  integrity sha512-PgpuoQInVBAmBwn12Wg7nvZ471khG++3UGlEsOAFZ6D6BFEvv8OMz90MTE5j6gnT//lzP2GIs/msG+LS8FV5vQ==
   dependencies:
-    "@ionic/core" "8.8.10"
+    "@ionic/core" "8.8.13"
     "@stencil/vue-output-target" "0.10.7"
     ionicons "^8.0.13"
 
