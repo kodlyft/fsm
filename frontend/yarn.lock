@@ -101,25 +101,25 @@
   dependencies:
     css-tree "^3.0.0"
 
-"@capacitor/android@^8.5.0":
-  version "8.5.0"
-  resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-8.5.0.tgz#1fa7c7eb00b6600df1f346b6548869670e6cd0d3"
-  integrity sha512-Rb3prJeQiTp0pQhSSOReJuG9VgibOGMG4ECs+UhMwr6TCCHZ3NCZO811bDA0HxD0xrT/gCrJAsY5yfEATu84JQ==
+"@capacitor/android@^8.5.2":
+  version "8.5.2"
+  resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-8.5.2.tgz#e774465cd42c321f643bb365ffe50b89697ef2bb"
+  integrity sha512-rtiaz78egCcS+vs29wkWCL3C+RhazKMSygXcjutwWP8NmO6r5UBxOvGf3Wjz5+ahobyQ723tn9gCePwRwcNDZQ==
 
-"@capacitor/app@^8.1.1":
-  version "8.1.1"
-  resolved "https://registry.yarnpkg.com/@capacitor/app/-/app-8.1.1.tgz#af00649d0c7799ec83469b1c4ada921f9933a77e"
-  integrity sha512-xM2ZTX5jK60tFtmjsmJv+Cdj1Qsb6NcavkqmdEnCPQBeya9oKhamZJxYOnQNj1ZvcJM7sWfG6BEtSLx42pisbA==
+"@capacitor/app@^8.1.2":
+  version "8.1.2"
+  resolved "https://registry.yarnpkg.com/@capacitor/app/-/app-8.1.2.tgz#3f39b7b02d2277b3ef6f659747d0d6e56b60a1cc"
+  integrity sha512-uKBlsrXH0IdvUn69e/KKYbZ32A06pcrUdG8LWuZ/6y33YMXZXLEEdNSwl+jKS/SrsTWqnePs8EqSWaiQM3mUGA==
 
-"@capacitor/camera@^8.2.3":
-  version "8.2.3"
-  resolved "https://registry.yarnpkg.com/@capacitor/camera/-/camera-8.2.3.tgz#36746029434b58adc83174bf9a5da87d04c5f5d9"
-  integrity sha512-x9Pl5UgvrZyU5Hl53Fly9f6u019hhgN+gSdDgi+WygxK9DUVuYKjigplOXz3VJQ9m8ttUSjqN/rAC3JVnyEzcA==
+"@capacitor/camera@^8.2.5":
+  version "8.2.5"
+  resolved "https://registry.yarnpkg.com/@capacitor/camera/-/camera-8.2.5.tgz#d56a169fdd0c74d1e0999d98256c0f74c13f7c06"
+  integrity sha512-FPuwY7byjTlBjeUKm17eTjLCPhuqBPJqTF4N3JCQuymLn2FUgfu0SMSN6OUQvCiiz/EVJVyZ9Mmg5GEmDfFoIA==
 
-"@capacitor/cli@^8.5.0":
-  version "8.5.0"
-  resolved "https://registry.yarnpkg.com/@capacitor/cli/-/cli-8.5.0.tgz#655bbdec95997ee723fecc1d326a08517b4eaf9f"
-  integrity sha512-rLdzMUM5QV4WITcqoWv04p32i14BXgUH2diqEH6MWQlWaJfiyNrvOyt/+d5vHAfOxOm1klBu637VDEobctlwBA==
+"@capacitor/cli@^8.5.2":
+  version "8.5.2"
+  resolved "https://registry.yarnpkg.com/@capacitor/cli/-/cli-8.5.2.tgz#3508c35adb52eef7d54d3cf95bd3636c6d4aab7f"
+  integrity sha512-O2kpA5ZPJUAmliDCcmpMf8xnJwMezxlFPUrlyOAjbL3U9MFNY3l4ZpPI/UXwvyPmR8ETcVF9pFr+VdWq61rqTQ==
   dependencies:
     "@ionic/cli-framework-output" "^2.2.8"
     "@ionic/utils-subprocess" "^3.0.1"
@@ -140,17 +140,17 @@
     xcode "^3.0.1"
     xml2js "^0.6.2"
 
-"@capacitor/core@^8.5.0":
-  version "8.5.0"
-  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-8.5.0.tgz#425893fddd7fff93dcf2d784677c45643602987b"
-  integrity sha512-Ca4krtqH1hothjtBIwf2J2TW7IhYq1ujp8QeItTiJohNsqij8ja2DYYH3DU0l8RmxCWaBAFTGA2TgOgOMCSNsQ==
+"@capacitor/core@^8.5.2":
+  version "8.5.2"
+  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-8.5.2.tgz#3e347a4d5a0c341995d0a26d4fdce156bf65b330"
+  integrity sha512-agnQbGdhGw/KZFuLf7H9SY2o+oE7upkr/WPQsYaokXP6f9chaE8iVmbKkfN6SVl4w3pmz7oZ3Ur1hbkmy1hx+w==
   dependencies:
     tslib "^2.1.0"
 
-"@capacitor/geolocation@^8.2.2":
-  version "8.2.2"
-  resolved "https://registry.yarnpkg.com/@capacitor/geolocation/-/geolocation-8.2.2.tgz#e8d809c397bd61d6a2049c0813513e18ab702847"
-  integrity sha512-X8ryw6CfL4LspJnnfVL4++DUKKZVfdUIA9JljWVRljEDIQxZQZtz6xf7qstht+ymc+le6oa5EaUChVA6KsCYlA==
+"@capacitor/geolocation@^8.2.3":
+  version "8.2.3"
+  resolved "https://registry.yarnpkg.com/@capacitor/geolocation/-/geolocation-8.2.3.tgz#768f299ce7e97ff190a0e57e17449b8a4204def6"
+  integrity sha512-tJWi6Vmj1tncFaFpruxrmXRsmvDb8i9Pp6Z04Bxsp39JeBavvvtHPMaNVf/jN/lKlohI8i7BqHqbrDVq3RD+cA==
   dependencies:
     "@capacitor/synapse" "^1.0.4"
 
@@ -159,15 +159,15 @@
   resolved "https://registry.yarnpkg.com/@capacitor/haptics/-/haptics-8.0.2.tgz#821d2687b81ff8855327273314d0d146476f069f"
   integrity sha512-c2hZzRR5Fk1tbTvhG1jhh2XBAf3EhnIerMIb2sl7Mt41Gxx1fhBJFDa0/BI1IbY4loVepyyuqNC9820/GZuoWQ==
 
-"@capacitor/ios@^8.5.0":
-  version "8.5.0"
-  resolved "https://registry.yarnpkg.com/@capacitor/ios/-/ios-8.5.0.tgz#d21c99b50119e586ca08b25e7630396db6fcf91f"
-  integrity sha512-7k1TfohJu5BzRXc1F3g04Q8QQ0fyQgms6h1AvhnHb04VaNr9EdHOx03hL8O+OigEKMQnyJd1ZOjTPPNHCqL5Yw==
+"@capacitor/ios@^8.5.2":
+  version "8.5.2"
+  resolved "https://registry.yarnpkg.com/@capacitor/ios/-/ios-8.5.2.tgz#05f805fc6e4b0478156212f06a30862abae67a67"
+  integrity sha512-eOT2S67AfTFG7KN0T3oxwAajrJz4rSye+ODfvChiwrk0F/+kWufFM1qU6cDjGJUOfwdAoeuEpZyWHSwZlu4GFg==
 
-"@capacitor/keyboard@^8.0.5":
-  version "8.0.5"
-  resolved "https://registry.yarnpkg.com/@capacitor/keyboard/-/keyboard-8.0.5.tgz#7ec60f27749b04aeba16f7ec232e7947f4e59f94"
-  integrity sha512-oFXygC4eKYA5l2MdpTR06L2M/4x6e2SLD5yS1T9+UBDKTkzyvhWKEhbYLUaTIBPpLKqlfGudJw1X73S1H9eUzQ==
+"@capacitor/keyboard@^8.0.6":
+  version "8.0.6"
+  resolved "https://registry.yarnpkg.com/@capacitor/keyboard/-/keyboard-8.0.6.tgz#361304068b7319ead091a83b846861deb2fb3639"
+  integrity sha512-Bbe+9V0qaT6dzEFJEK7BUWR01l2+vZE8FM5ITF/WgKtx+G6eGZ6d5+YiSMRJBAK0VGjdO59v8yiQ10Doa5KyvQ==
 
 "@capacitor/local-notifications@^8.3.1":
   version "8.3.1"
@@ -184,20 +184,20 @@
   resolved "https://registry.yarnpkg.com/@capacitor/preferences/-/preferences-8.0.1.tgz#9924997d694242a5f378e9ddba9711ad1ca611dc"
   integrity sha512-T6no3ebi79XJCk91U3Jp/liJUwgBdvHR+s6vhvPkPxSuch7z3zx5Rv1bdWM6sWruNx+pViuEGqZvbfCdyBvcHQ==
 
-"@capacitor/push-notifications@^8.1.2":
-  version "8.1.2"
-  resolved "https://registry.yarnpkg.com/@capacitor/push-notifications/-/push-notifications-8.1.2.tgz#d7340d9c81f46500cdb61ecaeb45cc21542a689f"
-  integrity sha512-TQl4XxqJfNF+KbSYBFMXYYT5WXUaleVKXlByhh/8+KySMVNjp+l5OqAUoGe/sY1IAnGXEuUeCjA/WLZEVvGwrA==
+"@capacitor/push-notifications@^8.1.3":
+  version "8.1.3"
+  resolved "https://registry.yarnpkg.com/@capacitor/push-notifications/-/push-notifications-8.1.3.tgz#00ae8fbc8347e733d9292df025a5a95201cf8551"
+  integrity sha512-UlOCTS3uiw8ZUJ1rkFKJgoqPADipHDNn0lq5mNRwtXALVxQXIeIoRd3iqpzC+962R2LpCRJRkCTjPX2OHK3tBA==
 
 "@capacitor/splash-screen@^8.0.2":
   version "8.0.2"
   resolved "https://registry.yarnpkg.com/@capacitor/splash-screen/-/splash-screen-8.0.2.tgz#52b5fac8a1178167f344f1330b6f607426a56b39"
   integrity sha512-0C6rYScr13WfAE9nPl4ScOQynmjFv9NT3Th+RZkD4ezYHmER6mcl1/lDYsv7jg3Rj3FOvLrlTlmNkUrr83kZzQ==
 
-"@capacitor/status-bar@^8.0.3":
-  version "8.0.3"
-  resolved "https://registry.yarnpkg.com/@capacitor/status-bar/-/status-bar-8.0.3.tgz#b638524f021cb3147e6f36ad55e7e5171aee4fd6"
-  integrity sha512-csSpfNeN49Hx9JaQBSJEIiEbOLtXg3kcc2IpScq2fu5L520h3AWEvsxoH8Srk1jxfRKepaJ4S4sqSC3foI4AgA==
+"@capacitor/status-bar@^8.0.4":
+  version "8.0.4"
+  resolved "https://registry.yarnpkg.com/@capacitor/status-bar/-/status-bar-8.0.4.tgz#ce93e52c2feba9ef218c7bd3e839aa447c183269"
+  integrity sha512-ZMzBUyHBzwDUxcHadEhvOvmoPmMQGMZgaMRJu8ohELeI6IaxoVH9ZhdF/OHnY3/yykv3Glev8Tnbh4aZY/0B0w==
 
 "@capacitor/synapse@^1.0.4":
   version "1.0.4"
@@ -667,12 +667,12 @@
     debug "^4.0.0"
     tslib "^2.0.1"
 
-"@ionic/core@9.0.0":
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-9.0.0.tgz#4b9d8987d6e39c8e0a98d4b8676536ed68e9e665"
-  integrity sha512-ouHmLIdyP0vTV0PK/kj0QNtQTcDjyoWi2vKRaCkwj0xY3oU9qq3lB0N6w3Cm93ol0inBuXgn3/IN71BTp88c+g==
+"@ionic/core@9.0.6":
+  version "9.0.6"
+  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-9.0.6.tgz#875ee822b7a83e9d91c61698dde8131ca7076ac4"
+  integrity sha512-WWxjOjwKPU75BuEhc42t3n2Tn89YEDe5Pce9kA61w/TlWVM3tqiAYC+qfR9MXmER4pQcST01oM2gftheMzcV6g==
   dependencies:
-    "@stencil/core" "^4.43.5"
+    "@stencil/core" "^4.44.2"
     ionicons "^8.1.0"
     tslib "^2.1.0"
 
@@ -751,20 +751,20 @@
     untildify "^4.0.0"
     wrap-ansi "^7.0.0"
 
-"@ionic/vue-router@^9.0.0":
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/@ionic/vue-router/-/vue-router-9.0.0.tgz#4f4822a155a90640f4a19ec06fe92d600eafd629"
-  integrity sha512-vCR+Do6wx5UPvItXSeMj1wc5l5Xu+hg2iGGJHUvseO6b8KwqdSNezTHyCdlA8/utaI5W5u//R9T+ke+xNBmu6A==
+"@ionic/vue-router@^9.0.6":
+  version "9.0.6"
+  resolved "https://registry.yarnpkg.com/@ionic/vue-router/-/vue-router-9.0.6.tgz#769898c1f55aafa486e049ef6274bf5c521934d7"
+  integrity sha512-kxc+6Ix648UL6Nr2MAetcTE8RHRXt7nP03C5KnuFgXaL5wC+YZKnGMQL0BAnROVTdu5ARTyA2CDKLBDGhDe/Gg==
   dependencies:
-    "@ionic/vue" "9.0.0"
+    "@ionic/vue" "9.0.6"
 
-"@ionic/vue@9.0.0", "@ionic/vue@^9.0.0":
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/@ionic/vue/-/vue-9.0.0.tgz#ba141a114953f719b2e15591579d32044defef0e"
-  integrity sha512-k679QcbbtUrfMWrbhv/37n3MT5DFW26lOXG550F8E6DlkKckjbiAOH+IsJ9gthYUWD2QuypldGwZGesk1kT6sg==
+"@ionic/vue@9.0.6", "@ionic/vue@^9.0.6":
+  version "9.0.6"
+  resolved "https://registry.yarnpkg.com/@ionic/vue/-/vue-9.0.6.tgz#4ead378202589c858b4dc5fcdc4c765778ece7c7"
+  integrity sha512-Bg8RqfnsVejulSXF+YENjZBtx1cEwZPUZAA47oLhFceYlSodapLI2qWeHgn6hgKmapCe+GzyJQIuxyRIfXqlXQ==
   dependencies:
-    "@ionic/core" "9.0.0"
-    "@stencil/vue-output-target" "0.14.1"
+    "@ionic/core" "9.0.6"
+    "@stencil/vue-output-target" "0.14.2"
     ionicons "^8.0.13"
 
 "@isaacs/cliui@^8.0.2":
@@ -1143,10 +1143,24 @@
     "@rollup/rollup-win32-arm64-msvc" "4.44.0"
     "@rollup/rollup-win32-x64-msvc" "4.44.0"
 
-"@stencil/vue-output-target@0.14.1":
-  version "0.14.1"
-  resolved "https://registry.yarnpkg.com/@stencil/vue-output-target/-/vue-output-target-0.14.1.tgz#c5f6d11f5dfefb0e9a9fb385ef14a177f7e71074"
-  integrity sha512-mtqpYVsdopTbMK0eAmyNa2+MuuhiZgJcrBt1hihEERyG0vtDqcaYkqNz+sYSvA0iK3tTGs5vOUPOd1HU1w9D7w==
+"@stencil/core@^4.44.2":
+  version "4.45.2"
+  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-4.45.2.tgz#0b87cc4533a0a832d4830a17ee8385293d8b14ce"
+  integrity sha512-CNkPVZsqyNMjFMX9bEkMJsvBbQxjLw480OaoamoqiLPdQCFjJQReeOjnWX1A5ivSn3UYEIJ6MoN5VXDkaHGt8Q==
+  optionalDependencies:
+    "@rollup/rollup-darwin-arm64" "4.44.0"
+    "@rollup/rollup-darwin-x64" "4.44.0"
+    "@rollup/rollup-linux-arm64-gnu" "4.44.0"
+    "@rollup/rollup-linux-arm64-musl" "4.44.0"
+    "@rollup/rollup-linux-x64-gnu" "4.44.0"
+    "@rollup/rollup-linux-x64-musl" "4.44.0"
+    "@rollup/rollup-win32-arm64-msvc" "4.44.0"
+    "@rollup/rollup-win32-x64-msvc" "4.44.0"
+
+"@stencil/vue-output-target@0.14.2":
+  version "0.14.2"
+  resolved "https://registry.yarnpkg.com/@stencil/vue-output-target/-/vue-output-target-0.14.2.tgz#3f2a49d5c7541ae05c66fb7b7aff0b1423d81e96"
+  integrity sha512-KF09dlRXvieXYEW7MnvnUoAWnQKm3JLori9UiB4xoTdJQeI987nRx5N5zzci+L3j4Ta+932D6+pJuWvHZJb+jA==
 
 "@tailwindcss/node@4.3.2":
   version "4.3.2"
