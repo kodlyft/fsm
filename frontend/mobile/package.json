@@ -44,7 +44,7 @@
     "@capacitor/android": "^8.5.0",
     "@capacitor/cli": "^8.5.0",
     "@capacitor/ios": "^8.5.0",
-    "@tailwindcss/vite": "^4.3.2",
+    "@tailwindcss/vite": "^4.3.3",
     "@types/leaflet": "^1.9.15",
     "@vitejs/plugin-vue": "^6.0.7",
     "tailwindcss": "^4.0.0",
